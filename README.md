@@ -1,7 +1,7 @@
 # CS_ASP.NET_Forum
 FTIT C# ASP .NET final project: a __Web Forum__ web application.
 
-Basic aspects and idea:
+## Basic aspects and idea:
 * user accounts:
   - e-mail address : used for registration and sending notifications (eg.: registration, quoted by other user, account suspension);
   - user name : unique alphanumeric string, max 10-20 characters, except special characters, no vulgar /crass words contained;
@@ -30,8 +30,9 @@ Basic aspects and idea:
   - title of the new element;
   - wether it is open for new element creation or set read-only (eg.: not everyone should be able to modify elements listing posting regulations).
 
-MAYBE aspects: allow to be part of the "post" : embedded video, webm.
+## MAYBE aspects:
+* allow to be part of the "post" : embedded video, webm.
 
-Made with:
+## Made with:
 * Mostly written using C# , .NET Core 5 ;
 * Database is managed with (at least until the end of the course): Xampp, written with MySQL.

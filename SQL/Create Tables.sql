@@ -1,71 +1,80 @@
+------------
+-- Forums --
+------------
+-- Board /Category_1		(SET, DELETE: ADMIN)
+--- Forum /Sub-Category_1	(SET, DELETE: ADMIN)
+---- Thread /Topic_1		(SET: ANY | DELETE: ADMIN)
+------ Post_1 (initial)	(SET: OWNER | HIDE-DELETE: ADMIN)
+------ Post_2			(SET: ANY | HIDE: OWNER | HIDE-DEL.: ADMIN)
+------ Post_n
+------------
+
 --
--- Database "Forums".
+-- Database "ForumDB".
 --
 
 -- Default type is "Regular", only an Admin can promote /demote users.
-CREATE TABLE forums.Users (
+CREATE TABLE ForumDB.Users (
 	Id INT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
 	Name VARCHAR2(25) NOT NULL UNIQUE ,
 	Pass VARCHAR2(50) NOT NULL ,
 	Email VARCHAR2(255) NOT NULL UNIQUE ,
-	Reg_Date DATETIME NOT NULL ,
-	UserType_ID INT NOT NULL DEFAULT 1,
+	JoinedAt DATETIME NOT NULL ,
+	RoleID INT NOT NULL DEFAULT 1,
 	PRIMARY KEY (Id) ,
-	CONSTRAINT FK_Users_UserType
-		FOREIGN KEY (UserType_ID)
-		REFERENCES UserType (Id)
+	CONSTRAINT FK_Users_Roles
+		FOREIGN KEY (RoleID)
+		REFERENCES Roles (Id)
 ) ENGINE = InnoDB;
 
 -- Admin > Moderator > Regular
-CREATE TABLE forums.UserType (
+CREATE TABLE ForumDB.Roles (
 	Id INT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
-	Name VARCHAR2(25) NOT NULL UNIQUE ,
+	Name VARCHAR(25) NOT NULL UNIQUE ,
 	PRIMARY KEY (Id)
 ) ENGINE = InnoDB;
 
--- Forum / Board / Category
-CREATE TABLE forums.Boards (
+-- Board / Category
+CREATE TABLE ForumDB.Boards (
 	Id INT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
-	Name VARCHAR2(255) NOT NULL UNIQUE ,
-	Description VARCHAR2(255) NOT NULL UNIQUE ,
-	Reg_By_Admin_User_ID INT NOT NULL ,
+	Name VARCHAR(100) NOT NULL UNIQUE ,
+	ForumID INT NOT NULL ,
 	PRIMARY KEY (Id) ,
-	CONSTRAINT FK_Boards_Admin_Users FOREIGN KEY (Reg_By_Admin_User_ID) REFERENCES Users (Id)
-) ENGINE = InnoDB; -- ONLY "Admin" TYPE Users CAN BE HERE !  How to reference with a constraint like that ?
+	CONSTRAINT FK_Boards_Forums FOREIGN KEY (ForumID) REFERENCES Boards (Id)
+) ENGINE = InnoDB;
+
+-- Forum / Sub-Category
+CREATE TABLE ForumDB.Forums (
+	Id INT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
+	Name VARCHAR(100) NOT NULL UNIQUE ,
+	Description VARCHAR(255) NOT NULL UNIQUE ,
+	BoardID INT NOT NULL ,
+	PRIMARY KEY (Id) ,
+	CONSTRAINT FK_Forums_Boards FOREIGN KEY (BoardID) REFERENCES Boards (Id)
+) ENGINE = InnoDB;
 
 -- Thread / Topic
-CREATE TABLE forums.Threads (
+CREATE TABLE ForumDB.Threads (
 	Id INT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
-	Name VARCHAR2(255) NOT NULL UNIQUE ,
-	Reg_Date DATETIME NOT NULL ,
-	Board_ID INT NOT NULL ,
-	Reg_By_User_ID INT NOT NULL ,
+	Name VARCHAR(255) NOT NULL UNIQUE ,
+	CreatedAt DATETIME NOT NULL ,
+	ForumID INT NOT NULL ,
+	CreatedByID INT NOT NULL ,
 	PRIMARY KEY (Id) ,
-	CONSTRAINT FK_Threads_Boards FOREIGN KEY (Board_ID) REFERENCES Boards (Id) ,
-	CONSTRAINT FK_Threads_Users FOREIGN KEY (Reg_By_User_ID) REFERENCES Users (Id)
-) ENGINE = InnoDB; -- Limit "Thread" count: no reason to store more than 1.000 posts per Thread; make new Thread instead.
+	CONSTRAINT FK_Threads_Forums FOREIGN KEY (ForumID) REFERENCES Forums (Id) ,
+	CONSTRAINT FK_Threads_Users FOREIGN KEY (CreatedByID) REFERENCES Users (Id)
+) ENGINE = InnoDB; -- "Thread" size limit: <= 100_K posts per Thread; make new Thread instead -> in app, check count before.
 
-CREATE TABLE forums.Posts (
+CREATE TABLE ForumDB.Posts (
 	Id INT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
 	Content VARCHAR(60000) NOT NULL ,
-	Reg_Date DATETIME NOT NULL ,
-	Thread_ID INT NOT NULL UNIQUE ,
-	Reg_By_User_ID INT NOT NULL ,
+	CreatedAt DATETIME NOT NULL ,
+	ThreadID INT NOT NULL UNIQUE ,
+	CreatedByID INT NOT NULL ,
 	PRIMARY KEY (Id) ,
-	CONSTRAINT FK_UserType_Users FOREIGN KEY (Thread_ID) REFERENCES Threads (Id) ,
-	CONSTRAINT FK_Posts_Users FOREIGN KEY (Reg_By_User_ID) REFERENCES Users (Id)
+	CONSTRAINT FK_Roles_Users FOREIGN KEY (ThreadID) REFERENCES Threads (Id) ,
+	CONSTRAINT FK_Posts_Users FOREIGN KEY (CreatedByID) REFERENCES Users (Id)
 ) ENGINE = InnoDB; -- "Content" size: if users want to post book volumes, let them.
 
-------------
--- Forums --
-------------
--- Forum /Board /Category_1 (SET, DELETE: ADMIN)
---- Thread /Topic_1 (SET: ANY | DELETE: ADMIN)
------ Post_1 (SET: OWNER | HIDE-DELETE: ADMIN)
------ Post_2 (SET: ANY | HIDE: OWNER | HIDE-DEL.: ADMIN)
------ Post_n
---
---- Thread /Topic_n
--- Forum /Board /Category_n
-------------
 
+-- TODO: add unique constraints like in the "contacts" mssql example. 

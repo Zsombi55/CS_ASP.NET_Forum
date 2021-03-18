@@ -19,6 +19,6 @@ namespace NC5MvcIdentitySqliteWebApp.Entities
 
 		public ForumEntity Forum { get; set; }
 
-		//public List<PostEntity> Posts { get; set; }
+		public List<PostEntity> Posts { get; set; }
 	}
 }

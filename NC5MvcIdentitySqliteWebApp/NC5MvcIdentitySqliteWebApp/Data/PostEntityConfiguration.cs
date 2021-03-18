@@ -5,21 +5,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Globalization;
 
 namespace NC5MvcIdentitySqliteWebApp.Data
 {
-	public class ThreadEntityConfiguration : IEntityTypeConfiguration<ThreadEntity>
+	public class PostEntityConfiguration : IEntityTypeConfiguration<PostEntity>
 	{
-		public void Configure(EntityTypeBuilder<ThreadEntity> builder)
+		public void Configure(EntityTypeBuilder<PostEntity> builder)
 		{
-			builder.ToTable("Threads");
+			builder.ToTable("Posts");
 			builder.HasKey(e => e.Id);
 			builder.Property(e => e.Id).ValueGeneratedOnAdd();
-			builder.Property(e => e.Name)
-					.HasMaxLength(255)
+			builder.Property(e => e.Content)
+					.HasMaxLength(60000)
 					.IsRequired();
 			builder.Property(e => e.CreatedAt)
+					.HasColumnType("TEXT")
+					//.HasColumnType<DateTime>("TEXT")
+					//.HasConversion(
+					//	v => v.ToString(@"yyyy-MM-dd HH:mm:ss"),
+					//	dbv => DateTime.Parse(dbv, CultureInfo.InvariantCulture))
+					// -- needed here ?
+					// SQLite uses TEXT in UTC format yyyy-MM-dd HH:mm:ss.FFFFFFF
+					.IsRequired();
+			builder.Property(e => e.ModifiedAt)
 					.HasColumnType("TEXT")
 					//.HasColumnType<DateTime>("TEXT")
 					//.HasConversion(
@@ -34,14 +42,14 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 			// Do I need to make a Users entity then somehow link it with the AspNetCore's User Identity ?
 			//
 			//builder.HasOne(u => u.User)
-			//		.WithMany(b => b.Threads)
+			//		.WithMany(b => b.Posts)
 			//		.HasForeignKey(f => f.UserId)
-			//		.HasConstraintName("FK_Threads_Users");
-			// "Forums" connection.
-			builder.HasOne(t => t.Forum)
-					.WithMany(f => f.Threads)
-					.HasForeignKey(f => f.ForumId)
-					.HasConstraintName("FK_Threads_Forums");
+			//		.HasConstraintName("FK_Posts_Users");
+			// "Threads" connection.
+			builder.HasOne(p => p.Thread)
+					.WithMany(t => t.Posts)
+					.HasForeignKey(p => p.ThreadId)
+					.HasConstraintName("FK_Posts_Threads");
 		}
 	}
 }

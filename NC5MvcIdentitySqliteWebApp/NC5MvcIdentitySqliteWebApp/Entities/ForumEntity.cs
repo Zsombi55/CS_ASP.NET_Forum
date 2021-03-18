@@ -17,6 +17,6 @@ namespace NC5MvcIdentitySqliteWebApp.Entities
 
 		public BoardEntity Board { get; set; }
 
-		//public List<ThreadEntity> Threads { get; set; }
+		public List<ThreadEntity> Threads { get; set; }
 	}
 }

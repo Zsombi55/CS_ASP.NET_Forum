@@ -16,6 +16,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 
 		public DbSet<BoardEntity> Boards { get; set; }
 		public DbSet<ForumEntity> Forums { get; set; }
+		public DbSet<ThreadEntity> Threads { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
@@ -23,6 +24,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 
 			builder.ApplyConfiguration(new BoardEntityConfiguration());
 			builder.ApplyConfiguration(new ForumEntityConfiguration());
+			builder.ApplyConfiguration(new ThreadEntityConfiguration());
 		}
 	}
 }

@@ -15,12 +15,14 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 		}
 
 		public DbSet<BoardEntity> Boards { get; set; }
+		public DbSet<ForumEntity> Forums { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
 
 			builder.ApplyConfiguration(new BoardEntityConfiguration());
+			builder.ApplyConfiguration(new ForumEntityConfiguration());
 		}
 	}
 }

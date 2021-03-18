@@ -1,0 +1,67 @@
+
+Basics, skeleton:
+----------------------------------------------------
+
+1)	User  registration and login (authentication, authorization)	--	anywhere, top / side bar button
+
+		Roles: Admin, Mod, Regular.
+		
+		* start with ONE Admin user -- set in DB ?
+		
+		* others to be set BY Admin User.
+
+
+2)	List available "Boards" and their "Forums"	--	Index, main page
+
+	+==========+	+==========+	+==========+
+	| Board A  |	| Board B  |	| Board C  |
+	|----------|	|----------|	|----------|
+	| Forums A |	| Forums D |	| Forums F |
+	| Forums B |	| Forums E |	| Forums G |
+	| Forums C |	+==========+	| Forums H |
+	+==========+					+==========+
+
+3.1)	Select a "Forum" :: List "Forum" matching available "Threads"	--	Forum page
+
+	eg.: Forum C	+==========+	+==========+
+					| Topic A  |	| Topic B  |
+					|----------|	|----------|
+					| Thread A |	| Thread D |
+					| Thread B |	| Thread E |
+					| Thread C |	| Thread F |
+					+==========+	+==========+
+
+3.2)	Selecting a "Board" :: List ALL "Board" matching available "Threads"	--	Thread page	
++ 4)	Select a "Thread" :: List "Thread" matching available "Post"	--	Thread page
+
+	eg.: Thread A	+========+
+					| Post 1 |
+					| Post 2 |
+					| Post 3 |
+					| Post 4 |
+					|   ...	 |
+					+========+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

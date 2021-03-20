@@ -12,6 +12,6 @@ namespace NC5MvcIdentitySqliteWebApp.Models
 
 		public DateTime? ModifiedAt { get; set; }
 
-		public int CreatorId { get; set; }
+		public int Creator { get; set; }
 	}
 }

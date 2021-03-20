@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace NC5MvcIdentitySqliteWebApp.Entities
+namespace NC5MvcIdentitySqliteWebApp.Models
 {
-	public class PostEntity
+	public class Post
 	{
 		public int Id { get; set; }
 
@@ -13,9 +13,5 @@ namespace NC5MvcIdentitySqliteWebApp.Entities
 		public DateTime? ModifiedAt { get; set; }
 
 		public int CreatorId { get; set; }
-
-		public int ThreadId { get; set; }
-
-		public ThreadEntity Thread { get; set; }
 	}
 }

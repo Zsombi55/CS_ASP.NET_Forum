@@ -33,5 +33,15 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
+
+		public IActionResult AdminUI()
+		{
+			return View();
+		}
+
+		public IActionResult OthersUI()
+		{
+			return View();
+		}
 	}
 }

@@ -34,5 +34,5 @@ FTIT C# ASP .NET final project: a __Web Forum__ web application.
 * allow to be part of the "post" : embedded video, webm.
 
 ## Made with:
-* Mostly written using C# , .NET Core 5 ;
-* Database is managed with (at least until the end of the course): Xampp, written with MySQL.
+* Mostly written using C# , .NET Core 5, Entity Framework Core; using MVC patern ;
+* Database is SQLite, manually managed with DB Browser (SQLite).

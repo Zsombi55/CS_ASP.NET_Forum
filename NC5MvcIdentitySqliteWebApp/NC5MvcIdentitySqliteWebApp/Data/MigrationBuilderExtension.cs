@@ -24,13 +24,22 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 
 			string normalizedRoleName = roleName.ToUpperInvariant();
 			//migration.ActiveProvider -- check msdn
+			// SQLite syntax:
 			migration.Sql($@"
-				IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE NormalizedName = '{normalizedRoleName}')
-				BEGIN
-					INSERT INTO AspNetRoles (Id, Name, NormalizedName, ConcurrencyStamp)
-					VALUES (NEWID(), '{roleName}', '{normalizedRoleName}', '{Guid.NewGuid().ToString()}')
-				END;
+				INSERT INTO AspNetRoles (Name, NormalizedName, ConcurrencyStamp)
+				SELECT '{roleName}', '{normalizedRoleName}', '{Guid.NewGuid().ToString()}'
+				WHERE NOT EXISTS (
+					SELECT * FROM AspNetRoles WHERE NormalizedName = '{normalizedRoleName}');
 			");
+
+			// MS SQL Server syntax:
+			//migration.Sql($@"
+			//	IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE NormalizedName = '{normalizedRoleName}')
+			//	BEGIN
+			//		INSERT INTO AspNetRoles (Id, Name, NormalizedName, ConcurrencyStamp)
+			//		VALUES (NEWID(), '{roleName}', '{normalizedRoleName}', '{Guid.NewGuid().ToString()}')
+			//	END;
+			//");
 		}
 	}
 }

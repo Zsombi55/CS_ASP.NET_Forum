@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NC5MvcIdentitySqliteWebApp.Models;
 using System;
@@ -34,11 +35,14 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 
+		//[Authorize(Roles = "admin")]
+		[Authorize(Policy = "IsAdmin")]
 		public IActionResult AdminUI()
 		{
 			return View();
 		}
 
+		[Authorize(Roles = "admin, mod")]
 		public IActionResult ModUI()
 		{
 			return View();

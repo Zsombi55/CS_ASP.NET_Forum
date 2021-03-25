@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace NC5MvcIdentitySqliteWebApp.Data
@@ -50,7 +51,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 			{ return; }
 
 			string normalizedEmail = email.ToUpperInvariant();
-			// TODO: Add "UserName" and "normalizedUserName" too; they MUST NOT be the same as Email !!
+			// TODO: UserName, UserID and Email MUST NEVER be the same, they are completely different things !!
 			var identityUser = new IdentityUser
 			{
 				UserName = email,
@@ -83,12 +84,13 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 				throw new Exception("Unable to correctly generate password hash!");
 			}
 
-			// ---IF ALL WENT WELL, BEGIN NEW USER INSERTION---
-			// SQLite: No need to insert "Id": https://www.sqlitetutorial.net/sqlite-autoincrement/
+	// ---IF ALL WENT WELL, BEGIN NEW USER INSERTION---
+	// SQLite: No need to insert "Id": https://www.sqlitetutorial.net/sqlite-autoincrement/
 			migrationBuilder.Sql($@"
 				INSERT INTO AspNetUsers (UserName, NormalizedUserName, Email, NormalizedEmail, 
 					EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, 
 					PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount)
+				BEGIN;
 				SELECT 
 					'{email}',							/* UserName */
 					'{normalizedEmail}', 				/* NormailzedEmail */
@@ -105,7 +107,47 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 				WHERE NOT EXISTS (
 					SELECT * FROM AspNetUsers 
 					WHERE NormalizedUserName = '{normalizedEmail}' OR NormalizedEmail = '{normalizedEmail}');
+				END;
 			");
+
+			if(roleNames != null && roleNames.Any())
+			{
+				var sqlRoleAssignments = new StringBuilder();
+	// TODO: find SQLite syntax, this won't work ! -------
+				sqlRoleAssignments.AppendLine($@"
+					/* THIS IS MS-SQL SYNTAX, NOT GOOD HERE */
+
+					DECLARE @UserID NVARCHAR(450);
+					SELECT @UserID = [Id]
+					FROM [dbo].[AspNetUsers]
+					WHERE [NormalizedUserName] = '{normalizedEmail}' 
+						OR [NormalizedEmail] = '{normalizedEmail}'
+					IF @UserID IS NOT NULL
+					BEGIN
+				");
+	//------------------------------------------------
+
+				foreach (var roleName in roleNames)
+				{
+					var normalizedRoleName = roleName.ToUpperInvariant();
+	// TODO: don't think this will work.. SQLite seems too primitive for what needs to be done here.  :(
+					migrationBuilder.Sql($@"
+						INSERT INTO AspNetUserRoles (UserID, RoleId)
+						BEGIN;
+						SELECT @UserID, Id FROM AspNetRoles WHERE NormalizedName = '{normalizedRoleName}'
+						WHERE NOT EXISTS (
+							SELECT * FROM AspNetUserRoles AS user_roles 
+							INNER JOIN AspNetRoles AS roles ON user_roles(RoleId)
+							WHERE user_roles.UserId = @UserID 
+							AND roles.NormalizedName = '{normalizedRoleName}');
+						END;
+					");
+				}
+
+				sqlRoleAssignments.AppendLine($@"END;");
+
+				migrationBuilder.Sql(sqlRoleAssignments.ToString());
+			}
 		}
 	}
 }

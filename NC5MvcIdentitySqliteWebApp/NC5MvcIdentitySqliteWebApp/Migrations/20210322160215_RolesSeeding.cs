@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using NC5MvcIdentitySqliteWebApp.Data;
+using System;
 
 namespace NC5MvcIdentitySqliteWebApp.Migrations
 {
@@ -7,25 +8,25 @@ namespace NC5MvcIdentitySqliteWebApp.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddRole("admin");
-            migrationBuilder.AddRole("mod");
+            migrationBuilder.AddRole("admin", out Guid adminRoleGuid);
+            migrationBuilder.AddRole("mod", out Guid modRoleGuid );
 
             migrationBuilder.AddUserWithRoles(
                 email: "user_admin@mail.com",
                 password: "Admin-User!",
-                new[] { "Admin" }
+                new[] { adminRoleGuid }
             );
 
             migrationBuilder.AddUserWithRoles(
                 email: "user_1_mod@mail.com",
                 password: "Mod-User_1!",
-                new[] { "Mod" }
+                new[] { modRoleGuid }
             );
 
             migrationBuilder.AddUserWithRoles(
                 email: "user_2_mod@mail.com",
                 password: "Mod-User_2!",
-                new[] { "Mod" }
+                new[] { modRoleGuid }
             );
         }
 

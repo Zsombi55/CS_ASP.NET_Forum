@@ -34,7 +34,7 @@ namespace NC5MvcIdentitySqliteWebApp
 				options.FallbackPolicy = new AuthorizationPolicyBuilder()
 					.RequireAuthenticatedUser()
 					.Build();
-				options.AddPolicy("IsAdmin", policy => policy.RequireRole("Admin"));
+				options.AddPolicy("IsAdmin", policy => policy.RequireRole("admin"));
 		// NOTE: this is often used together with Claims, allowing flexible condition sets, above "yes/ no".
 			});
 

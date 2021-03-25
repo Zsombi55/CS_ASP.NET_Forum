@@ -17,38 +17,43 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 		/// <param name="migration">Object: contains migration data.</param>
 		/// <param name="roleName">String: name of the desired User role.</param>
 		/// <remarks>Best not to hardcode the SQL code, syntax differs, eg.: SQLServer != SQLite.</remarks>
-		public static void AddRole(this MigrationBuilder migration, string roleName)
+		public static void AddRole(
+			this MigrationBuilder migration, 
+			string roleName, 
+			out Guid roleId)
 		{
+			roleId = Guid.NewGuid();
 			if (string.IsNullOrWhiteSpace(roleName))
 			{
 				return;
 			}
 
 			string normalizedRoleName = roleName.ToUpperInvariant();
-			//migration.ActiveProvider -- check msdn
+			
+			// TODO: migration.ActiveProvider -- check msdn
 			// SQLite syntax (if there's no INT AUTOINCREMENT, the hidden ROWID is automatically used as such):
 			migration.Sql($@"
-				INSERT INTO AspNetRoles (Name, NormalizedName, ConcurrencyStamp)
-				SELECT '{roleName}', '{normalizedRoleName}', '{Guid.NewGuid().ToString()}'
+				INSERT INTO AspNetRoles (Id, Name, NormalizedName, ConcurrencyStamp)
+				SELECT '{roleId}', '{roleName}', '{normalizedRoleName}', '{Guid.NewGuid()}'
 				WHERE NOT EXISTS (
-					SELECT * FROM AspNetRoles WHERE NormalizedName = '{normalizedRoleName}');
+									SELECT	* 
+									FROM	AspNetRoles 
+									WHERE	NormalizedName = '{normalizedRoleName}'
+								 );
 			");
-
-			// MS SQL Server syntax:
-			//migration.Sql($@"
-			//	IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE NormalizedName = '{normalizedRoleName}')
-			//	BEGIN
-			//		INSERT INTO AspNetRoles (Id, Name, NormalizedName, ConcurrencyStamp)
-			//		VALUES (NEWID(), '{roleName}', '{normalizedRoleName}', '{Guid.NewGuid().ToString()}')
-			//	END;
-			//");
 		}
 
-		public static void AddUserWithRoles(this MigrationBuilder migrationBuilder,
-			string email, string password, string[] roleNames)
+		public static void AddUser(
+			this MigrationBuilder migration,
+			string email, 
+			string password,
+			out Guid userId)
 		{
-			if(string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-			{ return; }
+			userId = Guid.NewGuid();
+			if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+			{ 
+				return;
+			}
 
 			string normalizedEmail = email.ToUpperInvariant();
 			// TODO: UserName, UserID and Email MUST NEVER be the same, they are completely different things !!
@@ -78,20 +83,29 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 			var passwordHasher = new PasswordHasher<IdentityUser>(options);
 			string passwordHash = passwordHasher.HashPassword(identityUser, password);
 
-			if(passwordHasher.VerifyHashedPassword(identityUser, passwordHash, password) ==
+			if (passwordHasher.VerifyHashedPassword(identityUser, passwordHash, password) ==
 				PasswordVerificationResult.Failed)
 			{
 				throw new Exception("Unable to correctly generate password hash!");
 			}
 
-	// ---IF ALL WENT WELL, BEGIN NEW USER INSERTION---
-	// SQLite: No need to insert "Id": https://www.sqlitetutorial.net/sqlite-autoincrement/
-			migrationBuilder.Sql($@"
-				INSERT INTO AspNetUsers (UserName, NormalizedUserName, Email, NormalizedEmail, 
-					EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, 
-					PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount)
-				BEGIN;
+			migration.Sql($@"
+				INSERT INTO AspNetUsers (
+					Id, 
+					UserName, 
+					NormalizedUserName, 
+					Email, 
+					NormalizedEmail, 
+					EmailConfirmed, 
+					PasswordHash, 
+					SecurityStamp, 
+					ConcurrencyStamp, 
+					PhoneNumberConfirmed, 
+					TwoFactorEnabled, 
+					LockoutEnabled, 
+					AccessFailedCount)
 				SELECT 
+					'{userId}',							/* Id */
 					'{email}',							/* UserName */
 					'{normalizedEmail}', 				/* NormailzedEmail */
 					'{email}', 							/* Email */
@@ -103,50 +117,48 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 					0, 									/* PhoneNumberConfirmed */
 					0, 									/* TwoFactorEnabled */
 					0, 									/* LockoutEnabled */
-					0, 									/* AccessFailedCount */
+					0 									/* AccessFailedCount */
 				WHERE NOT EXISTS (
-					SELECT * FROM AspNetUsers 
-					WHERE NormalizedUserName = '{normalizedEmail}' OR NormalizedEmail = '{normalizedEmail}');
-				END;
+									SELECT	* 
+									FROM	AspNetUsers 
+									WHERE	NormalizedUserName = '{normalizedEmail}' OR								   NormalizedEmail = '{normalizedEmail}'
+								 );
 			");
+		}
 
-			if(roleNames != null && roleNames.Any())
+		public static void MapUserRole(
+			this MigrationBuilder migration,
+			Guid userId,
+			Guid roleId)
+		{
+			migration.Sql($@"
+				INSERT INTO AspNetUserRoles (UserID, RoleId)
+				SELECT	'{userId}', '{roleId}' 
+				WHERE NOT EXISTS (
+									SELECT	* 
+									FROM	AspNetUserRoles
+									WHERE	UserId = '{userId}' 
+											AND RoleId = '{roleId}'
+								 );
+			");
+		}
+
+		public static void AddUserWithRoles(
+			this MigrationBuilder migration,
+			string email, 
+			string password, 
+			params Guid[] roleIds)
+		{
+			migration.AddUser(email, password, out Guid userId);
+
+			// SQLite: No need to insert "Id": https://www.sqlitetutorial.net/sqlite-autoincrement/
+
+			if (roleIds != null && roleIds.Any())
 			{
-				var sqlRoleAssignments = new StringBuilder();
-	// TODO: find SQLite syntax, this won't work ! -------
-				sqlRoleAssignments.AppendLine($@"
-					/* THIS IS MS-SQL SYNTAX, NOT GOOD HERE */
-
-					DECLARE @UserID NVARCHAR(450);
-					SELECT @UserID = [Id]
-					FROM [dbo].[AspNetUsers]
-					WHERE [NormalizedUserName] = '{normalizedEmail}' 
-						OR [NormalizedEmail] = '{normalizedEmail}'
-					IF @UserID IS NOT NULL
-					BEGIN
-				");
-	//------------------------------------------------
-
-				foreach (var roleName in roleNames)
+				foreach (Guid roleId in roleIds)
 				{
-					var normalizedRoleName = roleName.ToUpperInvariant();
-	// TODO: don't think this will work.. SQLite seems too primitive for what needs to be done here.  :(
-					migrationBuilder.Sql($@"
-						INSERT INTO AspNetUserRoles (UserID, RoleId)
-						BEGIN;
-						SELECT @UserID, Id FROM AspNetRoles WHERE NormalizedName = '{normalizedRoleName}'
-						WHERE NOT EXISTS (
-							SELECT * FROM AspNetUserRoles AS user_roles 
-							INNER JOIN AspNetRoles AS roles ON user_roles(RoleId)
-							WHERE user_roles.UserId = @UserID 
-							AND roles.NormalizedName = '{normalizedRoleName}');
-						END;
-					");
+					migration.MapUserRole(userId, roleId);
 				}
-
-				sqlRoleAssignments.AppendLine($@"END;");
-
-				migrationBuilder.Sql(sqlRoleAssignments.ToString());
 			}
 		}
 	}

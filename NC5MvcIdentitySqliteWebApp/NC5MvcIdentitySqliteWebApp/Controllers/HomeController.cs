@@ -39,7 +39,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
 			return View();
 		}
 
-		public IActionResult OthersUI()
+		public IActionResult ModUI()
 		{
 			return View();
 		}

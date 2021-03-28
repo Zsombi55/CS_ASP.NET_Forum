@@ -35,7 +35,7 @@ namespace NC5MvcIdentitySqliteWebApp
 					.RequireAuthenticatedUser()
 					.Build();
 				options.AddPolicy("IsAdmin", policy => policy.RequireRole("admin"));
-		// NOTE: this is often used together with Claims, allowing flexible condition sets, above "yes/ no".
+		// NOTE: this is often used together with Claims, allowing flexible condition sets, other than "has /doesn't have".
 			});
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);

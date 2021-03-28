@@ -31,7 +31,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 			string normalizedRoleName = roleName.ToUpperInvariant();
 			
 			// TODO: migration.ActiveProvider -- check msdn
-			// SQLite syntax (if there's no INT AUTOINCREMENT, the hidden ROWID is automatically used as such):
+			// SQLite syntax (if there's no INT AUTOINCREMENT, the hidden ROWID is auto.-used as such):
 			migration.Sql($@"
 				INSERT INTO AspNetRoles (Id, Name, NormalizedName, ConcurrencyStamp)
 				SELECT '{roleId}', '{roleName}', '{normalizedRoleName}', '{Guid.NewGuid()}'
@@ -151,7 +151,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 		{
 			migration.AddUser(email, password, out Guid userId);
 
-			// SQLite: No need to insert "Id": https://www.sqlitetutorial.net/sqlite-autoincrement/
+			// SQLite: https://www.sqlitetutorial.net/sqlite-autoincrement/
 
 			if (roleIds != null && roleIds.Any())
 			{

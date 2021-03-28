@@ -9,7 +9,7 @@ namespace NC5MvcIdentitySqliteWebApp.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddRole("admin", out Guid adminRoleGuid);
-            migrationBuilder.AddRole("mod", out Guid modRoleGuid );
+            migrationBuilder.AddRole("mod", out Guid modRoleGuid);
 
             migrationBuilder.AddUserWithRoles(
                 email: "user_admin@mail.com",
@@ -32,8 +32,8 @@ namespace NC5MvcIdentitySqliteWebApp.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            // NOTE: implement code for DB downgrating through migration.
-            // Not necessary, when necessary the Admin can do it in the DB without touching the App code.
+            // Code for DB downgrating through migration.
+            // NOTE: Not necessary, the Admin could do it in the DB, but should do it in-App.
         }
     }
 }

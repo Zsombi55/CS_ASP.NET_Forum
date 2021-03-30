@@ -18,30 +18,41 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 					<ul class="navbar-nav flex-grow-1">
-					    @if (User.Identity.IsAuthenticated) {
+						@if (User.Identity.IsAuthenticated.Equals(false))
+						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 							</li>
 						}
 
-						@if (User.Identity.IsAuthenticated) {
+						@if (User.Identity.IsAuthenticated.Equals(false))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TheForumsMain">Forums</a>
+							</li>
+						}
+
+						@if (User.Identity.IsAuthenticated.Equals(false))
+						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 							</li>
 						}
 
-						@if (User.IsInRole("admin")) {
+						@if (User.IsInRole("admin"))
+						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminUI">Admin Ui</a>
 							</li>
 						}
 
-						@if (User.IsInRole("admin") || User.IsInRole("mod")) {
+						@if (User.IsInRole("admin") || User.IsInRole("mod"))
+						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ModUI">Mod Ui</a>
 							</li>
-                        }
-						</ul>
+						}
+					</ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace NC5MvcIdentitySqliteWebApp.Entities
@@ -12,6 +13,8 @@ namespace NC5MvcIdentitySqliteWebApp.Entities
 		public DateTime? CreatedAt { get; set; }
 
 		public int CreatorId { get; set; }
+
+		//public IdentityUser Creator { get; set; }
 
 		public int ForumId { get; set; }
 

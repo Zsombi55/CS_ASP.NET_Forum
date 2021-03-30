@@ -47,5 +47,10 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
 		{
 			return View();
 		}
+
+		public IActionResult TheForumsMain()
+		{
+			return View();
+		}
 	}
 }

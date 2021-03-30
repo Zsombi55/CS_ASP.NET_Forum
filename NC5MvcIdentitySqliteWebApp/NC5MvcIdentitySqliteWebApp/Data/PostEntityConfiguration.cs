@@ -37,7 +37,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 					// SQLite uses TEXT in UTC format yyyy-MM-dd HH:mm:ss.FFFFFFF
 					.IsRequired();
 			// "Users" connection -- how to reference a User.Id ?
-			builder.Property(e => e.Creator)
+			builder.Property(e => e.CreatorId)
 					.IsRequired();
 			// Do I need to make a Users entity then somehow link it with the AspNetCore's User Identity ?
 			//
@@ -50,10 +50,10 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 					.WithMany(t => t.Posts)
 					.HasForeignKey(p => p.ThreadId)
 					.HasConstraintName("FK_Posts_Threads");
-			builder.HasOne(p => p.Post)
-					.WithMany(r => r.PostReplies)
-					.HasForeignKey(p => p.Id)
-					.HasConstraintName("FK_Posts_PostReplies");
+			//builder.HasOne(p => p.Post)
+			//		.WithMany(r => r.PostReplies)
+			//		.HasForeignKey(p => p.Id)
+			//		.HasConstraintName("FK_Posts_PostReplies");
 		}
 	}
 }

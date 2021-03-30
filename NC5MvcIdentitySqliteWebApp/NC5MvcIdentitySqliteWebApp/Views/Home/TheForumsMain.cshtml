@@ -1,0 +1,66 @@
+﻿@model IEnumerable<NC5MvcIdentitySqliteWebApp.Models.Board>
+
+@{
+	ViewData["Title"] = "TheForumsMain";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>The Forums Main</h1>
+
+<p>This would be the main page where the various Boards and within them the various Forums are listed.</p>
+
+@if (User.IsInRole("admin")) {
+<p>
+	<a asp-action="Create">New Board</a>
+</p>
+}
+
+<table class="table">
+	@foreach (var item in Model) {
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayFor(modelItem => item.Name)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var fItem in Model)
+		{
+		<tr>
+			<td>
+				<!--FORUM TITLE-->
+				@*@Html.DisplayFor(modelFitem => fItem.Forums)*@
+				<a asp-area="" asp-controller="Forums" asp-action="Index">A_Forum_Title</a>
+			</td>
+			<td>
+				<!--FORUM'S LAST POST-->
+				@Html.DisplayFor(modelFitem => fItem.Name)
+			</td>
+			<td>
+				<!--FORUM'S LAST POST'S CREATOR NAME-->
+				@Html.DisplayFor(modelFitem => fItem.Name)
+			</td>
+			<td>
+				<!--FORUM'S LAST POST'S CREATION TIME / DATE .. which is closer to Viewer.CurrentTime-->
+				@Html.DisplayFor(modelFitem => fItem.Name)
+			</td>
+			</tr>
+		<tr>
+			<td>
+				<!--FORUM CREATOR NAME-->
+				@Html.DisplayFor(modelFitem => fItem.Name)
+			</td>
+			<td>
+				<!--FORUM CREATION TIME / DATE .. which is closer to Viewer.CurrentTime-->
+				@Html.DisplayFor(modelFitem => fItem.Name)
+			</td>
+			<td>
+				<!--FORUM CONTENT TOTAL WORD COUNT-->
+				@Html.DisplayFor(modelFitem => fItem.Name)
+			</td>
+		</tr>
+		}
+	</tbody>
+}
+</table>

@@ -2,11 +2,11 @@
 Basics, skeleton:
 ----------------------------------------------------
 
-1)	User  registration and login (authentication, authorization)	--	anywhere, top / side bar button
+1)	User  registration and login (authentication, authorization)
 
-		Roles: Admin, Mod, Regular.
+		Special Roles: Admin, Mod.
 		
-		* start with ONE Admin user -- set in DB ?
+		* start with ONE Admin user, and 2 Mod users.
 		
 		* others to be set BY Admin User.
 
@@ -31,14 +31,25 @@ Basics, skeleton:
 					| Thread C |	| Thread F |
 					+==========+	+==========+
 
-3.2)	Selecting a "Board" :: List ALL "Board" matching available "Threads"	--	Thread page	
+3.2)	Selecting a "Board" :: List ALL "Board" matching available "Threads"	--	Forum page	
+
+	eg.: Board A	+==========+
+					| Board A  |
+					|----------|
+					| Thread X |
+					| Thread Y |
+					| Thread Z |
+					|   ...	   |
+					+==========+
+
 + 4)	Select a "Thread" :: List "Thread" matching available "Post"	--	Thread page
 
 	eg.: Thread A	+========+
-					| Post 1 |
-					| Post 2 |
-					| Post 3 |
-					| Post 4 |
+					| Post 1 |	<- initial, first, starter, original post.
+					|--------|
+					| Post 2 |	<-thread &/ post replies.
+					| Post 3 |	<-|
+					| Post 4 |	<-|
 					|   ...	 |
 					+========+
 

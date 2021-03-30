@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 
 namespace NC5MvcIdentitySqliteWebApp.Entities
 {
@@ -12,10 +14,12 @@ namespace NC5MvcIdentitySqliteWebApp.Entities
 
 		public DateTime? ModifiedAt { get; set; }
 
-		public int CreatorId { get; set; }
+		public IdentityUser Creator { get; set; }
 
 		public int ThreadId { get; set; }
 
 		public ThreadEntity Thread { get; set; }
+
+		public List<PostEntity> PostReplies { get; set; }
 	}
 }

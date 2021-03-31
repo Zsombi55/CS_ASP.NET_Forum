@@ -8,6 +8,9 @@ using NC5MvcIdentitySqliteWebApp.Models;
 
 namespace NC5MvcIdentitySqliteWebApp.Data
 {
+	/// <summary>
+	/// Connects: View models, Logic controllers, Database Entity models.
+	/// </summary>
 	public class ApplicationDbContext : IdentityDbContext
 	{
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

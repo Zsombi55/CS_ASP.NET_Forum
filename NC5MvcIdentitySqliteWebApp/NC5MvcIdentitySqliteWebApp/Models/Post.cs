@@ -13,5 +13,7 @@ namespace NC5MvcIdentitySqliteWebApp.Models
 		public DateTime? ModifiedAt { get; set; }
 
 		public int Creator { get; set; }
+
+		// this is wrong, I want to show select owner-User data, eg.: name, picture, etc. not an Id.  
 	}
 }

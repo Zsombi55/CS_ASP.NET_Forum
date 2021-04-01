@@ -1,0 +1,12 @@
+INSERT INTO Forums (CreatedAt, Title, Description, Status)
+VALUES
+(datetime('now', 'localtime'), "Recipes", "Kitchen work: cooking, baking & preparing drinks.", 1),
+(datetime('now', 'localtime'), "Creative Writing", "Writing outside the bounds of normal professional forms of literature, identified by an emphasis on narrative craft, character development, and the use of literary tropes or with various traditions of poetry and poetics.", 1),
+(datetime('now', 'localtime'), "Science", "Writing inside the bounds of normal professional hard & soft sciences, such as: Technology, Engineering, Mathematics, or Philosophy, Sociology.", 1),
+(datetime('now', 'localtime'), "Documentaries", "Non-fictional motion-picture intended to document reality, primarily for the purposes of instruction, education, or maintaining a historical record.", 1),
+(datetime('now', 'localtime'), "Educational: Tutorials & Guides, Tutorials, Guides", "A method of transferring knowledge and may be used as a part of a learning process. More interactive and specific than a book or a lecture, a tutorial seeks to teach by example and supply the information to complete a certain task.", 1),
+(datetime('now', 'localtime'), "Entertainment, Movies, Cartoons", "Often fictional motion-picture that holds the attention and interest of an audience or gives pleasure and delight.", 1),
+(datetime('now', 'localtime'), "LEGO", "Lego (/ˈlɛɡoʊ/ LEG-oh, Danish: [ˈle̝ːko]; stylised as LEGO) is a line of plastic construction toys made by a company based in Billund, Denmark. Pieces can be assembled and connected in many ways to construct objects and mechanical contraptions.", 1),
+(datetime('now', 'localtime'), "Tabletop", "Normally played on a table or other flat surface, such as board games, card games, dice games, miniature wargames, or tile-based games, for example: Scrabble, Chess, Monopoly, Dungeons & Dragons, Warhammer 40.000, etc.", 1),
+(datetime('now', 'localtime'), "Tycoons & Management Simulators", "Tycoon, business, city, nation and civilization builder simulators. The focus on the management of economic processes, managing a society and building & maintaining supporting infrastructure.", 1),
+(datetime('now', 'localtime'), "Strategy Games & Simulators", "Focuses on skillful thinking and planning; emphasizes strategic, tactical, and sometimes logistical and economic challenges. Many also offer exploration. Generally categorized into four sub-types: turn-based or real-time, and strategy or tactics.", 1)

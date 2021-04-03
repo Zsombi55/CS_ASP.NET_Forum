@@ -36,6 +36,10 @@ namespace NC5MvcIdentitySqliteWebApp
 					.Build();
 				options.AddPolicy("IsAdmin", policy => policy.RequireRole("admin"));
 		// NOTE: this is often used together with Claims, allowing flexible condition sets, other than "has /doesn't have".
+
+			// NOTE: this didn't do anything, perhaps I misinterpreted the msdn instructions.
+			//services.AddRazorPages(options =>
+			//	options.Conventions.AllowAnonymousToPage("Home/TheForumsMain"));
 			});
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);

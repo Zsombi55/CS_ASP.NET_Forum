@@ -19,11 +19,13 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
 			_logger = logger;
 		}
 
+		//[AllowAnonymous]
 		public IActionResult Index()
 		{
 			return View();
 		}
 
+		[AllowAnonymous]
 		public IActionResult Privacy()
 		{
 			return View();
@@ -48,6 +50,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
 			return View();
 		}
 
+		[AllowAnonymous]
 		public IActionResult TheForumsMain()
 		{
 			return View();

@@ -18,11 +18,13 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 		{
 		}
 
+		// DB Entity Models
 		public DbSet<BoardEntity> Boards { get; set; }
 		public DbSet<ForumEntity> Forums { get; set; }
 		public DbSet<ThreadEntity> Threads { get; set; }
 		public DbSet<PostEntity> Posts { get; set; }
 
+		// Configuration settings for DB Entity relations.
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
@@ -33,6 +35,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 			builder.ApplyConfiguration(new PostEntityConfiguration());
 		}
 
+		// View Models
 		public DbSet<NC5MvcIdentitySqliteWebApp.Models.Board> Board { get; set; }
 
 		public DbSet<NC5MvcIdentitySqliteWebApp.Models.Forum> Forum { get; set; }

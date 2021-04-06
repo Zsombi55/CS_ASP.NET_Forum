@@ -1,0 +1,42 @@
+﻿@*For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860*@
+
+@model WebForum.Models.Forum.ForumTopicModel
+
+<h1>@Model.Forum.Title</h1>
+
+@if (Model.Threads.Any())
+{
+	<table class="table table-bordered table-hover">
+		<tbody>
+			@foreach (var thread in Model.Threads)
+			{
+			<tr>
+				<td>
+					<a asp-controller="Thread" asp-action="Index" asp-route-id="@thread.Id">
+						@thread.Title
+					</a>
+				</td>
+				<td>
+					<a>
+						@thread.CreatorName
+					</a>
+				</td>
+				<td>@thread.CreatedAt</td>
+				<td>@thread.PostCount</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<div class="noThreads">
+		<h3>
+			There is no @Model.Forum.Title threads yet. 
+			<a asp-controller="Thread" asp-action="Create" asp-route-id="@Model.Forum.Id">
+				<span>Create</span>
+			</a>
+			a new thread?
+		</h3>
+	</div>
+}

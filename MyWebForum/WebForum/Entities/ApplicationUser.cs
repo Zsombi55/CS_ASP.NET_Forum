@@ -9,7 +9,7 @@ namespace WebForum.Entities
 
 		//public string ProfileImageUrl { get; set; }
 
-		public DateTime Membersince { get; set; }
+		public DateTime MemberSince { get; set; }
 
 		public bool IsActive { get; set; }
 	}

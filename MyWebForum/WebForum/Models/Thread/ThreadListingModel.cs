@@ -15,6 +15,9 @@ namespace WebForum.Models.Thread
 
 		public string Title { get; set; }
 
+		public int Status { get; set; }
+		//public IEnumerable<WebForum.Models.StatusModel> Status { get; set; }
+
 		public string CreatorName { get; set; }
 
 		public int CreatorRating { get; set; }

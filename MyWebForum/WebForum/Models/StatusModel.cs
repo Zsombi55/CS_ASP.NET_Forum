@@ -1,4 +1,4 @@
-﻿namespace WebForum.Models.Forum
+﻿namespace WebForum.Models
 {
 	/// <summary>
 	/// Yes/no values settable through a dropdown box.

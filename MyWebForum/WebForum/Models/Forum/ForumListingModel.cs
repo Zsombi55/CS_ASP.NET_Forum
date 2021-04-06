@@ -18,6 +18,6 @@ namespace WebForum.Models.Forum
 		public string Description { get; set; }
 
 		public int Status { get; set; }
-		//public IEnumerable<StatusModel> Status { get; set; }
+		//public IEnumerable<WebForum.Models.StatusModel> Status { get; set; }
 	}
 }

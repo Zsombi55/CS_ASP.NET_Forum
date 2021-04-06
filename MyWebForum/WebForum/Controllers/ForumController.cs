@@ -49,17 +49,24 @@ namespace WebForum.Controllers
 			return View(model);
 		}
 
-		// GET : Topic
+		// GET : Topic / a Forum
+		/// <summary>
+		/// Gets a Forum by its ID including all of its Threads.
+		/// </summary>
+		/// <param name="id">Int: forum ID.</param>
+		/// <returns>Object: a Forum's data, its Thread collection, and some of their data.</returns>
 		public IActionResult Topic(int id)
 		{
 			var forum = _forumEntityService.GetById(id);
-			var thread = _threadEntityService.GetThreadsByForum(id);
+			//var thread = _threadEntityService.GetThreadsByForum(id);
+			var thread = forum.Threads;
 
 			// Identity-/ Application-User ID : Microsoft.AspNetCore.Identity.IdentityUser<string>.Id
 			var threadListings = thread.Select(thread => new ThreadListingModel
 			{
 				Id = thread.Id,
 				Title = thread.Title,
+				Status = thread.Status,
 				CreatorId = thread.User.Id,
 				CreatorName = thread.User.UserName,
 				CreatorRating = thread.User.Rating,
@@ -68,17 +75,49 @@ namespace WebForum.Controllers
 				Forum = BuildForumListing(thread)
 			});
 
-			return View();
+			var model = new ForumTopicModel
+			{
+				Threads = threadListings,
+				Forum = BuildForumListing(forum)
+			};
+
+			return View(model);
 		}
 
 		/// <summary>
-		/// Collects the necessary data, generates then returns a Forum list collection object.
+		/// Overload.
+		/// Collects the necessary data, generates then returns a Thread object.
 		/// </summary>
 		/// <param name="thread">ThreadEntity object.</param>
 		/// <returns>Object: collection of forums.</returns>
 		private ForumListingModel BuildForumListing(ThreadEntity thread)
 		{
-			throw new NotImplementedException();
+			var forum = thread.Forum;
+
+			return BuildForumListing(forum);
+			//return new ForumListingModel
+			//{
+			//	Id = forum.Id,
+			//	Title = forum.Title,
+			//	Description = forum.Description
+			//};
+		}
+
+		/// <summary>
+		/// Collects the necessary data, generates then returns a Forum object.
+		/// </summary>
+		/// <param name="thread">ThreadEntity object.</param>
+		/// <returns>Object: collection of forums.</returns>
+		private ForumListingModel BuildForumListing(ForumEntity forum)
+		{
+			//var forum = thread.Forum;
+
+			return new ForumListingModel
+			{
+				Id = forum.Id,
+				Title = forum.Title,
+				Description = forum.Description
+			};
 		}
 	}
 }

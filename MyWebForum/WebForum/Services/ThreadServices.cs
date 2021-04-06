@@ -44,6 +44,7 @@ namespace WebForum.Services
 		public ThreadEntity GetById(int id)
 		{
 			var thread = _context.Threads.Where(thread => thread.Id == id)
+				.Include(thread => thread.Status)
 				.Include(thread => thread.Content)
 				.Include(thread => thread.User)
 				.Include(thread => thread.Posts)

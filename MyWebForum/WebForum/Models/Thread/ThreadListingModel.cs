@@ -19,7 +19,8 @@ namespace WebForum.Models.Thread
 
 		public int CreatorRating { get; set; }
 
-		public int CreatorId { get; set; }
+		//public int CreatorId { get; set; }
+		public string CreatorId { get; set; } // Microsoft.AspNetCore.Identity.IdentityUser<string>.Id
 
 		public string CreatedAt { get; set; }
 

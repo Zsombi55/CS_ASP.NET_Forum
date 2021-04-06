@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebForum.Data;
 using WebForum.Entities;
 using WebForum.Models.Forum;
+using WebForum.Models.Thread;
 
 namespace WebForum.Controllers
 {
@@ -52,11 +53,32 @@ namespace WebForum.Controllers
 		public IActionResult Topic(int id)
 		{
 			var forum = _forumEntityService.GetById(id);
-			var thread = _threadEntityService.GetFilteredThreads(searchQuery: s);
+			var thread = _threadEntityService.GetThreadsByForum(id);
 
-			//var threadListings = ... 
+			// Identity-/ Application-User ID : Microsoft.AspNetCore.Identity.IdentityUser<string>.Id
+			var threadListings = thread.Select(thread => new ThreadListingModel
+			{
+				Id = thread.Id,
+				Title = thread.Title,
+				CreatorId = thread.User.Id,
+				CreatorName = thread.User.UserName,
+				CreatorRating = thread.User.Rating,
+				CreatedAt = thread.CreatedAt.ToString(),
+				PostCount = thread.Posts.Count(),
+				Forum = BuildForumListing(thread)
+			});
 
 			return View();
+		}
+
+		/// <summary>
+		/// Collects the necessary data, generates then returns a Forum list collection object.
+		/// </summary>
+		/// <param name="thread">ThreadEntity object.</param>
+		/// <returns>Object: collection of forums.</returns>
+		private ForumListingModel BuildForumListing(ThreadEntity thread)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

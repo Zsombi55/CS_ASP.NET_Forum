@@ -16,7 +16,7 @@ namespace WebForum.Services
 	/// then the server gets it from the DataBase, hands it bundled back to the ApplicationDbContext,
 	/// which then forwards it to the appropriate Controller for further manipulation & display.
 	/// 
-	/// Also allows the injection of single instances of the Srvice to Controllers for all interactions. 
+	/// Also allows the injection of single instances of the Service to Controllers for all interactions. 
 	/// </summary>
 	public class ForumServices : IForumEntity
 	{

@@ -10,6 +10,7 @@ namespace WebForum.Data
 	{
 		ThreadEntity GetById(int id);
 		IEnumerable<ThreadEntity> GetAll();
+		IEnumerable<ThreadEntity> GetThreadsByForum(int id);
 		IEnumerable<ThreadEntity> GetFilteredThreads(string searchQuery);
 
 		Task Create(ThreadEntity thread);

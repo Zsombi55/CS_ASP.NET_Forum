@@ -17,6 +17,9 @@ namespace WebForum.Entities
 
 		public DateTime? ModifiedAt { get; set; }
 
+		public int Status { get; set; }
+		//public IEnumerable<StatusModel> Status { get; set; }
+
 
 		public virtual ApplicationUser User { get; set; } // IdentityUser ...
 

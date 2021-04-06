@@ -7,7 +7,7 @@ namespace WebForum.Entities
 	{
 		public int Id { get; set; }
 
-		[StringLength(60000)]
+		[MaxLength(60000)]
 		public string Content { get; set; }
 
 		public DateTime CreatedAt { get; set; }

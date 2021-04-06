@@ -11,6 +11,6 @@ namespace WebForum.Entities
 
 		public DateTime MemberSince { get; set; }
 
-		public bool IsActive { get; set; }
+		public bool IsActive { get; set; } // True = active /online; False = inactive /offline.
 	}
 }

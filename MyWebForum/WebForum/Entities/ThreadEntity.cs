@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebForum.Entities
 {
@@ -11,28 +10,25 @@ namespace WebForum.Entities
 
 		public string Title { get; set; }
 
-		//[StringLength(60000)]
+		[StringLength(60000)]
 		public string Content { get; set; }
 
-		public DateTime? CreatedAt { get; set; }
+		public DateTime CreatedAt { get; set; }
 
 		public DateTime? ModifiedAt { get; set; }
 
 		public int Status { get; set; }
-		//public IEnumerable<StatusModel> Status { get; set; }
-
-
+		// 0 /00 = Open+Normal; 01 /1 = Open+Sticky (priority); 10 = Closed+Normal; 11 = Closed+Sticky.
+		// Open = any Usercan crud; Closed = only staff (admin, mods) can crud, rest read only.
+		
 		public virtual ApplicationUser User { get; set; } // IdentityUser ...
 
 		public virtual ForumEntity Forum { get; set; }
 
 
 		public virtual IEnumerable<PostEntity> Posts { get; set; }
-
-
-		// MAY NOT NEED :
-		//public int ForumId { get; set; }
-		//
-		//public virtual ForumEntity Forum { get; set; }
 	}
 }
+
+// TODO: still not sure if the Thread.Content should be a special abstract Post instance or remain as is.
+// TODO: add Status DB table & link in here & PostEntity.

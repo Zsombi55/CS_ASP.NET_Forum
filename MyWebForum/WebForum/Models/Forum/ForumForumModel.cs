@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using WebForum.Models.Thread;
 
 namespace WebForum.Models.Forum
 {
 	/// <summary>
-	/// View Model: collection of Forums by topic and their Threads.
+	/// View Model: a Forum and its Thread collection.
 	/// </summary>
-	public class ForumTopicModel
+	public class ForumForumModel
 	{
 		public ForumListingModel Forum { get; set; }
 

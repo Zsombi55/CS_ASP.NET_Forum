@@ -18,14 +18,14 @@ namespace WebForum.Services
 	/// 
 	/// Also allows the injection of single instances of the Service to Controllers for all interactions. 
 	/// </summary>
-	public class ForumServices : IForumEntity
+	public class ForumService : IForumEntity
 	{
 		private readonly ApplicationDbContext _context;
 
 		/// <summary>
 		/// ForumService uses EF to interact with the actual Data.
 		/// </summary>
-		public ForumServices(ApplicationDbContext context)
+		public ForumService(ApplicationDbContext context)
 		{
 			_context = context;
 		}
@@ -44,6 +44,7 @@ namespace WebForum.Services
 		/// Gets all Forums & their Threads.
 		/// </summary>
 		/// <returns>Every instance of the ForumEntity object.</returns>
+		/// <remarks>If not all threads are to be loaded, modify or overload this.</remarks>
 		public IEnumerable<ForumEntity> GetAll()
 		{
 			return _context.Forums.Include(forum => forum.Threads);
@@ -54,6 +55,11 @@ namespace WebForum.Services
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Gets a Forum object by its ID, and its Threads.
+		/// </summary>
+		/// <param name="id">Int: forum ID, primary key in DB.</param>
+		/// <returns>ForumEntity object: a forum.</returns>
 		public ForumEntity GetById(int id)
 		{
 			var forum = _context.Forums.Where(forum => forum.Id == id)

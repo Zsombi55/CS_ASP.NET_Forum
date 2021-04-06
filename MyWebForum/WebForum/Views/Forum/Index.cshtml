@@ -3,9 +3,9 @@
 @model WebForum.Models.Forum.ForumIndexModel
 
 <!--TODO: put in a shared place so all pages have it, right below the top nav-bar. -->
-<h5>[Site Map Path From Home-Index To Closest-Index]</h5>
+<h5>[Site Map Path From Home-Index To Closest-Index, eg. here: Home / Forums]</h5>
 
-<h1>[Board Name] Forums Index</h1>
+<h1>[Board Name]</h1>
 
 <table class="table table-hover" id="forumIndexTable">
 	<thead>
@@ -14,9 +14,8 @@
 			<th>@Html.DisplayNameFor(model => model.Title)</th>
 			<th>@Model.ForumList.Title</th>
 			*@
-			<th>Title</th>
+			<th>Forum Title</th>
 			<th>Description</th>
-			<th>Status</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,20 +24,12 @@
 		<tr>
 			<td>
 				<!--{controller=Home}/{action=Index}/{id?}-->
-				<a asp-controller="Forum" asp-action="Topic" asp-route-id="@forum.Id">
+				<a asp-controller="Forum" asp-action="Forum" asp-route-id="@forum.Id">
 					@forum.Title
 				</a>
 			</td>
 			<td>
 				@forum.Description
-			</td>
-			<td>
-				@if (forum.Status.Equals(1)) { 
-					@:Open
-				}
-				else {
-					@:Locked
-				}
 			</td>
 		</tr>
 	}

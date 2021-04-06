@@ -2,19 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebForum.Models.Post;
 
-namespace WebForum.Models.Thread
+namespace WebForum.Models.Post
 {
-	/// <summary>
-	/// Grabs a collection of "ReplyPostModel", then it is passed to the View.
-	/// A Thread's content (1st "post") & a collection of Posts ("ReplyPostModel").
-	/// </summary>
-	public class ThreadIndexModel
+	public class PostModel
 	{
 		public int Id { get; set; }
-
-		public string Title { get; set; }
 
 		public string Content { get; set; }
 
@@ -26,12 +19,12 @@ namespace WebForum.Models.Thread
 
 		public string AuthorName { get; set; }
 
-		public string AuthorImageUrl { get; set; }
-
 		public int AuthorRating { get; set; }
 
-		
-		public virtual IEnumerable<PostModel> Posts { get; set; }
+		public string AuthorImageUrl { get; set; }
+
+
+		public int PostId { get; set; }
 	}
 }
 

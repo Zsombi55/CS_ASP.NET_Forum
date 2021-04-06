@@ -1,12 +1,26 @@
 ﻿@*For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860*@
 
-@model WebForum.Models.Forum.ForumTopicModel
+@model WebForum.Models.Forum.ForumForumModel
 
 <h1>@Model.Forum.Title</h1>
+
+<div>
+	@Model.Forum.Description
+</div>
 
 @if (Model.Threads.Any())
 {
 	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Thread Title</th>
+				<th>User</th>
+				<th>Date Added</th>
+				<th>Last Edited</th>
+				<th>Posts</th>
+				<th>Status</th>
+			</tr>
+		</thead>
 		<tbody>
 			@foreach (var thread in Model.Threads)
 			{
@@ -18,11 +32,31 @@
 				</td>
 				<td>
 					<a>
-						@thread.CreatorName
+						@thread.AuthorName
 					</a>
 				</td>
 				<td>@thread.CreatedAt</td>
+				<td>
+					@if (thread.ModifiedAt is not null)
+					{ @thread.ModifiedAt
+					}
+					else {}
+				</td>
 				<td>@thread.PostCount</td>
+				<td>
+					@if (thread.Status.Equals(0))
+					{ @:Open, Normal
+					}
+					else if (thread.Status.Equals(1))
+					{ @:Open, Sticky
+					}
+					else if (thread.Status.Equals(10))
+					{ @:Closed, Normal
+					}
+					else if (thread.Status.Equals(11))
+					{ @:Closed, Sticky
+					}
+				</td>
 			</tr>
 			}
 		</tbody>
@@ -32,11 +66,10 @@ else
 {
 	<div class="noThreads">
 		<h3>
-			There is no @Model.Forum.Title threads yet. 
+			There is no @Model.Forum.Title threads yet.
 			<a asp-controller="Thread" asp-action="Create" asp-route-id="@Model.Forum.Id">
-				<span>Create</span>
+				<span>New Thread</span>
 			</a>
-			a new thread?
 		</h3>
 	</div>
 }

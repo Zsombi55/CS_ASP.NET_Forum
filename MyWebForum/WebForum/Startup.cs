@@ -40,8 +40,8 @@ namespace WebForum
 					   .AddEntityFrameworkStores<ApplicationDbContext>();
 			services.AddControllersWithViews();
 
-			services.AddScoped<IForumEntity, ForumServices>();
-			services.AddScoped<IThreadEntity, ThreadServices>();
+			services.AddScoped<IForumEntity, ForumService>();
+			services.AddScoped<IThreadEntity, ThreadService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebForum.Entities
 {
@@ -9,10 +7,10 @@ namespace WebForum.Entities
 	{
 		public int Id { get; set; }
 
-		//[StringLength(60000)]
+		[StringLength(60000)]
 		public string Content { get; set; }
 
-		public DateTime? CreatedAt { get; set; }
+		public DateTime CreatedAt { get; set; }
 
 		public DateTime? ModifiedAt { get; set; }
 
@@ -20,11 +18,8 @@ namespace WebForum.Entities
 		public virtual ApplicationUser User { get; set; }  // IdentityUser ...
 
 		public virtual ThreadEntity Thread { get; set; }
-
-
-		// MAY NOT NEED :
-		//public int ThreadId { get; set; }
-		//
-		//public virtual ThreadEntity Thread { get; set; }
 	}
 }
+
+// TODO: still not sure if the Thread.Content should be a special abstract Post instance or remain as is.
+// TODO: add Status DB table & link in here & ThreadEntity.

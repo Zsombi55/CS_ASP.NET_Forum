@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebForum.Entities;
 
@@ -10,7 +8,7 @@ namespace WebForum.Data
 	{
 		ThreadEntity GetById(int id);
 		IEnumerable<ThreadEntity> GetAll();
-		IEnumerable<ThreadEntity> GetThreadsByForum(int id);
+		IEnumerable<ThreadEntity> GetThreadsByForum(int id); // forum id ; was used in ForumController.
 		IEnumerable<ThreadEntity> GetFilteredThreads(string searchQuery);
 
 		Task Create(ThreadEntity thread);

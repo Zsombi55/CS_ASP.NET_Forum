@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebForum.Models.Forum;
 
 namespace WebForum.Entities
 {
@@ -14,18 +11,12 @@ namespace WebForum.Entities
 
 		public string Description { get; set; }
 
-		public DateTime? CreatedAt { get; set; }
-
-		public int Status { get; set; }
-		//public IEnumerable<ForumStatusModel> Status { get; set; }
+		public DateTime CreatedAt { get; set; }
 
 
 		public IEnumerable<ThreadEntity> Threads { get; set; }
-
-
-		// MAY NOT NEED :
-		//public int BoardId { get; set; }
-		//
-		//public virtual BoardEntity Board { get; set; }
 	}
 }
+
+//public virtual BoardEntity Board { get; set; }
+// BoardEntity ::: public IEnumerable<ForumEntity> Forums { get; set; }

@@ -8,11 +8,14 @@ using WebForum.Entities;
 
 namespace WebForum.Services
 {
-	public class ThreadServices : IThreadEntity
+	public class ThreadService : IThreadEntity
 	{
 		private readonly ApplicationDbContext _context;
 
-		public ThreadServices(ApplicationDbContext context)
+		/// <summary>
+		/// ThreadService uses EF to interact with the actual Data.
+		/// </summary>
+		public ThreadService(ApplicationDbContext context)
 		{
 			_context = context;
 		}

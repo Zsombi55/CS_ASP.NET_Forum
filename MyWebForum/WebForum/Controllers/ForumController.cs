@@ -27,15 +27,14 @@ namespace WebForum.Controllers
 		/// </summary>
 		public IActionResult Index()
 		{
-			// FORCED casting like this does not work; it builds, but it borks at runtime.
+			// FORCED casting like this does not work; it builds, but borks at runtime.
 			//ForumListingModel forums = (ForumListingModel)_forumEntityService.GetAll()
 
 			var forums = _forumEntityService.GetAll()
 				.Select(forum => new ForumListingModel {
 					Id = forum.Id,
 					Title = forum.Title,
-					Description = forum.Description,
-					Status = forum.Status
+					Description = forum.Description
 				});
 
 			var model = new ForumIndexModel
@@ -49,34 +48,34 @@ namespace WebForum.Controllers
 			return View(model);
 		}
 
-		// GET : Topic / a Forum
+		// GET : Forum
 		/// <summary>
-		/// Gets a Forum by its ID including all of its Threads.
+		/// Gets a Forum by its ID with all of its Threads for listing.
 		/// </summary>
 		/// <param name="id">Int: forum ID.</param>
 		/// <returns>Object: a Forum's data, its Thread collection, and some of their data.</returns>
-		public IActionResult Topic(int id)
+		public IActionResult Forum(int id)
 		{
 			var forum = _forumEntityService.GetById(id);
-			//var thread = _threadEntityService.GetThreadsByForum(id);
-			var thread = forum.Threads;
+			//var threads = _threadEntityService.GetThreadsByForum(id);
+			var threads = forum.Threads;
 
-			// Identity-/ Application-User ID : Microsoft.AspNetCore.Identity.IdentityUser<string>.Id
-			var threadListings = thread.Select(thread => new ThreadListingModel
+			var threadListings = threads.Select(thread => new ThreadListingModel
 			{
-				Id = thread.Id,
+				Id = thread.Id, // int
 				Title = thread.Title,
 				Status = thread.Status,
-				CreatorId = thread.User.Id,
-				CreatorName = thread.User.UserName,
-				CreatorImageUrl = thread.User.ProfileImageUrl,
-				CreatorRating = thread.User.Rating,
 				CreatedAt = thread.CreatedAt.ToString(),
+				ModifiedAt = thread.ModifiedAt.ToString(),
 				PostCount = thread.Posts.Count(),
+				AuthorId = thread.User.Id, // ApplicationUser : IdentityUser<string>
+				AuthorName = thread.User.UserName,
+				AuthorImageUrl = thread.User.ProfileImageUrl,
+				CreatorRating = thread.User.Rating,
 				Forum = BuildForumListing(thread)
 			});
 
-			var model = new ForumTopicModel
+			var model = new ForumForumModel
 			{
 				Threads = threadListings,
 				Forum = BuildForumListing(forum)
@@ -87,10 +86,10 @@ namespace WebForum.Controllers
 
 		/// <summary>
 		/// Overload.
-		/// Collects the necessary data, generates then returns a Thread object.
+		/// Collects the necessary data, generates then returns a Thread object for a Forum.
 		/// </summary>
 		/// <param name="thread">ThreadEntity object.</param>
-		/// <returns>Object: collection of forums.</returns>
+		/// <returns>ForumEntity object: a forum based on the given thread.</returns>
 		private ForumListingModel BuildForumListing(ThreadEntity thread)
 		{
 			var forum = thread.Forum;
@@ -107,8 +106,8 @@ namespace WebForum.Controllers
 		/// <summary>
 		/// Collects the necessary data, generates then returns a Forum object.
 		/// </summary>
-		/// <param name="thread">ThreadEntity object.</param>
-		/// <returns>Object: collection of forums.</returns>
+		/// <param name="forum">ForumEntity object.</param>
+		/// <returns>ForumListingModel object: a forum.</returns>
 		private ForumListingModel BuildForumListing(ForumEntity forum)
 		{
 			//var forum = thread.Forum;

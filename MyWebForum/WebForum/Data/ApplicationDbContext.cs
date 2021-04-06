@@ -18,6 +18,7 @@ namespace WebForum.Data
 		{
 		}
 
+		// DB Entity Models:
 		// MAY NEED INSTEAD <IdentityUser>
 		public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 

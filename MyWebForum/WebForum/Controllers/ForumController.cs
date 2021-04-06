@@ -49,14 +49,14 @@ namespace WebForum.Controllers
 		}
 
 		// GET : Topic
-		//public IActionResult Topic(int id)
-		//{
-		//	var forum = _forumEntityService.GetById(id);
-		//	var thread = _threadEntityService.GetFilteredThreads(id);
+		public IActionResult Topic(int id)
+		{
+			var forum = _forumEntityService.GetById(id);
+			var thread = _threadEntityService.GetFilteredThreads(searchQuery: s);
 
-		//	var threadListings = ... 
+			//var threadListings = ... 
 
-		//	return;
-		//}
+			return View();
+		}
 	}
 }

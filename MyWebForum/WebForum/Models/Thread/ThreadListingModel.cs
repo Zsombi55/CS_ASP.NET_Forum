@@ -6,6 +6,9 @@ using WebForum.Models.Forum;
 
 namespace WebForum.Models.Thread
 {
+	/// <summary>
+	/// View Model: what to show for each record in a list of Threads.
+	/// </summary>
 	public class ThreadListingModel
 	{
 		public int Id { get; set; }

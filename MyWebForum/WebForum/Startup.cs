@@ -41,6 +41,7 @@ namespace WebForum
 			services.AddControllersWithViews();
 
 			services.AddScoped<IForumEntity, ForumServices>();
+			services.AddScoped<IThreadEntity, ThreadServices>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

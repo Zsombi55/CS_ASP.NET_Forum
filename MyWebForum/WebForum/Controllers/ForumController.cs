@@ -69,6 +69,7 @@ namespace WebForum.Controllers
 				Status = thread.Status,
 				CreatorId = thread.User.Id,
 				CreatorName = thread.User.UserName,
+				CreatorImageUrl = thread.User.ProfileImageUrl,
 				CreatorRating = thread.User.Rating,
 				CreatedAt = thread.CreatedAt.ToString(),
 				PostCount = thread.Posts.Count(),

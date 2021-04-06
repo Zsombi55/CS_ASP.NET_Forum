@@ -7,7 +7,7 @@ namespace WebForum.Entities
 	{
 		public int Rating { get; set; }
 
-		//public string ProfileImageUrl { get; set; }
+		public string ProfileImageUrl { get; set; }
 
 		public DateTime MemberSince { get; set; }
 

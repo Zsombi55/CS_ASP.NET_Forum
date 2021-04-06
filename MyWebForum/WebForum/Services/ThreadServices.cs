@@ -41,15 +41,17 @@ namespace WebForum.Services
 			return _context.Threads.Include(thread => thread.Posts);
 		}
 
+		/// <summary>
+		/// Gets 1 Thread & its reply Posts.
+		/// </summary>
 		public ThreadEntity GetById(int id)
 		{
 			var thread = _context.Threads.Where(thread => thread.Id == id)
-				.Include(thread => thread.Status)
-				.Include(thread => thread.Content)
 				.Include(thread => thread.User)
 				.Include(thread => thread.Posts)
 					.ThenInclude(post => post.User)
-				.FirstOrDefault();
+				.Include(thread => thread.Forum)
+				.First();
 
 			return thread;
 		}

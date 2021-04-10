@@ -13,47 +13,39 @@ namespace NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig
 		public void Configure(EntityTypeBuilder<PostEntity> builder)
 		{
 			builder.ToTable("Posts");
-			builder.HasKey(e => e.Id);
-			builder.Property(e => e.Id).ValueGeneratedOnAdd();
-			builder.Property(e => e.Content)
+			builder.HasKey(e => e.Id); // "Id"
+			builder.HasIndex("ThreadId");
+			builder.HasIndex("UserId");
+
+			builder.Property<int>(e => e.Id)
+					.ValueGeneratedOnAdd()
+					.HasColumnType("INTEGER");
+			builder.Property<string>(e => e.Content)
 					.HasMaxLength(60000)
 					.IsRequired();
-			builder.Property(e => e.CreatedAt)
-					.HasColumnType("TEXT")
-					//.HasColumnType<DateTime>("TEXT")
-					//.HasConversion(
-					//	v => v.ToString(@"yyyy-MM-dd HH:mm:ss"),
-					//	dbv => DateTime.Parse(dbv, CultureInfo.InvariantCulture))
-					// -- needed here ?
-					// SQLite uses TEXT in UTC format yyyy-MM-dd HH:mm:ss.FFFFFFF
-					.IsRequired();
-			builder.Property(e => e.ModifiedAt)
-					.HasColumnType("TEXT")
-					//.HasColumnType<DateTime>("TEXT")
-					//.HasConversion(
-					//	v => v.ToString(@"yyyy-MM-dd HH:mm:ss"),
-					//	dbv => DateTime.Parse(dbv, CultureInfo.InvariantCulture))
-					// -- needed here ?
-					// SQLite uses TEXT in UTC format yyyy-MM-dd HH:mm:ss.FFFFFFF
-					.IsRequired();
-			// "Users" connection -- how to reference a User.Id ?
-			builder.Property(e => e.CreatorId)
-					.IsRequired();
-			// Do I need to make a Users entity then somehow link it with the AspNetCore's User Identity ?
-			//
-			//builder.HasOne(u => u.User)
-			//		.WithMany(b => b.Posts)
-			//		.HasForeignKey(f => f.UserId)
-			//		.HasConstraintName("FK_Posts_Users");
+			builder.Property<DateTime>(e => e.CreatedAt)
+					.HasColumnType("TEXT");
+			builder.Property<DateTime?>(e => e.ModifiedAt)
+					.HasColumnType("TEXT");
+
+			builder.Property<string>(e => e.User.Id) // "UserId"
+					.HasColumnType("TEXT");
+			builder.Property<int?>(e => e.Thread.Id) // "ThreadId"
+					.HasColumnType("INTEGER");
+
+			// "Users" connection.
+			builder.HasOne(p => p.User)
+					.WithMany(u => u.Posts)
+					.HasForeignKey(u => u.User.Id)
+					.HasConstraintName("FK_Posts_AspNetUsers");
+					//.OnDelete(); ?? - IF Post is deleted leave User, IF User is del. leave Posts
+
 			// "Threads" connection.
 			builder.HasOne(p => p.Thread)
 					.WithMany(t => t.Posts)
-					.HasForeignKey(p => p.ThreadId)
+					.HasForeignKey(p => p.Thread.Id)
 					.HasConstraintName("FK_Posts_Threads");
-			//builder.HasOne(p => p.Post)
-			//		.WithMany(r => r.PostReplies)
-			//		.HasForeignKey(p => p.Id)
-			//		.HasConstraintName("FK_Posts_PostReplies");
+					//.OnDelete(); ?? - IF Post is deleted leave Thread, IF Thread is del. delete Posts
 		}
 	}
 }

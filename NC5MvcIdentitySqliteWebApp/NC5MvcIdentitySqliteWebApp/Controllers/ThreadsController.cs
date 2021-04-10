@@ -24,7 +24,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Thread.ToListAsync());
+            return View(await _context.Threads.ToListAsync());
         }
 
         // GET: Threads/Details/5
@@ -35,7 +35,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
                 return NotFound();
             }
 
-            var thread = await _context.Thread
+            var thread = await _context.Threads
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (thread == null)
             {
@@ -75,7 +75,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
                 return NotFound();
             }
 
-            var thread = await _context.Thread.FindAsync(id);
+            var thread = await _context.Threads.FindAsync(id);
             if (thread == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
                 return NotFound();
             }
 
-            var thread = await _context.Thread
+            var thread = await _context.Threads
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (thread == null)
             {
@@ -141,15 +141,15 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var thread = await _context.Thread.FindAsync(id);
-            _context.Thread.Remove(thread);
+            var thread = await _context.Threads.FindAsync(id);
+            _context.Threads.Remove(thread);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ThreadExists(int id)
         {
-            return _context.Thread.Any(e => e.Id == id);
+            return _context.Threads.Any(e => e.Id == id);
         }
     }
 }

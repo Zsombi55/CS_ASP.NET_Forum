@@ -24,7 +24,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Forum.ToListAsync());
+            return View(await _context.Forums.ToListAsync());
         }
 
         // GET: Forums/Details/5
@@ -75,7 +75,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
                 return NotFound();
             }
 
-            var forum = await _context.Forum.FindAsync(id);
+            var forum = await _context.Forums.FindAsync(id);
             if (forum == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
                 return NotFound();
             }
 
-            var forum = await _context.Forum
+            var forum = await _context.Forums
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (forum == null)
             {
@@ -141,15 +141,15 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var forum = await _context.Forum.FindAsync(id);
-            _context.Forum.Remove(forum);
+            var forum = await _context.Forums.FindAsync(id);
+            _context.Forums.Remove(forum);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ForumExists(int id)
         {
-            return _context.Forum.Any(e => e.Id == id);
+            return _context.Forums.Any(e => e.Id == id);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Board.ToListAsync());
+            return View(await _context.Boards.ToListAsync());
         }
 
         // GET: Boards/Details/5
@@ -35,7 +35,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
                 return NotFound();
             }
 
-            var board = await _context.Board
+            var board = await _context.Boards
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (board == null)
             {
@@ -75,7 +75,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
                 return NotFound();
             }
 
-            var board = await _context.Board.FindAsync(id);
+            var board = await _context.Boards.FindAsync(id);
             if (board == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
                 return NotFound();
             }
 
-            var board = await _context.Board
+            var board = await _context.Boards
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (board == null)
             {
@@ -141,15 +141,15 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var board = await _context.Board.FindAsync(id);
-            _context.Board.Remove(board);
+            var board = await _context.Boards.FindAsync(id);
+            _context.Boards.Remove(board);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BoardExists(int id)
         {
-            return _context.Board.Any(e => e.Id == id);
+            return _context.Boards.Any(e => e.Id == id);
         }
     }
 }

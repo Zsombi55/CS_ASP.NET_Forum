@@ -20,6 +20,8 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 		}
 
 		// DB Entity Models
+		public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
 		public DbSet<BoardEntity> Boards { get; set; }
 		public DbSet<ForumEntity> Forums { get; set; }
 		public DbSet<ThreadEntity> Threads { get; set; }
@@ -29,6 +31,8 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
+
+			builder.ApplyConfiguration(new AppUserEntityConfiguration());
 
 			builder.ApplyConfiguration(new BoardEntityConfiguration());
 			builder.ApplyConfiguration(new ForumEntityConfiguration());

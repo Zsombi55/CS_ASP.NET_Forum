@@ -17,6 +17,7 @@ namespace WebForum.Data
 		// DB Entity Models:
 		public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
+		//public DbSet<BoardEntity> Boards { get; set; }
 		public DbSet<ForumEntity> Forums { get; set; }
 		public DbSet<ThreadEntity> Threads { get; set; }
 		public DbSet<PostEntity> Posts { get; set; }

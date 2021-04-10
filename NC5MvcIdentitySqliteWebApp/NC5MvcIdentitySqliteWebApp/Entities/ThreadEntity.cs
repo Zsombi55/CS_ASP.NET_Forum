@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using WebForum.Entities;
 
 namespace NC5MvcIdentitySqliteWebApp.Entities
 {
@@ -18,7 +19,7 @@ namespace NC5MvcIdentitySqliteWebApp.Entities
 
 		//public int Status { get; set; } // TODO: open ~ locked AND normal ~ sticky /priority.
 
-		public IdentityUser User { get; set; } // TODO: ? use an extension with additional data ?
+		public ApplicationUser User { get; set; } // TODO: will add an extension with additional data.
 
 		//public int ForumId { get; set; }
 

@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using WebForum.Entities;
 
 namespace NC5MvcIdentitySqliteWebApp.Entities
 {

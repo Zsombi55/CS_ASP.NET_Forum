@@ -35,7 +35,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
                 return NotFound();
             }
 
-            var forum = await _context.Forum
+            var forum = await _context.Forums
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (forum == null)
             {

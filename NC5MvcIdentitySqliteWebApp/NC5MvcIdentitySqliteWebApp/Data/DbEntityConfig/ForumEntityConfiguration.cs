@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NC5MvcIdentitySqliteWebApp.Data
+namespace NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig
 {
 	public class ForumEntityConfiguration : IEntityTypeConfiguration<ForumEntity>
 	{
@@ -15,16 +15,14 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 			builder.ToTable("Forums");
 			builder.HasKey(e => e.Id);
 			builder.Property(e => e.Id).ValueGeneratedOnAdd();
-			builder.Property(e => e.Name)
-					.HasMaxLength(100)
+			builder.Property(e => e.Title)
 					.IsRequired();
 			builder.Property(e => e.Description)
-					.HasMaxLength(255)
 					.IsRequired();
 			// "Boards" connection.
 			builder.HasOne(f => f.Board)
 					.WithMany(b => b.Forums)
-					.HasForeignKey(f => f.BoardId)
+					.HasForeignKey(f => f.Board.Id)
 					.HasConstraintName("FK_Forums_Boards");
 		}
 	}

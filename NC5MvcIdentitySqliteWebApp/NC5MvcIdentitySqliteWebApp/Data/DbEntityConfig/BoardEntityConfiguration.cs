@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NC5MvcIdentitySqliteWebApp.Data
+namespace NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig
 {
 	public class BoardEntityConfiguration : IEntityTypeConfiguration<BoardEntity>
 	{
@@ -14,9 +14,9 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 		{
 			builder.ToTable("Boards");
 			builder.HasKey(e => e.Id);
-			builder.HasAlternateKey(e => e.Name);
+			builder.HasAlternateKey(e => e.Title);
 			builder.Property(e => e.Id).ValueGeneratedOnAdd();
-			builder.Property(e => e.Name).IsRequired();
+			builder.Property(e => e.Title).IsRequired();
 		}
 	}
 }

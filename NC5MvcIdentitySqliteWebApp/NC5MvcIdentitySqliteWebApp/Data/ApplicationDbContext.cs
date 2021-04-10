@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using NC5MvcIdentitySqliteWebApp.Models;
+using NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig;
 
 namespace NC5MvcIdentitySqliteWebApp.Data
 {
@@ -36,12 +37,12 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 		}
 
 		// View Models
-		public DbSet<NC5MvcIdentitySqliteWebApp.Models.Board> Board { get; set; }
+		//public DbSet<NC5MvcIdentitySqliteWebApp.Models.Board> Board { get; set; }
 
-		public DbSet<NC5MvcIdentitySqliteWebApp.Models.Forum> Forum { get; set; }
+		//public DbSet<NC5MvcIdentitySqliteWebApp.Models.Forum> Forum { get; set; }
 
-		public DbSet<NC5MvcIdentitySqliteWebApp.Models.Thread> Thread { get; set; }
+		//public DbSet<NC5MvcIdentitySqliteWebApp.Models.Thread> Thread { get; set; }
 
-		public DbSet<NC5MvcIdentitySqliteWebApp.Models.Post> Post { get; set; }
+		//public DbSet<NC5MvcIdentitySqliteWebApp.Models.Post> Post { get; set; }
 	}
 }

@@ -18,5 +18,6 @@ namespace WebForum.Entities
 	}
 }
 
+// FOR ADDING "BOARDS", THE CATEGORY LEVEL, AFTER THESE 3 ARE DONE & MOSTLY WORKING.
 //public virtual BoardEntity Board { get; set; }
 // BoardEntity ::: public IEnumerable<ForumEntity> Forums { get; set; }

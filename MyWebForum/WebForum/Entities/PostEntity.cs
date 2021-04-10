@@ -21,5 +21,4 @@ namespace WebForum.Entities
 	}
 }
 
-// TODO: still not sure if the Thread.Content should be a special abstract Post instance or remain as is.
-// TODO: add Status DB table & link in here & ThreadEntity.
+// TODO: add Status DB table & link in here & ThreadEntity?

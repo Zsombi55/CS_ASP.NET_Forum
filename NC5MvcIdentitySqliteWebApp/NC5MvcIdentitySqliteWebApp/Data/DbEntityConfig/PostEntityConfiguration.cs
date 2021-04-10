@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NC5MvcIdentitySqliteWebApp.Data
+namespace NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig
 {
 	public class PostEntityConfiguration : IEntityTypeConfiguration<PostEntity>
 	{

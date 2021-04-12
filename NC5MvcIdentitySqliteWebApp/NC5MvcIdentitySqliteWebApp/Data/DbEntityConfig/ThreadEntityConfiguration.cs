@@ -14,7 +14,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig
 			builder.HasIndex("ForumId");
 			builder.HasIndex("UserId");
 
-			builder.Property<int>("Id")
+			builder.Property<int>(e => e.Id) // "Id"
 					.ValueGeneratedOnAdd()
 					.HasColumnType("INTEGER");
 			builder.Property<string>(e => e.Title)

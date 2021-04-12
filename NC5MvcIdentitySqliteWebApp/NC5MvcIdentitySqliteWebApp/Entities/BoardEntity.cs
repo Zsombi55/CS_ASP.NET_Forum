@@ -8,6 +8,6 @@ namespace NC5MvcIdentitySqliteWebApp.Entities
 
 		public string Title { get; set; }
 
-		public List<ForumEntity> Forums { get; set; }
+		public IEnumerable<ForumEntity> Forums { get; set; }
 	}
 }

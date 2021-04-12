@@ -17,7 +17,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig
             builder.HasIndex("NormalizedEmail")
                     .HasDatabaseName("EmailIndex");
 
-            builder.Property<string>("Id")
+            builder.Property<string>(e => e.Id) // "Id"
                     .HasColumnType("TEXT");
             builder.Property<string>("UserName")
                     .HasMaxLength(256)

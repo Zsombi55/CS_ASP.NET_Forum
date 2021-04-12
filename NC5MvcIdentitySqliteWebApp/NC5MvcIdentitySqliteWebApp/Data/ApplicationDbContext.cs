@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NC5MvcIdentitySqliteWebApp.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NC5MvcIdentitySqliteWebApp.Models;
 using NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig;
 
 namespace NC5MvcIdentitySqliteWebApp.Data

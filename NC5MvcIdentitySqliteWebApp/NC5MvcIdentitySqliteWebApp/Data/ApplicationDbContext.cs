@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NC5MvcIdentitySqliteWebApp.Entities;
 using NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig;
+using NC5MvcIdentitySqliteWebApp.Models.Board;
 
 namespace NC5MvcIdentitySqliteWebApp.Data
 {
@@ -16,7 +17,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 		}
 
 		// DB Entity Models
-		public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+		//public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
 		public DbSet<BoardEntity> Boards { get; set; }
 		public DbSet<ForumEntity> Forums { get; set; }
@@ -28,13 +29,16 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 		{
 			base.OnModelCreating(builder);
 
-			builder.ApplyConfiguration(new AppUserEntityConfiguration());
+			//builder.ApplyConfiguration(new AppUserEntityConfiguration());
 
 			builder.ApplyConfiguration(new BoardEntityConfiguration());
 			builder.ApplyConfiguration(new ForumEntityConfiguration());
 			builder.ApplyConfiguration(new ThreadEntityConfiguration());
 			builder.ApplyConfiguration(new PostEntityConfiguration());
 		}
+
+		// Configuration settings for DB Entity relations.
+		public DbSet<NC5MvcIdentitySqliteWebApp.Models.Board.BoardViewModel> BoardViewModel { get; set; }
 
 		// View Models
 		//public DbSet<NC5MvcIdentitySqliteWebApp.Models.Board> Board { get; set; }

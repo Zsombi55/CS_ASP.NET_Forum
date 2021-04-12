@@ -10,7 +10,8 @@ namespace NC5MvcIdentitySqliteWebApp.Entities
 
 		public string Description { get; set; }
 
-		//public int BoardId { get; set; }
+		public int BoardId { get; set; }
+		// Necessary: scaffolder is too dumb to understand "e=>e.Board.Id" in the configuration.
 
 		public BoardEntity Board { get; set; }
 

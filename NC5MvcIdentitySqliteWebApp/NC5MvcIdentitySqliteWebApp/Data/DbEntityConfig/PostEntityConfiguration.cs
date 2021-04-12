@@ -27,22 +27,22 @@ namespace NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig
 			builder.Property<DateTime?>(e => e.ModifiedAt)
 					.HasColumnType("TEXT");
 
-			builder.Property<string>(e => e.User.Id) // "UserId"
+			builder.Property<string>(e => e.UserId) // "UserId"
 					.HasColumnType("TEXT");
-			builder.Property<int?>(e => e.Thread.Id) // "ThreadId"
+			builder.Property<int?>(e => e.ThreadId) // "ThreadId"
 					.HasColumnType("INTEGER");
 
 			// "Users" connection.
 			builder.HasOne(p => p.User)
 					.WithMany(u => u.Posts)
-					.HasForeignKey(u => u.User.Id)
+					.HasForeignKey(u => u.UserId)
 					.HasConstraintName("FK_Posts_AspNetUsers");
 					//.OnDelete(); ?? - IF Post is deleted leave User, IF User is del. leave Posts
 
 			// "Threads" connection.
 			builder.HasOne(p => p.Thread)
 					.WithMany(t => t.Posts)
-					.HasForeignKey(p => p.Thread.Id)
+					.HasForeignKey(p => p.ThreadId)
 					.HasConstraintName("FK_Posts_Threads");
 					//.OnDelete(); ?? - IF Post is deleted leave Thread, IF Thread is del. delete Posts
 		}

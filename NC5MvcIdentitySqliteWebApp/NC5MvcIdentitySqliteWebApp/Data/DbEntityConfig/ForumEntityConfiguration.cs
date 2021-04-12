@@ -18,7 +18,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig
 			// "Boards" connection.
 			builder.HasOne(f => f.Board)
 					.WithMany(b => b.Forums)
-					.HasForeignKey(f => f.Board.Id)
+					.HasForeignKey(f => f.BoardId)
 					.HasConstraintName("FK_Forums_Boards");
 		}
 	}

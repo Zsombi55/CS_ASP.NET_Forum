@@ -27,22 +27,22 @@ namespace NC5MvcIdentitySqliteWebApp.Data.DbEntityConfig
 			//builder.Property<int>("Status")
 			//		.HasColumnType("INTEGER"); // TODO: see ThreadEntity.cs
 
-			builder.Property<string>(e => e.User.Id) // "UserId"
+			builder.Property<string>(e => e.UserId) // "UserId"
 					.HasColumnType("TEXT");
-			builder.Property<int?>(e => e.Forum.Id) // "ForumId"
+			builder.Property<int?>(e => e.ForumId) // "ForumId"
 					.HasColumnType("INTEGER");
 
 			// "Users" connection.
 			builder.HasOne(t => t.User)
 					.WithMany(u => u.Threads)
-					.HasForeignKey(u => u.User.Id)
+					.HasForeignKey(u => u.UserId)
 					.HasConstraintName("FK_Threads_AspNetUsers");
 					//.OnDelete(); ?? - IF Thread is deleted leave User, IF User is del. leave Threads
 
 			// "Forums" connection.
 			builder.HasOne(t => t.Forum)
 					.WithMany(f => f.Threads)
-					.HasForeignKey(f => f.Forum.Id)
+					.HasForeignKey(f => f.ForumId)
 					.HasConstraintName("FK_Threads_Forums");
 					//.OnDelete(); ?? - IF Thread is deleted leave Forum, IF Forum is del. delete Threads
 		}

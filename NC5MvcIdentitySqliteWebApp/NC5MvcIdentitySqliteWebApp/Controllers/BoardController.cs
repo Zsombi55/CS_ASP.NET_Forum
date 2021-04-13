@@ -10,22 +10,22 @@ using NC5MvcIdentitySqliteWebApp.Models.Board;
 
 namespace NC5MvcIdentitySqliteWebApp.Controllers
 {
-    public class BoardViewController : Controller
+    public class BoardController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public BoardViewController(ApplicationDbContext context)
+        public BoardController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: BoardView
+        // GET: Board
         public async Task<IActionResult> Index()
         {
             return View(await _context.BoardViewModel.ToListAsync());
         }
 
-        // GET: BoardView/Details/5
+        // GET: Board/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,13 +43,13 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
             return View(boardViewModel);
         }
 
-        // GET: BoardView/Create
+        // GET: Board/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: BoardView/Create
+        // POST: Board/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -65,7 +65,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
             return View(boardViewModel);
         }
 
-        // GET: BoardView/Edit/5
+        // GET: Board/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,7 +81,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
             return View(boardViewModel);
         }
 
-        // POST: BoardView/Edit/5
+        // POST: Board/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -116,7 +116,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
             return View(boardViewModel);
         }
 
-        // GET: BoardView/Delete/5
+        // GET: Board/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +134,7 @@ namespace NC5MvcIdentitySqliteWebApp.Controllers
             return View(boardViewModel);
         }
 
-        // POST: BoardView/Delete/5
+        // POST: Board/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -56,6 +56,7 @@ namespace WebForum.Controllers
 			{
 				Id = forum.Id, // int
 				Title = forum.Title,
+				Description = forum.Description,
 				Board = BuildBoardListing(forum)
 			});
 

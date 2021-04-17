@@ -60,7 +60,7 @@ namespace WebForum.Services
 			var board = _context.Boards.Where(board => board.Id == id)
 				.Include(board => board.Forums)
 					.ThenInclude(forum => forum.Threads)
-						.ThenInclude(thread => thread.User)
+						//.ThenInclude(thread => thread.User)
 				.FirstOrDefault();
 
 			return board;

@@ -8,6 +8,7 @@ namespace WebForum.Entities
 
 		public string Title { get; set; }
 
+
 		public IEnumerable<ForumEntity> Forums { get; set; }
 	}
 }

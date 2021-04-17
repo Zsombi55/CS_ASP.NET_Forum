@@ -84,7 +84,7 @@ namespace WebForum.Controllers
 		/// <summary>
 		/// Collects the necessary data, generates then returns a Board object.
 		/// </summary>
-		/// <param name="forum">ForumEntity object.</param>
+		/// <param name="board">ForumEntity object.</param>
 		/// <returns>BoardListingModel object: a board.</returns>
 		private BoardListingModel BuildBoardListing(BoardEntity board)
 		{

@@ -76,7 +76,7 @@ namespace WebForum.Controllers
 				Forum = BuildForumListing(thread)
 			});
 
-			var model = new ForumForumModel
+			var model = new ForumThreadsModel
 			{
 				Threads = threadListings,
 				Forum = BuildForumListing(forum)

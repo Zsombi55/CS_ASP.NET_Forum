@@ -1,5 +1,5 @@
 ------------
--- Forums --
+-- Forums -- THIS IS SOMEWHAT OUTDATED --
 ------------
 -- Board /Category_1		(SET, DELETE: ADMIN)
 --- Forum /Sub-Category_1	(SET, DELETE: ADMIN)

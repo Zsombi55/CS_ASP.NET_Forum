@@ -6,7 +6,7 @@ namespace WebForum.Models.Forum
 	/// <summary>
 	/// View Model: a Forum and its Thread collection.
 	/// </summary>
-	public class ForumForumModel
+	public class ForumThreadsModel
 	{
 		public ForumListingModel Forum { get; set; }
 

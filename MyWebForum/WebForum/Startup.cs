@@ -40,6 +40,7 @@ namespace WebForum
 					   .AddEntityFrameworkStores<ApplicationDbContext>();
 			services.AddControllersWithViews();
 
+			services.AddScoped<IBoardEntity, BoardService>();
 			services.AddScoped<IForumEntity, ForumService>();
 			services.AddScoped<IThreadEntity, ThreadService>();
 		}

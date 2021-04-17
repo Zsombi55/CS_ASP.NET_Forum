@@ -1,0 +1,45 @@
+﻿@*For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860*@
+
+@model WebForum.Models.Board.BoardForumsModel
+
+<h1>@Model.Board.Title</h1>
+
+@if (Model.Forums.Any())
+{
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Forum Title</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var forum in Model.Forums)
+			{
+			<tr>
+				<td>
+					<a asp-controller="Forum" asp-action="Index" asp-route-id="@forum.Id">
+						@forum.Title
+					</a>
+				</td>
+				<td>
+					<a>
+						@forum.Description
+					</a>
+				</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<div class="noForums">
+		<h3>
+			This board is empty.
+			<a asp-controller="Forum" asp-action="Create" asp-route-id="@Model.Board.Id">
+				<span>New Forum</span>
+			</a>
+		</h3>
+	</div>
+}

@@ -1,0 +1,35 @@
+﻿@*For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860*@
+
+@model WebForum.Models.Board.BoardIndexModel
+
+<!--TODO: put in a shared place so all pages have it, right below the top nav-bar. -->
+<h5>[Site Map Path From Home-Index To Closest-Index, eg. here: Home / Forums]</h5>
+
+<table class="table table-hover" id="forumIndexTable">
+	<thead>
+		<tr>
+			@*
+			<th>@Html.DisplayNameFor(model => model.Title)</th>
+			<th>@Model.ForumList.Title</th>
+			*@
+			<th>Board Title</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+	@foreach (var board in Model.BoardList)
+	{
+		<tr>
+			<td>
+				<!--{controller=Home}/{action=Index}/{id?}-->
+				<a asp-controller="Board" asp-action="Board" asp-route-id="@board.Id">
+					@board.Title
+				</a>
+			</td>
+			<td>
+				@board.Description
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>

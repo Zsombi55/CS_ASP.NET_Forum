@@ -31,7 +31,8 @@ namespace WebForum.Controllers
 			//ForumListingModel forums = (ForumListingModel)_forumEntityService.GetAll()
 
 			var forums = _forumEntityService.GetAll()
-				.Select(forum => new ForumListingModel {
+				.Select(forum => new ForumListingModel
+				{
 					Id = forum.Id,
 					Title = forum.Title,
 					Description = forum.Description

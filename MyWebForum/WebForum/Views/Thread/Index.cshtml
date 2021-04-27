@@ -5,8 +5,8 @@
 <h1>@Model.Title</h1>
 
 <div>
-	Author: @Model.AuthorName (@Model.AuthorRating)
-	Date Created: @Model.CreatedAt (Date Modified: @Model.ModifiedAt)
+	Author: @Model.AuthorName @*(@Model.AuthorRating)*@
+	Date Created: @Model.CreatedAt @*(Date Modified: @Model.ModifiedAt)*@
 </div>
 
 <div>
@@ -20,8 +20,8 @@
 	{
 		<div>
 			<div>
-				Author: @post.AuthorName (@post.AuthorRating)
-				Date Created: @post.CreatedAt (Date Modified: @post.ModifiedAt)
+				Author: @post.AuthorName @*(@post.AuthorRating)*@
+				Date Created: @post.CreatedAt @*(Date Modified: @post.ModifiedAt)*@
 			</div>
 			<div>
 				@post.Content

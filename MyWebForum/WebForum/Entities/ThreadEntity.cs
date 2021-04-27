@@ -19,7 +19,7 @@ namespace WebForum.Entities
 
 		public int Status { get; set; }
 		// 0 /00 = Open+Normal; 01 /1 = Open+Sticky (priority); 10 = Closed+Normal; 11 = Closed+Sticky.
-		// Open = any Usercan crud; Closed = only staff (admin, mods) can crud, rest read only.
+		// Open = any User can crud; Closed = only staff (admin, mods) can crud, rest read only.
 		
 		public virtual ApplicationUser User { get; set; } // IdentityUser ...
 

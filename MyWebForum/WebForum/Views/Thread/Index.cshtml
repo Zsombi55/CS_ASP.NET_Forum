@@ -5,8 +5,19 @@
 <h1>@Model.Title</h1>
 
 <div>
-	Author: @Model.AuthorName @*(@Model.AuthorRating)*@
-	Date Created: @Model.CreatedAt @*(Date Modified: @Model.ModifiedAt)*@
+	<p>
+		Author: @Model.AuthorName
+		@if (Model.AuthorRating != 0)
+		{
+			@: (@Model.AuthorRating)
+		}
+	</p>
+	<p>Date Created: @Model.CreatedAt
+	@if(Model.CreatedAt != Model.ModifiedAt)
+		{
+			@: (Date Modified: @Model.ModifiedAt)
+		}
+	</p>
 </div>
 
 <div>

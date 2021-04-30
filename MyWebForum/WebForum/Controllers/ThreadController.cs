@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WebForum.Data;
 using WebForum.Entities;
 using WebForum.Models.Forum;
@@ -13,10 +15,17 @@ namespace WebForum.Controllers
 	public class ThreadController : Controller
 	{
 		private readonly IThreadEntity _threadEntityService;
+		private readonly IForumEntity _forumEntityService;
 
-		public ThreadController(IThreadEntity threadEntityService)
+		private static UserManager<ApplicationUser> _userManager;
+		// provides the APIs for interacting with the Users in the data-storage.
+
+		public ThreadController(IThreadEntity threadEntityService, IForumEntity forumEntityService,
+			UserManager<ApplicationUser> userManager)
 		{
 			_threadEntityService = threadEntityService;
+			_forumEntityService = forumEntityService;
+			_userManager = userManager;
 		}
 
 		// GET : Thread
@@ -47,6 +56,68 @@ namespace WebForum.Controllers
 			};
 				
 			return View(model);
+		}
+
+		// POST : Thread
+		/// <summary>
+		/// Gets the existing data to which later the User-entered data can be connected to.
+		/// [bad explanation, this basically gets references to where the new thread obj. will belong to]
+		/// </summary>
+		/// <param name="id">Integer: Forum obj. ID parameter.</param>
+		/// <returns>NewThreadModel object: basic new thread creation data.</returns>
+		public IActionResult Create(int id)
+		{
+			var forum = _forumEntityService.GetById(id);
+
+			var model = new NewThreadModel
+			{
+				ForumId = forum.Id,
+				ForumName = forum.Title,
+				AuthorName = User.Identity.Name
+				// the User obj. from the current http context,
+				// so: whoever is logged in & using the Thread Creation form is the User.
+			};
+
+			return View(model);
+		}
+
+		/// <summary>
+		/// Sets/ Posts user-input into a view model then puch that into the DB.
+		/// A form method type post, triggers this; so it doesn't handle it like a typical GET request.
+		/// [bad explanation]
+		/// </summary>
+		/// <param name="model">NewThreadModel obj.; returned by the "Create" function above.</param>
+		/// <returns></returns>
+		[HttpPost]
+		public async Task<IActionResult> AddThread(NewThreadModel model)
+		{
+			var userId = _userManager.GetUserId(User);
+			var user = await _userManager.FindByIdAsync(userId);
+
+			var thread = BuildThread(model, user);
+
+			await _threadEntityService.Create(thread);
+
+			// TODO: add user rating manager
+
+			return RedirectToAction("Index", "Post", thread.Id);
+		}
+
+		/// <summary>
+		/// Gets user input into a model for making a new Thread.
+		/// </summary>
+		/// <param name="model">NewThreadModel obj.; what is needed at least to make a new one.</param>
+		/// <param name="user">Current user.</param>
+		/// <returns>Object: a new ThreadEntity based on the NewThreadModel data template.</returns>
+		private ThreadEntity BuildThread(NewThreadModel model, ApplicationUser user)
+		{
+			return new ThreadEntity
+			{
+				Title = model.Title,
+				Content = model.Content,
+				CreatedAt = DateTime.Now,
+				User = user
+			};
 		}
 
 		/// <summary>

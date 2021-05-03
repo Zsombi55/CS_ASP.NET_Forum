@@ -93,15 +93,18 @@ namespace WebForum.Controllers
 		public async Task<IActionResult> AddThread(NewThreadModel model)
 		{
 			var userId = _userManager.GetUserId(User);
+			//var user = _userManager.FindByIdAsync(userId).Result;
 			var user = await _userManager.FindByIdAsync(userId);
 
 			var thread = BuildThread(model, user);
 
-			await _threadEntityService.Create(thread);
+			//await _threadEntityService.Create(thread);
+			// Block current thread, wait for task completion - NOTE: bad workaround, shoud use "await".
+			_threadEntityService.Create(thread).Wait();
 
 			// TODO: add user rating manager
 
-			return RedirectToAction("Index", "Post", thread.Id);
+			return RedirectToAction("Index", "Thread", new { id = thread.Id });
 		}
 
 		/// <summary>

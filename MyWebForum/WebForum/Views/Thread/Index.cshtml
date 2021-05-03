@@ -13,10 +13,11 @@
 		}
 	</p>
 	<p>Date Created: @Model.CreatedAt
-	@if(Model.CreatedAt != Model.ModifiedAt)
-		{
-			@: (Date Modified: @Model.ModifiedAt)
-		}
+	@if(Model.ModifiedAt != null || Model.CreatedAt != Model.ModifiedAt)
+	{
+		@*this check is not right but it doesn't even work as expected*@
+		@: (Date Modified: @Model.ModifiedAt)
+	}
 	</p>
 </div>
 

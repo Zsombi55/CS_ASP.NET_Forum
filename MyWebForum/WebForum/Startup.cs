@@ -37,7 +37,8 @@ namespace WebForum
 			services.AddDefaultIdentity<ApplicationUser>(options => 
 				options.SignIn.RequireConfirmedAccount = true)
 					   .AddRoles<IdentityRole>()
-					   .AddEntityFrameworkStores<ApplicationDbContext>();
+					   .AddEntityFrameworkStores<ApplicationDbContext>()
+					   .AddDefaultUI();
 			services.AddControllersWithViews();
 
 			services.AddScoped<IBoardEntity, BoardService>();

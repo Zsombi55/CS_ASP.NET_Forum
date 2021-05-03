@@ -25,9 +25,13 @@ namespace WebForum.Services
 			throw new NotImplementedException();
 		}
 
-		public Task Create(ThreadEntity thread)
+		/// <summary>
+		/// Sets a new Thread.
+		/// </summary>
+		public async Task Create(ThreadEntity thread)
 		{
-			throw new NotImplementedException();
+			_context.Add(thread);
+			await _context.SaveChangesAsync();
 		}
 
 		public Task Delete(int threadId)

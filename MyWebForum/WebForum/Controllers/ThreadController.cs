@@ -82,12 +82,12 @@ namespace WebForum.Controllers
 		}
 
 		/// <summary>
-		/// Sets/ Posts user-input into a view model then puch that into the DB.
+		/// Sets/ Posts user-input into a view model then pushes that into the DB.
 		/// A form method type post, triggers this; so it doesn't handle it like a typical GET request.
 		/// [bad explanation]
 		/// </summary>
 		/// <param name="model">NewThreadModel obj.; returned by the "Create" function above.</param>
-		/// <returns></returns>
+		/// <returns>An action: set view to the newly created Thread Index by its ID.</returns>
 		[HttpPost]
 		public async Task<IActionResult> AddThread(NewThreadModel model)
 		{
@@ -111,12 +111,15 @@ namespace WebForum.Controllers
 		/// <returns>Object: a new ThreadEntity based on the NewThreadModel data template.</returns>
 		private ThreadEntity BuildThread(NewThreadModel model, ApplicationUser user)
 		{
+			var forum = _forumEntityService.GetById(model.ForumId);
+
 			return new ThreadEntity
 			{
 				Title = model.Title,
 				Content = model.Content,
 				CreatedAt = DateTime.Now,
-				User = user
+				User = user,
+				Forum = forum
 			};
 		}
 

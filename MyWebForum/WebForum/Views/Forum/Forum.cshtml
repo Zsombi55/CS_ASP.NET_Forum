@@ -8,6 +8,12 @@
 	@Model.Forum.Description
 </div>
 
+<span id="headingBtn">
+	<a asp-controller="Post" asp-action="Create" asp-route=@Model.Forum.Id class="btn btn-newThread">
+		Create New Thread
+	</a>
+</span>
+
 @if (Model.Threads.Any())
 {
 	<table class="table table-bordered table-hover">

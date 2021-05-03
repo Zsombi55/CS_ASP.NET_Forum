@@ -27,6 +27,7 @@ namespace WebForum.Controllers
 			_forumEntityService = forumEntityService;
 			_userManager = userManager;
 		}
+		// TODO: if User IS NOT authen. & author. thread editing and cretion should not even be offered.
 
 		// GET : Thread
 		/// <summary>

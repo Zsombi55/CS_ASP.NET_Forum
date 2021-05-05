@@ -122,6 +122,7 @@ namespace WebForum.Controllers
 				Title = model.Title,
 				Content = model.Content,
 				CreatedAt = DateTime.Now,
+				//ModifiedAt = DateTime.Now,
 				User = user,
 				Forum = forum
 			};

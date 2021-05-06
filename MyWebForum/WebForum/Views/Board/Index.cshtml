@@ -1,31 +1,37 @@
 ﻿@*For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860*@
 
 @model WebForum.Models.Board.BoardIndexModel
-
 <!--TODO: put in a shared place so all pages have it, right below the top nav-bar. -->
 <h5>[Site Map Path From Home-Index To Closest-Index, eg. here: Home / Forums]</h5>
+
+@*TODO: the "Asp Route Id" is incorrect. How can I get an id for this?*@
+<span id="headingBtn">
+	<a asp-controller="Board" asp-action="Create" class="btn btn-newBoard">
+		Create New Board
+	</a>
+</span>
 
 <table class="table table-hover" id="boardIndexTable">
 	<thead>
 		<tr>
 			@*
-			<th>@Html.DisplayNameFor(model => model.Title)</th>
-			<th>@Model.ForumList.Title</th>
+				<th>@Html.DisplayNameFor(model => model.Title)</th>
+				<th>@Model.ForumList.Title</th>
 			*@
 			<th>Board Title</th>
 		</tr>
 	</thead>
 	<tbody>
-	@foreach (var board in Model.BoardList)
-	{
-		<tr>
-			<td>
-				<!--{controller=Home}/{action=Index}/{id?}-->
-				<a asp-controller="Board" asp-action="Board" asp-route-id="@board.Id">
-					@board.Title
-				</a>
-			</td>
-		</tr>
-	}
+		@foreach (var board in Model.BoardList)
+		{
+			<tr>
+				<td>
+					<!--{controller=Home}/{action=Index}/{id?}-->
+					<a asp-controller="Board" asp-action="Board" asp-route-id="@board.Id">
+						@board.Title
+					</a>
+				</td>
+			</tr>
+		}
 	</tbody>
 </table>

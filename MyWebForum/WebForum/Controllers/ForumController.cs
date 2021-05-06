@@ -94,7 +94,7 @@ namespace WebForum.Controllers
 		/// [bad explanation, this basically gets references to where the new thread obj. will belong to]
 		/// </summary>
 		/// <param name="id">Integer: Board obj. ID parameter.</param>
-		/// <returns>NewForumModel object: basic new thread creation data.</returns>
+		/// <returns>NewForumModel object: basic new Forum creation data.</returns>
 		public IActionResult Create(int id)
 		{
 			var board = _boardEntityService.GetById(id);

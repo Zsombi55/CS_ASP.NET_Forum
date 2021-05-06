@@ -69,6 +69,51 @@ namespace WebForum.Controllers
 			return View(model);
 		}
 
+		// POST : Board
+		/// <summary>
+		/// Gets the existing data to which later the User-entered data can be connected to.
+		/// [bad explanation, this basically gets references to where the new thread obj. will belong to]
+		/// </summary>
+		/// <param name="id">Integer: ?? obj. ID parameter.</param>
+		/// <returns>NewForumModel object: basic new Board creation data.</returns>
+		public IActionResult Create()
+		{
+			var model = new NewBoardModel{};
+			//TODO: no regular Users should be able to use this, only Mods & Admins !
+
+			return View(model);
+		}
+
+		/// <summary>
+		/// Sets/ Posts user-input into a view model then pushes that into the DB.
+		/// A form method type post, triggers this; so it doesn't handle it like a typical GET request.
+		/// [bad explanation]
+		/// </summary>
+		/// <param name="model">NewBoardModel obj.; returned by the "Create" function above.</param>
+		/// <returns>An action: set view to the newly created Board Index by its ID.</returns>
+		[HttpPost]
+		public async Task<IActionResult> AddBoard(NewBoardModel model)
+		{
+			var board = BuildBoard(model);
+
+			_boardEntityService.Create(board).Wait();
+
+			return RedirectToAction("Index", "Board", new { id = board.Id });
+		}
+
+		/// <summary>
+		/// Gets user input into a model for making a new Board.
+		/// </summary>
+		/// <param name="model">NewBoardModel obj.; what is needed at least to make a new one.</param>
+		/// <returns>Object: a new BoardEntity based on the NewBoardModel data template.</returns>
+		private BoardEntity BuildBoard(NewBoardModel model)
+		{
+			return new BoardEntity
+			{
+				Title = model.Title
+			};
+		}
+
 		/// <summary>
 		/// Overload.
 		/// Collects the necessary data, generates then returns a Forum object for a Board.

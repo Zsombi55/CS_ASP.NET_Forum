@@ -30,9 +30,14 @@ namespace WebForum.Services
 			_context = context;
 		}
 
-		public Task Create(BoardEntity board)
+		/// <summary>
+		/// Sets a new Board.
+		/// </summary>
+		/// <param name="board">Obj.: BoardEntity.</param>
+		public async Task Create(BoardEntity board)
 		{
-			throw new NotImplementedException();
+			_context.Add(board);
+			await _context.SaveChangesAsync();
 		}
 
 		public Task Delete(int boardId)

@@ -1,6 +1,8 @@
 # CS_ASP.NET_Forum
 FTIT C# ASP .NET final project: a __Web Forum__ web application.
 
+Currently there are 2 projects/ solutions: "NC5MvcIdentitySqliteWebApp" and "MyWebForum". They are (/will be) largely the same, with the only difference being the way "Thread content" and "Posts" are handled. For example, in the first all text entries are Posts the 1st of which in a Thread is a mandatory element; while in the latter a Thread's content is an integral part of the Thread itself, not just an attached Post.
+
 ## Basic aspects and idea:
 * user accounts:
   - [x] e-mail address : used for registration;

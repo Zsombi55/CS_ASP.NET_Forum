@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebForum.Data;
 using WebForum.Entities;
+using WebForum.Models.Board;
 using WebForum.Models.Forum;
 using WebForum.Models.Thread;
 
@@ -12,11 +13,13 @@ namespace WebForum.Controllers
 {
 	public class ForumController : Controller
 	{
+		private readonly IBoardEntity _boardEntityService;
 		private readonly IForumEntity _forumEntityService;
 		private readonly IThreadEntity _threadEntityService;
 
-		public ForumController(IForumEntity forumEntityService)
+		public ForumController(IForumEntity forumEntityService, IBoardEntity boardEntityService)
 		{
+			_boardEntityService = boardEntityService;
 			_forumEntityService = forumEntityService;
 		}
 
@@ -83,6 +86,62 @@ namespace WebForum.Controllers
 			};
 
 			return View(model);
+		}
+
+		// POST : Forum
+		/// <summary>
+		/// Gets the existing data to which later the User-entered data can be connected to.
+		/// [bad explanation, this basically gets references to where the new thread obj. will belong to]
+		/// </summary>
+		/// <param name="id">Integer: Board obj. ID parameter.</param>
+		/// <returns>NewForumModel object: basic new thread creation data.</returns>
+		public IActionResult Create(int id)
+		{
+			var board = _boardEntityService.GetById(id);
+
+			var model = new NewForumModel
+			{
+				BoardId = board.Id,
+				BoardName = board.Title
+				//TODO: no regular Users should be able to use this, only Mods & Admins !
+			};
+
+			return View(model);
+		}
+
+		/// <summary>
+		/// Sets/ Posts user-input into a view model then pushes that into the DB.
+		/// A form method type post, triggers this; so it doesn't handle it like a typical GET request.
+		/// [bad explanation]
+		/// </summary>
+		/// <param name="model">NewForumModel obj.; returned by the "Create" function above.</param>
+		/// <returns>An action: set view to the newly created Forum Index by its ID.</returns>
+		[HttpPost]
+		public async Task<IActionResult> AddForum(NewForumModel model)
+		{
+			var forum = BuildForum(model);
+
+			_forumEntityService.Create(forum).Wait();
+
+			return RedirectToAction("Index", "Forum", new { id = forum.Id });
+		}
+
+		/// <summary>
+		/// Gets user input into a model for making a new Forum.
+		/// </summary>
+		/// <param name="model">NewForumModel obj.; what is needed at least to make a new one.</param>
+		/// <returns>Object: a new ForumEntity based on the NewForumModel data template.</returns>
+		private ForumEntity BuildForum(NewForumModel model)
+		{
+			var board = _boardEntityService.GetById(model.BoardId);
+
+			return new ForumEntity
+			{
+				Title = model.Title,
+				Description = model.Description,
+				CreatedAt = DateTime.Now,
+				Board = board
+			};
 		}
 
 		/// <summary>

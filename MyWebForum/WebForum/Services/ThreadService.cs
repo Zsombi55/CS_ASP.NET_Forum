@@ -28,6 +28,7 @@ namespace WebForum.Services
 		/// <summary>
 		/// Sets a new Thread.
 		/// </summary>
+		/// <param name="thread">Obj.: ThreadEntity.</param>
 		public async Task Create(ThreadEntity thread)
 		{
 			_context.Add(thread);

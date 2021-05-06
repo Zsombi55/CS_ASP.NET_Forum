@@ -7,27 +7,27 @@ using System.Threading.Tasks;
 using WebForum.Data;
 using WebForum.Entities;
 using WebForum.Models.Forum;
-using WebForum.Models.Post;
 using WebForum.Models.Thread;
+using WebForum.Models.Post;
 
 namespace WebForum.Controllers
 {
 	public class ThreadController : Controller
 	{
-		private readonly IThreadEntity _threadEntityService;
 		private readonly IForumEntity _forumEntityService;
-
+		private readonly IThreadEntity _threadEntityService;
+		
 		private static UserManager<ApplicationUser> _userManager;
 		// provides the APIs for interacting with the Users in the data-storage.
 
 		public ThreadController(IThreadEntity threadEntityService, IForumEntity forumEntityService,
 			UserManager<ApplicationUser> userManager)
 		{
-			_threadEntityService = threadEntityService;
 			_forumEntityService = forumEntityService;
+			_threadEntityService = threadEntityService;
 			_userManager = userManager;
 		}
-		// TODO: if User IS NOT authen. & author. thread editing and cretion should not even be offered.
+		// TODO: if User IS NOT authen. & author. T.-editing and cretion should not even be offered.
 
 		// GET : Thread
 		/// <summary>
@@ -57,6 +57,12 @@ namespace WebForum.Controllers
 			};
 				
 			return View(model);
+		}
+
+		// NOTE: How would it be different from "Index(int id)" above ??
+		public IActionResult GetById(int id)
+		{
+			throw new NotImplementedException();
 		}
 
 		// POST : Thread
@@ -146,12 +152,6 @@ namespace WebForum.Controllers
 				AuthorImageUrl = post.User.ProfileImageUrl,
 				AuthorRating = post.User.Rating
 			});
-		}
-
-		// How would it be different from "Index(int id)" above ??
-		public IActionResult GetById(int id)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

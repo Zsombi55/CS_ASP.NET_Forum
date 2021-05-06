@@ -30,9 +30,14 @@ namespace WebForum.Services
 			_context = context;
 		}
 
-		public Task Create(ForumEntity forum)
+		/// <summary>
+		/// Sets a new Forum.
+		/// </summary>
+		/// <param name="forum">Obj.: ForumEntity.</param>
+		public async Task Create(ForumEntity forum)
 		{
-			throw new NotImplementedException();
+			_context.Add(forum);
+			await _context.SaveChangesAsync();
 		}
 
 		public Task Delete(int forumId)

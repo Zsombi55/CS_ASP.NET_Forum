@@ -23,6 +23,13 @@ namespace WebForum.Controllers
 			return View();
 		}
 
+		public IActionResult About()
+		{
+			ViewData["Message"] = "Application description page.";
+
+			return View();
+		}
+
 		public IActionResult Privacy()
 		{
 			return View();

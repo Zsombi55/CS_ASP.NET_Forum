@@ -1,8 +1,61 @@
-﻿@{
+﻿@model WebForum.Models.Home.HomeIndexModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container body-content">
+	<!--First row, banner/ content header.-->
+	<div class="row frontPageSplash">
+		<div class="col-md-6 frontPageTopics">
+			<div class="frontPageHeading">Discuss, share, learn new things.</div>
+			<p class="frontPageSubHeading"><i>Web Forums</i> is my first bigger project in 10 years.</p>
+			<div>
+				<form asp-controller="Search" asp-action="Search" method="post">
+					<input asp-for="SearchQuery" type="text" class="homeSearch" placeholder="Search..." />
+				</form>
+			</div>
+		</div>
+		<div class="col-md-6"></div>
+	</div>
+
+	<!--Second row, content.-->
+	<div class="row frontPageContent">
+		<h3 id="latestThreads">Latest Threads</h3>
+		<table class="table table-hover" id="latestThreadsTable">
+			<tbody>
+				@foreach(var thread in Model.LatestThreads)
+				{
+					<tr>
+						<td>
+							<div class="threadTitle">
+								<a asp-controller="Thread" asp-action="Index" asp-route-id="@thread.Id">
+									@thread.Title
+								</a>
+							</div>
+							<div class="threadSubTitle">
+								@if (thread.PostCount == 1)
+								{
+									<span>@thread.PostCount Post</span>
+								}
+								else if (thread.PostCount == 0)
+								{
+									<span>No Posts</span>
+								}
+								else
+								{
+									<span>@thread.PostCount Posts</span>
+								}
+								<span class="postUser">
+									<a asp-controller="Profile" asp-action="Detail" asp-route-id="@thread.AuthorName">
+										@thread.AuthorId
+									</a>
+								</span>
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
 </div>

@@ -25,6 +25,11 @@ namespace WebForum.Controllers
 			_threadEntityService = threadEntityService;
 		}
 
+		/// <summary>
+		/// Gets a list/ collection of the latest  " 10 "  Threads and associated data,
+		/// then passes the data object to the View() function for display.
+		/// </summary>
+		/// <returns>Object: a view model with the collected data.</returns>
 		public IActionResult Index()
 		{
 			var model = BuildHomeIndexModel();
@@ -34,7 +39,7 @@ namespace WebForum.Controllers
 
 		private HomeIndexModel BuildHomeIndexModel()
 		{
-			var latestThreads = _threadEntityService.GetLatestThreads(10);
+			var latestThreads = _threadEntityService.GetLatestThreads(amount: 10);
 			
 			var threads = latestThreads.Select(thread => new ThreadListingModel
 			{
@@ -47,6 +52,12 @@ namespace WebForum.Controllers
 				PostCount = thread.Posts.Count(),
 				Forum = GetForumListingForThread(thread)
 			});
+
+			return new HomeIndexModel
+			{
+				LatestThreads = threads,
+				SearchQuery = "" // TODO: HomeController > BuildHomeIndexModel > search query.
+			};
 		}
 
 		private ForumListingModel GetForumListingForThread(ThreadEntity thread)

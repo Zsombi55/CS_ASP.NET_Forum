@@ -46,7 +46,12 @@ namespace WebForum.Services
 		/// <returns>Every instance of the ThreadEntity object.</returns>
 		public IEnumerable<ThreadEntity> GetAll()
 		{
-			return _context.Threads.Include(thread => thread.Posts);
+			//return _context.Threads.Include(thread => thread.Posts);
+			return _context.Threads
+				.Include(thread => thread.User)
+				.Include(thread => thread.Posts)
+					.ThenInclude(post => post.User)
+				.Include(thread => thread.Forum);
 		}
 
 		/// <summary>
@@ -69,9 +74,13 @@ namespace WebForum.Services
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<ThreadEntity> GetLatestThreads(int a)
+		public IEnumerable<ThreadEntity> GetLatestThreads(int amount)
 		{
-			return GetAll().OrderByDescending<ThreadEntity> (thread => thread.Created).Take(a);
+			//return GetAll().OrderByDescending<ThreadEntity> (thread => thread.CreatedAt).Take(amount);
+			// This was wrong OrderByDescending(<T1>, <T2>) takes 2 arguments not one.
+
+			// Was suggested to do this because the compiler should be able to inferr the desired type.
+			return GetAll().OrderByDescending(thread => thread.CreatedAt).Take(amount);
 		}
 
 		public IEnumerable<ThreadEntity> GetThreadsByForum(int id)
@@ -86,11 +95,6 @@ namespace WebForum.Services
 		}
 
 		public Task UpdateThreadContent(int threadId, string newContent)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task UpdateThreadTitle(int threadId, string newTitle)
 		{
 			throw new NotImplementedException();
 		}

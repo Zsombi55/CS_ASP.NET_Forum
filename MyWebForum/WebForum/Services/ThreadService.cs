@@ -69,6 +69,11 @@ namespace WebForum.Services
 			throw new NotImplementedException();
 		}
 
+		public IEnumerable<ThreadEntity> GetLatestThreads(int a)
+		{
+			return GetAll().OrderByDescending<ThreadEntity> (thread => thread.Created).Take(a);
+		}
+
 		public IEnumerable<ThreadEntity> GetThreadsByForum(int id)
 		{
 			return _context.Forums.Where(forum => forum.Id == id)

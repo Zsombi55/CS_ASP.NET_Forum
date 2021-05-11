@@ -30,7 +30,7 @@ namespace NC5MvcIdentitySqliteWebApp.Data
 
 			string normalizedRoleName = roleName.ToUpperInvariant();
 			
-			// TODO: migration.ActiveProvider -- check msdn
+			// TODO: migration.ActiveProvider -- check msdn before live deployment.
 			// SQLite syntax (if there's no INT AUTOINCREMENT, the hidden ROWID is auto.-used as such):
 			migration.Sql($@"
 				INSERT INTO AspNetRoles (Id, Name, NormalizedName, ConcurrencyStamp)

@@ -1,9 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-
-@inject UserManager<WebForum.Entities.ApplicationUser> UserManager
-@inject SignInManager<WebForum.Entities.ApplicationUser> SignInManager
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -22,65 +17,17 @@
 						<span class="navbar-toggler-icon"></span>
 					</button>*@
 			<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-				@*<ul class=" navbar-nav flex-grow-1">
-		<li class="nav-item">
-			<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
-		</li>*@
-				<ul class="nav navbar-nav flex-grow-1">
-					<li><a asp-controller="Forum" asp-action="Index">Forums</a></li>
-					@if (SignInManager.IsSignedIn(User))
-					{
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								Settings
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu">
-								<li role="separator" class="divider"></li>
-								<li class="dropdown-header">Profile</li>
-								<li>
-									<a asp-controller="Profile" asp-action="Detail">
-										My Profile
-									</a>
-								</li>
-								@if (User.IsInRole("Admin"))
-								{
-									<li role="separator" class="divider"></li>
-									<li class="dropdown-header">Admin</li>
-									<li>
-										<a asp-controller="Forum" asp-action="Create">
-											Create Forum
-										</a>
-									</li>
-									<li>
-										<a asp-controller="Profile" asp-action="Index">
-											View Users
-										</a>
-									</li>
-								}
-							</ul>
-						</li>
-					}
+				<ul class=" navbar-nav flex-grow-1">
+					<li class="nav-item">
+						<a class=nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-dark" asp-controller="Forum" asp-action="Index">Forums</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+					</li>
 				</ul>
-				<!--These sign in/out actions require [http post] controller functions.-->
-				@if (!SignInManager.IsSignedIn(User))
-				{
-					<ul class="nav navbar-nav navbar-right">
-						<li><a asp-controller="Account" asp-action="Login">Sign In</a></li>
-						<li class="active">
-							<a asp-controller="Account" asp-action="Register">Register</a>
-						</li>
-					</ul>
-				}
-				@if (SignInManager.IsSignedIn(User))
-				{
-					<ul class="nav navbar-nav navbar-right">
-						<li><a asp-controller="Account" asp-action="Logout">Sign Out</a></li>
-					</ul>
-				}
 				<partial name="_LoginPartial" />
 			</div>
 			</div>

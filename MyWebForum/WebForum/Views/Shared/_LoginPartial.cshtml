@@ -12,9 +12,12 @@
 		<li class="nav-item">
 			<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
 		</li>
-		@*<li class="nav-item navbar-nav navbar-right">
-			<a asp-controller="Account" asp-action="Logout">Logout</a>
-		</li>*@
+		@*<form id="logoutForm" class="navbar-right" asp-controller="Account" asp-action="Logout" mehod="post">
+			<ul class="nav navbar-nav navbar-right">
+				<li>@UserManager.GetUserName(User)</li>
+				<li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
+			</ul>
+		</form>*@
 		<li class="nav-item">
 			<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
 				<button type="submit" class="nav-link btn btn-link text-dark">Logout</button>

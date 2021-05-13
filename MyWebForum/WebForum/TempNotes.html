@@ -5,4 +5,9 @@ T.p.10~13 : made the latest 10 (of all types of) threads listed on the "Home > I
 	Ideally the "Home > Index" should not hold any forum entries, but introduction to the site.
 	See "site map.txt" for a general site layout and to see what links should lead to what pages & data to be shown to what User types /roles.
 
+Rename the Controllers from singular to plural - ForumController >> ForumsController - so that the address paths for showing lists will be called appropriately, eg.: instead of
+	https://localhost:44323/Forum/Forum/1 it will be https://localhost:44323/Forums/Forum/1
+	when loking at a specific "Forum". Take care to change the references in other files too.
+
+
 .

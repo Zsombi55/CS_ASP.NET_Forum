@@ -19,43 +19,82 @@
 	</div>
 </div>
 
-
-<h1>@Model.Title</h1>
-
-<div>
-	<p>
-		Author: @Model.AuthorName
-		@if (Model.AuthorRating != 0)
+<div class="row" id="threadIndexContent">
+	<div class="col-md-3 threadAuthorContainer">
+		<div class="threadAuthorImage" style="background-image: url(@Model.AuthorImageUrl);"></div>
+		<a asp-controller="Profile" asp-action="Detail" asp-route-id="@Model.AuthorId">
+			@Model.AuthorName
+		</a>
+		<span class="threadData">@Model.CreatedAt</span>
+		@if(Model.IsAdmin)
 		{
-			@: (@Model.AuthorRating)
+			<span class="isAdmin smaller">Admin</span>
 		}
-	</p>
-	<p>Date Created: @Model.CreatedAt
-	@if(Model.ModifiedAt != null || Model.CreatedAt != Model.ModifiedAt)
-	{
-		@*this check is not right but it doesn't even work as expected*@
-		@: (Date Modified: @Model.ModifiedAt)
-	}
-	</p>
+	</div>
+	<div class="col-md-9 threadContentContainer">
+		<div class="threadContent">
+			@Html.Raw(Model.ThreadContent)
+		</div>
+	</div>
 </div>
 
-<div>
-	@Model.Content
-</div>
+<div class="row" id="postDivider"></div>
 
-
-@if (Model.Posts.Any())
+@if(User.Identity.IsAuthenticated)
 {
-	foreach (var post in Model.Posts)
+	<div class="row">
+		<span>
+			<a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id"
+				class="btn btn-newPost">
+				New Post
+			</a>
+		</span>
+	</div>
+}
+
+@if(Model.Posts.Any())
+{
+	foreach(var post in Model.Posts)
 	{
-		<div>
-			<div>
-				Author: @post.AuthorName @*(@post.AuthorRating)*@
-				Date Created: @post.CreatedAt @*(Date Modified: @post.ModifiedAt)*@
+		<div class="row postContent">
+			<div class="col-md-3 postAuthorContainer">
+				<div class="postAuthorImage" style="background-image: url(@post.AuthorImageUrl);"></div>
+				<a asp-controller="Profile" asp-action="Detail" asp-route-id="@post.AuthorId">
+					Author: @post.AuthorName
+				</a>
+				<span>
+					@if (post.AuthorRating != 0)
+					{
+						@: (@post.AuthorRating)
+					}
+				</span>
+
+				@if (post.IsauthorAdmin)
+				{
+					<div class="isAdmin smaller">Admin</div>
+					<br />
+				}
+				<span>Date Created: @post.CreatedAt</span>
+				<span>
+					@if (post.CreatedAt != post.ModifiedAt)
+					{
+						@*doesn't work as expected*@
+						@: (Date Modified: @post.ModifiedAt)
+					}
+				</span>
 			</div>
-			<div>
-				@post.Content
+			<div class="col-md-9 postContentContainer">
+				<div class="threadContent">
+					@Html.Raw(post.Content)
+				</div>
 			</div>
 		</div>
 	}
+}
+else
+{
+	<div class="noPosts">
+		<h3>There are no posts in this thread.</h3>
+		<br />
+	</div>
 }

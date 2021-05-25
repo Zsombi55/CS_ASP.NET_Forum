@@ -266,6 +266,87 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
 }
 
+.threadHeader {
+    background-color: #212121;
+    padding: 8px 0 24px 24px;
+}
+
+#headingBtn {
+    float: right;
+    margin-left: 20px;
+}
+
+/* Thread (/Post) Content -- header, body, footer
+-------------------------------------------------- */
+.threadContentBody {
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+/* Custom Buttons
+-------------------------------------------------- */
+.btn-back {
+    background-color: #555;
+    color: #FFF !important;
+    transition: ease-in 0.1s;
+    border-radius: 0px !important;
+}
+
+.btn-back:hover {
+    transition: ease-in 0.1s;
+    background-color: #1E88E5 !important;
+}
+
+.btn-newPost {
+    background-color: #5C6BC0 !important;
+    color: #FFF !important;
+    transition: ease-in 0.1s;
+    border-radius: 0px !important;
+}
+
+.btn-newPost:hover {
+    background-color: #9FA8DA !important;
+    transition: ease-in 0.1s;
+}
+
+.btn-file {
+    color: white;
+    width: 100%;
+    background-color: #4FC3F7;
+    transition: ease 0.3s;
+}
+
+.btn-file:hover {
+    background-color: #039BE5;
+    transition: ease 0.3s;
+}
+
+.btn-newThread {
+    background-color: #C62828 !important;
+    color: #FFF !important;
+    transition: ease-in 0.1s;
+    border-radius: 0px !important;
+}
+
+.btn-newThread:hover {
+    background-color: #E53935 !important;
+    transition: ease-in 0.1s;
+    color: #FFF !important;
+}
+
+.btn-submitThread {
+    background-color: #DD695C !important;
+    color: #FFF !important;
+    transition: ease-in 0.1s;
+    border-radius: 0px !important;
+}
+
+.btn-submitThread:hover {
+    background-color: #00897B !important;
+    transition: ease-in 0.1s;
+    color: #FFF !important;
+}
+
 /* Forum Index
 -------------------------------------------------- */
 #forumIndexTable td {

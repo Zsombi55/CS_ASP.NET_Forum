@@ -11,97 +11,107 @@
 			</span>
 			<span id="headingBtn">
 				<a asp-controller="Forum" asp-action="Forum" asp-route-id="@Model.ForumId"
-					class="btn btn-back">
+				   class="btn btn-back">
 					Back to @Model.ForumName
 				</a>
 			</span>
 		</div>
 	</div>
-</div>
 
-<div class="row" id="threadIndexContent">
-	<div class="col-md-3 threadAuthorContainer">
-		<div class="threadAuthorImage" style="background-image: url(@Model.AuthorImageUrl);"
-			title="@Model.AuthorName"></div>
-		<a asp-controller="Profile" asp-action="Detail" asp-route-id="@Model.AuthorId">
-			@Model.AuthorName
-		</a>
-		@if(Model.IsAuthorAdmin)
-		{
-			<span class="isAdmin smaller">Admin</span>
-		}
-	</div>
-	<div class="col-md-9 threadContentContainer">
-		<header class="threadContentHeader">
-			<span class="threadData">Created at: @Model.CreatedAt</span>
-		</header>
-		<div class="threadContentBody">
-			@Html.Raw(Model.Content)
-		</div>
-		<footer class="threadContentFooter"></footer>
-	</div>
-</div>
-
-<div class="row" id="postDivider"></div>
-
-@if(User.Identity.IsAuthenticated)
-{
-	<div class="row">
-		<span>
-			<a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id"
-				class="btn btn-newPost">
-				New Post
+	<div class="row" id="threadIndexContent">
+		<div class="col-md-3 threadAuthorContainer">
+			<div class="threadAuthorImage" style="background-image: url(@Model.AuthorImageUrl);"
+				 title="@Model.AuthorName"></div>
+			<a asp-controller="Profile" asp-action="Detail" asp-route-id="@Model.AuthorId">
+				@Model.AuthorName
 			</a>
-		</span>
+			@if (Model.IsAuthorAdmin)
+			{
+				<span class="isAdmin smaller">Admin</span>
+			}
+		</div>
+
+		<div class="col-md-9 threadContentContainer">
+	<!-- TODO: Inspect one of the inspiration sources to see how they put 3 rows in 1 coluumn. -->
+			<header class="threadContentHeader">
+				<!-- Can format the output of the date here with at'ToString(). -->
+				<span class="threadData">Created at: @Model.CreatedAt</span>
+			</header>
+			<div class="threadContentBody">
+				@Html.Raw(Model.Content)
+			</div>
+			<footer class="threadContentFooter">
+				@if (Model.ModifiedAt != null && Model.CreatedAt != Model.ModifiedAt)
+				{
+					<span class="threadData">Modified at: @Model.ModifiedAt</span>
+				}
+			</footer>
+		</div>
 	</div>
-}
 
-<!-- Posts' View -->
-@if(Model.Posts.Any())
-{
-	foreach(var post in Model.Posts)
+	<div class="row" id="postDivider"></div>
+
+	@if (User.Identity.IsAuthenticated)
 	{
-		<div class="row postContent">
-			<div class="col-md-3 postAuthorContainer">
-				<div class="postAuthorImage" style="background-image: url(@post.AuthorImageUrl);"></div>
-				<a asp-controller="Profile" asp-action="Detail" asp-route-id="@post.AuthorId">
-					Author: @post.AuthorName
+		<div class="row">
+			<span>
+				<a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id"
+				   class="btn btn-newPost">
+					New Post
 				</a>
-				@if (post.AuthorRating != 0)
-				{
-					@: (Rating: @post.AuthorRating)
-				}
-
-				@if (post.IsAuthorAdmin)
-				{
-					<div class="isAdmin smaller">Admin</div>
-					<br />
-				}
-			</div>
-			<div class="col-md-9 postContentContainer">
-				<header class="threadContentHeader">
-					<!-- Can format the output of the date here with at'ToString(). -->
-					<div>Created at: @post.CreatedAt</div>
-				</header>
-				<div class="threadContentBody">
-					@Html.Raw(post.Content)
-				</div>
-				<footer class="threadContentFooter">
-					<div>
-						@if (post.CreatedAt != post.ModifiedAt)
-						{
-							@: Modified at: @post.ModifiedAt
-						}
-					</div>
-				</footer>
-			</div>
+			</span>
 		</div>
 	}
-}
-else
-{
-	<div class="noPosts">
-		<h3>There are no posts in this thread.</h3>
-		<br />
-	</div>
-}
+
+	<!-- Posts' View -->
+	@if (Model.Posts.Any())
+	{
+		foreach (var post in Model.Posts)
+		{
+			<div class="row postContent">
+				<div class="col-md-3 postAuthorContainer">
+					<div class="postAuthorImage" style="background-image: url(@post.AuthorImageUrl);"></div>
+					<a asp-controller="Profile" asp-action="Detail" asp-route-id="@post.AuthorId">
+						Author: @post.AuthorName
+					</a>
+					@if (post.AuthorRating != 0)
+					{
+						@: (Rating: @post.AuthorRating)
+					}
+
+					@if (post.IsAuthorAdmin)
+					{
+						<div class="isAdmin smaller">Admin</div>
+						<br />
+					}
+				</div>
+
+				<div class="col-md-9 postContentContainer">
+					<header class="threadContentHeader">
+						<!-- Can format the output of the date here with at'ToString(). -->
+						<div>Created at: @post.CreatedAt</div>
+					</header>
+	<!-- TODO: Inspect one of the inspiration sources to see how they put 3 rows in 1 coluumn. -->
+					<div class="threadContentBody">
+						@Html.Raw(post.Content)
+					</div>
+					<footer class="threadContentFooter">
+						<div>
+							@if (post.CreatedAt != post.ModifiedAt)
+							{
+								@: Modified at: @post.ModifiedAt
+							}
+						</div>
+					</footer>
+				</div>
+			</div>
+		}
+	}
+	else
+	{
+		<div class="noPosts">
+			<h3>There are no posts in this thread.</h3>
+			<br />
+		</div>
+	}
+</div>

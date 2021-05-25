@@ -53,7 +53,9 @@ namespace WebForum.Controllers
 				AuthorName = thread.User.UserName,
 				AuthorImageUrl = thread.User.ProfileImageUrl,
 				AuthorRating = thread.User.Rating,
-				Posts = posts
+				Posts = posts,
+				ForumId = thread.Forum.Id,
+				ForumName = thread.Forum.Title
 			};
 				
 			return View(model);

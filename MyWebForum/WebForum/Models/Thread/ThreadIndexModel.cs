@@ -7,8 +7,8 @@ using WebForum.Models.Post;
 namespace WebForum.Models.Thread
 {
 	/// <summary>
-	/// Grabs a collection of "ReplyPostModel", then it is passed to the View.
-	/// A Thread's content (1st "post") & a collection of Posts ("ReplyPostModel").
+	/// Grabs a collection of "PostModel", then it is passed to the View.
+	/// A Thread's content (1st "post") and a collection of Posts ("PostModel").
 	/// </summary>
 	public class ThreadIndexModel
 	{
@@ -30,7 +30,12 @@ namespace WebForum.Models.Thread
 
 		public int AuthorRating { get; set; }
 
-		
+		// These 2 are used to get/ route back to the Forum this Thread belongs to.
+		public int ForumId { get; set; }
+
+		public string ForumName { get; set; }
+
+
 		public virtual IEnumerable<PostModel> Posts { get; set; }
 	}
 }

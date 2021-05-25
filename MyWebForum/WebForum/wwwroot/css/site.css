@@ -64,7 +64,7 @@ body {
 
   padding: 50px 0 20px 0;
   background-color: #EEE;
-  background-image: url("/images/theme/bg-01.png");
+  background-image: url("/images/themes/bg-01.png");
   background-size: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -130,7 +130,7 @@ body {
 /* Front Page (Home)
 -------------------------------------------------- */
 .frontPageSplash {
-    background-image: url("../images/theme/front-splash.png");
+    background-image: url("../images/themes/front-splash.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: right;
@@ -229,6 +229,42 @@ body {
     width: 40px;
     background-color: #DDD;
 }*/
+
+.threadAuthorImage {
+    height: 80px;
+    width: 80px;
+    background-size: 100%;
+    border: 1px solid;
+}
+
+.threadAuthorContainer {
+    padding: 12px;
+    color: #444;
+    font-family: Roboto;
+    width: 190px;
+}
+
+.threadIndexTitle {
+    font-size: 1.4em;
+}
+
+.threadContentContainer {
+    font-family: Roboto;
+    color: #222;
+    padding: 22px;
+    border-left: 1px solid #DDD;
+}
+
+.threadAuthorRating {
+    font-size: 0.9em;
+    color: #159;
+    font-family: Roboto Mono;
+}
+
+#threadIndexContent {
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
+}
 
 /* Forum Index
 -------------------------------------------------- */

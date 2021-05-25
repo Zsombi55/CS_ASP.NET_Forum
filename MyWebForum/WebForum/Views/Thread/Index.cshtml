@@ -21,20 +21,24 @@
 
 <div class="row" id="threadIndexContent">
 	<div class="col-md-3 threadAuthorContainer">
-		<div class="threadAuthorImage" style="background-image: url(@Model.AuthorImageUrl);"></div>
+		<div class="threadAuthorImage" style="background-image: url(@Model.AuthorImageUrl);"
+			title="@Model.AuthorName"></div>
 		<a asp-controller="Profile" asp-action="Detail" asp-route-id="@Model.AuthorId">
 			@Model.AuthorName
 		</a>
-		<span class="threadData">@Model.CreatedAt</span>
 		@if(Model.IsAuthorAdmin)
 		{
 			<span class="isAdmin smaller">Admin</span>
 		}
 	</div>
 	<div class="col-md-9 threadContentContainer">
-		<div class="threadContent">
+		<header class="threadContentHeader">
+			<span class="threadData">Created at: @Model.CreatedAt</span>
+		</header>
+		<div class="threadContentBody">
 			@Html.Raw(Model.Content)
 		</div>
+		<footer class="threadContentFooter"></footer>
 	</div>
 </div>
 
@@ -52,6 +56,7 @@
 	</div>
 }
 
+<!-- Posts' View -->
 @if(Model.Posts.Any())
 {
 	foreach(var post in Model.Posts)
@@ -72,20 +77,23 @@
 					<div class="isAdmin smaller">Admin</div>
 					<br />
 				}
-				<!--Can format the output of the date here with at'ToString()-->
-				<span>Date Created: @post.CreatedAt</span>
-				<span>
-					@if (post.CreatedAt != post.ModifiedAt)
-					{
-						@*doesn't work as expected*@
-						@: (Date Modified: @post.ModifiedAt)
-					}
-				</span>
 			</div>
 			<div class="col-md-9 postContentContainer">
-				<div class="threadContent">
+				<header class="threadContentHeader">
+					<!-- Can format the output of the date here with at'ToString(). -->
+					<div>Created at: @post.CreatedAt</div>
+				</header>
+				<div class="threadContentBody">
 					@Html.Raw(post.Content)
 				</div>
+				<footer class="threadContentFooter">
+					<div>
+						@if (post.CreatedAt != post.ModifiedAt)
+						{
+							@: Modified at: @post.ModifiedAt
+						}
+					</div>
+				</footer>
 			</div>
 		</div>
 	}

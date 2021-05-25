@@ -23,6 +23,8 @@ namespace WebForum.Models.Post
 
 		public string AuthorImageUrl { get; set; }
 
+		public bool IsAuthorAdmin { get; set; }
+
 
 		public int PostId { get; set; }
 	}

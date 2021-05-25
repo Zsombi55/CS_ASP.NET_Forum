@@ -26,14 +26,14 @@
 			@Model.AuthorName
 		</a>
 		<span class="threadData">@Model.CreatedAt</span>
-		@if(Model.IsAdmin)
+		@if(Model.IsAuthorAdmin)
 		{
 			<span class="isAdmin smaller">Admin</span>
 		}
 	</div>
 	<div class="col-md-9 threadContentContainer">
 		<div class="threadContent">
-			@Html.Raw(Model.ThreadContent)
+			@Html.Raw(Model.Content)
 		</div>
 	</div>
 </div>
@@ -62,18 +62,17 @@
 				<a asp-controller="Profile" asp-action="Detail" asp-route-id="@post.AuthorId">
 					Author: @post.AuthorName
 				</a>
-				<span>
-					@if (post.AuthorRating != 0)
-					{
-						@: (@post.AuthorRating)
-					}
-				</span>
+				@if (post.AuthorRating != 0)
+				{
+					@: (Rating: @post.AuthorRating)
+				}
 
-				@if (post.IsauthorAdmin)
+				@if (post.IsAuthorAdmin)
 				{
 					<div class="isAdmin smaller">Admin</div>
 					<br />
 				}
+				<!--Can format the output of the date here with at'ToString()-->
 				<span>Date Created: @post.CreatedAt</span>
 				<span>
 					@if (post.CreatedAt != post.ModifiedAt)

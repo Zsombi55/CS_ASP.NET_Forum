@@ -30,6 +30,8 @@ namespace WebForum.Models.Thread
 
 		public int AuthorRating { get; set; }
 
+		public bool IsAuthorAdmin { get; set; }
+
 		// These 2 are used to get/ route back to the Forum this Thread belongs to.
 		public int ForumId { get; set; }
 

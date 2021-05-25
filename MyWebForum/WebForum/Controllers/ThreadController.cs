@@ -55,7 +55,8 @@ namespace WebForum.Controllers
 				AuthorRating = thread.User.Rating,
 				Posts = posts,
 				ForumId = thread.Forum.Id,
-				ForumName = thread.Forum.Title
+				ForumName = thread.Forum.Title,
+				IsAuthorAdmin = IsAuthorAdmin(thread.User)
 			};
 				
 			return View(model);
@@ -155,5 +156,16 @@ namespace WebForum.Controllers
 				AuthorRating = post.User.Rating
 			});
 		}
+
+		/// <summary>
+		/// Gets all roles the current User has and checks if it has "Admin".
+		/// </summary>
+		/// <param name="user">Obj.: the current User's data.</param>
+		/// <returns>Bool: is ther "Admin" or not in the list of Roles.</returns>
+		private bool IsAuthorAdmin(ApplicationUser user)
+		{
+			return _userManager.GetRolesAsync(user).Result.Contains("Admin");
+		}
+
 	}
 }

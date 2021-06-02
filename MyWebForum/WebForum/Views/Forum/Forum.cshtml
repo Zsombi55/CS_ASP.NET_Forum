@@ -6,92 +6,140 @@
 
 <div class="container body-content">
 	<div class="row sectionHeader">
-		<span><h1>@Model.Forum.Title Forum</h1></span>
-		<span>@Model.Forum.Description</span>
-		@if (Context.User.Identity.IsAuthenticated)
+		<div class="sectionHeading">
+			<h1><span>@Model.Forum.Title Forum</span></h1>
+
+			@if (Context.User.Identity.IsAuthenticated)
+			{
+				<span id="headingBtn">
+					<a asp-controller="Thread" asp-action="Create"
+						asp-route-id=@Model.Forum.Id class="btn btn-newThread">
+							New Thread
+					</a>
+				</span>
+			}
+			<form asp-controller="Forum" asp-action="Search" method="post">
+				<div class="searchForm">
+					<input asp-for="SearchQuery" type="text" placeholder="Search..."
+						class="searchBar" onfocus="clearThis(this)" />
+					<button type="submit" class="btn buttonSearch">
+						<i class="material-icons">Search</i>
+					</button>
+				</div>
+				<input asp-for="Forum.Id" name="id" type="hidden" />
+			</form>
+		</div>
+		<div class="sectionDescription">
+			@* NOT using this, there is; just a placeholder.
+			<div id="forumLogo" class="forumLogo"
+				style="background-image: url(@Model.Forum.ImageUrl)"></div>*@
+			<p>@Model.Forum.Description</p>
+			@if (!User.Identity.IsAuthenticated)
+			{
+				<p>
+					<span>
+						You must
+						<a asp-area="Identity" asp-page="/Account/Register"><b>register</b></a>
+						and /or 
+						<a asp-area="Identity" asp-page="/Account/Login"><b>login</b></a>
+						in order to create new threads.
+					</span>
+				</p>
+			}
+		</div>
+	</div>
+	<div class="row forumIndexContent">
+		@if (Model.Threads.Any())
 		{
-			<span id="headingBtn">
-				<a asp-controller="Thread" asp-action="Create" asp-route-id=@Model.Forum.Id class="btn btn-newThread">
-					New Thread
-				</a>
-			</span>
+			<table class="table table-hover table-bordered" id="threadIndexTable">
+				<tbody>
+					@foreach (var thread in Model.Threads)
+					{
+						<tr>
+							<td>
+								<div class="threadData">
+									<div class="threadTitle">
+										<a asp-controller="Thread"
+										   asp-action="Index"
+										   asp-route-id="@thread.Id">
+											@thread.Title
+										</a>
+									</div>
+									<div class="threadSubTitle">
+										<div>
+											<span class="threadAuthor">
+												<a asp-controller="Profile"
+												   asp-action="Detail"
+												   asp-route-id="@thread.AuthorId">
+													@thread.AuthorName
+												</a>
+											</span>
+											(@thread.CreatorRating)
+										</div>
+									</div>
+								</div>
+							</td>
+
+							<td>
+								<div class="forumPostCount">Posts: @thread.PostCount</div>
+							</td>
+
+							<td>
+								<div class="threadDate">
+									@thread.CreatedAt
+								</div>
+								<!--TODO: why is the plain text generated when the data isn't ?-->
+								@if (thread.ModifiedAt != null && thread.CreatedAt != thread.ModifiedAt)
+								{
+									@:<div class="threadDate">Modified at: @thread.ModifiedAt</div>
+								}
+							</td>
+
+							<td>
+								<!--TODO: why the class style was not applied from the css?-->
+								<div class="threadStatus"
+									 style="color: #888; font-family: Roboto Mono; font-size: 0.8em;">
+									Status:<br />
+									@if (thread.Status.Equals(0))
+									{@:Open, Normal
+									}
+									else if (thread.Status.Equals(1))
+									{ @:Open, Sticky
+									}
+									else if (thread.Status.Equals(10))
+									{ @:Closed, Normal
+									}
+									else if (thread.Status.Equals(11))
+									{ @:Closed, Sticky
+									}
+								</div>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
 		}
-		<form asp-controller="Forum" asp-action="Search" method="post">
-			<div class="searchForm">
-				<input asp-for="SearchQuery" type="text" placeholder="Search..." class="searchBar" onfocus="clearThis(this)" />
-				<button type="submit" class="btn buttonSearch">
-					<i class="material-icons">Search</i>
-				</button>
+		else
+		{
+			<div class="noPosts">
+				<i class="material-icons md-72">question_answer</i>
+				<h3>
+					This forum is empty.
+					<a asp-controller="Thread" asp-action="Create"
+					   asp-route-id="@Model.Forum.Id">
+						<span>New Thread</span>
+					</a>
+				</h3>
 			</div>
-			<input asp-for="Forum.Id" name="id" type="hidden" />
-		</form>
+		}
 	</div>
 </div>
 
-
-
-@if (Model.Threads.Any())
+@section Scripts
 {
-	<table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>Thread Title</th>
-				<th>User</th>
-				<th>Date Added</th>
-				<th>Last Edited</th>
-				<th>Posts</th>
-				<th>Status</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var thread in Model.Threads)
-			{
-				<tr>
-					<td>
-						<a asp-controller="Thread" asp-action="Index" asp-route-id="@thread.Id">
-							@thread.Title
-						</a>
-					</td>
-					<td>
-						<a>
-							@thread.AuthorName
-						</a>
-					</td>
-					<td>@thread.CreatedAt</td>
-					<td>
-						@if (thread.ModifiedAt is not null)
-						{@thread.ModifiedAt
-					}
-					else { }
-					</td>
-					<td>@thread.PostCount</td>
-					<td>
-						@if (thread.Status.Equals(0))
-						{@:Open, Normal
-						}
-						else if (thread.Status.Equals(1))
-						{ @:Open, Sticky
-						}
-						else if (thread.Status.Equals(10))
-						{ @:Closed, Normal
-						}
-						else if (thread.Status.Equals(11))
-						{ @:Closed, Sticky
-						}
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
-}
-else
-{
-	<div class="noThreads">
-		<h3>
-			This forum is empty.
-			<a asp-controller="Thread" asp-action="Create" asp-route-id="@Model.Forum.Id">
-				<span>New Thread</span>
-			</a>
-		</h3>
-	</div>
+	<script>
+		function clearThis(target) {
+			target.value = "";
+		}
+	</script>
 }

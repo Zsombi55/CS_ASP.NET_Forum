@@ -2,17 +2,33 @@
 
 @model WebForum.Models.Forum.ForumThreadsModel
 
-<h1>@Model.Forum.Title</h1>
+<!--TODO: clean up tag properies, 1st id, 2nd class, 3rd everything else.-->
 
-<div>
-	@Model.Forum.Description
+<div class="container body-content">
+	<div class="row sectionHeader">
+		<span><h1>@Model.Forum.Title Forum</h1></span>
+		<span>@Model.Forum.Description</span>
+		@if (Context.User.Identity.IsAuthenticated)
+		{
+			<span id="headingBtn">
+				<a asp-controller="Thread" asp-action="Create" asp-route-id=@Model.Forum.Id class="btn btn-newThread">
+					New Thread
+				</a>
+			</span>
+		}
+		<form asp-controller="Forum" asp-action="Search" method="post">
+			<div class="searchForm">
+				<input asp-for="SearchQuery" type="text" placeholder="Search..." class="searchBar" onfocus="clearThis(this)" />
+				<button type="submit" class="btn buttonSearch">
+					<i class="material-icons">Search</i>
+				</button>
+			</div>
+			<input asp-for="Forum.Id" name="id" type="hidden" />
+		</form>
+	</div>
 </div>
 
-<span id="headingBtn">
-	<a asp-controller="Thread" asp-action="Create" asp-route-id=@Model.Forum.Id class="btn btn-newThread">
-		Create New Thread
-	</a>
-</span>
+
 
 @if (Model.Threads.Any())
 {
@@ -30,40 +46,40 @@
 		<tbody>
 			@foreach (var thread in Model.Threads)
 			{
-			<tr>
-				<td>
-					<a asp-controller="Thread" asp-action="Index" asp-route-id="@thread.Id">
-						@thread.Title
-					</a>
-				</td>
-				<td>
-					<a>
-						@thread.AuthorName
-					</a>
-				</td>
-				<td>@thread.CreatedAt</td>
-				<td>
-					@if (thread.ModifiedAt is not null)
-					{ @thread.ModifiedAt
+				<tr>
+					<td>
+						<a asp-controller="Thread" asp-action="Index" asp-route-id="@thread.Id">
+							@thread.Title
+						</a>
+					</td>
+					<td>
+						<a>
+							@thread.AuthorName
+						</a>
+					</td>
+					<td>@thread.CreatedAt</td>
+					<td>
+						@if (thread.ModifiedAt is not null)
+						{@thread.ModifiedAt
 					}
-					else {}
-				</td>
-				<td>@thread.PostCount</td>
-				<td>
-					@if (thread.Status.Equals(0))
-					{ @:Open, Normal
-					}
-					else if (thread.Status.Equals(1))
-					{ @:Open, Sticky
-					}
-					else if (thread.Status.Equals(10))
-					{ @:Closed, Normal
-					}
-					else if (thread.Status.Equals(11))
-					{ @:Closed, Sticky
-					}
-				</td>
-			</tr>
+					else { }
+					</td>
+					<td>@thread.PostCount</td>
+					<td>
+						@if (thread.Status.Equals(0))
+						{@:Open, Normal
+						}
+						else if (thread.Status.Equals(1))
+						{ @:Open, Sticky
+						}
+						else if (thread.Status.Equals(10))
+						{ @:Closed, Normal
+						}
+						else if (thread.Status.Equals(11))
+						{ @:Closed, Sticky
+						}
+					</td>
+				</tr>
 			}
 		</tbody>
 	</table>

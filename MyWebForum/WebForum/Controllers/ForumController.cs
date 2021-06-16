@@ -66,11 +66,12 @@ namespace WebForum.Controllers
 			var forum = _forumEntityService.GetById(id);
 			var threads = new List<ThreadEntity>();
 
-			if(!string.IsNullOrEmpty(searchQuery))
-			{
-				threads = _threadEntityService.GetFilteredThreads(id, searchQuery).ToList();
-			}
-			threads = forum.Threads.ToList();
+			//if (!string.IsNullOrEmpty(searchQuery))
+			//{
+			//	threads = _threadEntityService.GetFilteredThreads(id, searchQuery).ToList();
+			//}
+			//threads = forum.Threads.ToList();
+			threads = _threadEntityService.GetFilteredThreads(forum, searchQuery).ToList();
 
 			var threadListings = threads.Select(thread => new ThreadListingModel
 			{

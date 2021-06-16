@@ -69,10 +69,8 @@ namespace WebForum.Services
 			return thread;
 		}
 
-		public IEnumerable<ThreadEntity> GetFilteredThreads(int id, string searchQuery)
+		public IEnumerable<ThreadEntity> GetFilteredThreads(ForumEntity forum, string searchQuery)
 		{
-			var forum = _context.Forums.Find(id);
-			
 			return string.IsNullOrEmpty(searchQuery) ? forum.Threads :
 				forum.Threads.Where(thread => 
 					thread.Title.Contains(searchQuery) ||

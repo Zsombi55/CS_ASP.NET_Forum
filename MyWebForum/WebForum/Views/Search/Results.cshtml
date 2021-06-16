@@ -1,0 +1,124 @@
+﻿@*For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860*@
+
+@model WebForum.Models.Search.SearchResultModel
+
+<div class="container body-content">
+	<div class="row sectionHeader">
+		<div class="sectionHeading">
+			<h1><span>Search results for: @Model.SearchQuery</span></h1>
+			<form asp-controller="Forum" asp-action="Search" method="post">
+				<div class="searchForm">
+					<input asp-for="SearchQuery" type="text" placeholder="Search..."
+						   class="searchBar" onfocus="clearThis(this)" />
+					<button type="submit" class="btn btn-forumSearch">
+						<i class="material-icons">search</i>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row forumIndexContent">
+		@if (! Model.EmptySerachResults)
+		{
+			<table class="table table-hover table-bordered" id="searchIndexTable">
+				<tbody>
+					@foreach (var thread in Model.Threads)
+					{
+						<tr>
+							<td>
+								<!-- Placeholder, there is no mage or logo for individual forums. -->
+								@*<a asp-controller="Forum" asp-action="Forum"
+									asp-route-id="@thread.Forum.Id">
+										<div class="forumLogo" 
+									style="background-image:url(@thread.Forum.ImageUrl)"></div>
+								</a>*@
+								<div class="threadData">
+									<div class="threadTitle">
+										<a asp-controller="Thread"
+										   asp-action="Index"
+										   asp-route-id="@thread.Id">
+											@thread.Title
+										</a>
+									</div>
+									<div class="threadSubTitle">
+										<div>
+											by:
+											<span class="threadAuthor">
+												<a asp-controller="Profile"
+												   asp-action="Detail"
+												   asp-route-id="@thread.AuthorId">
+													@thread.AuthorName
+												</a>
+												(@thread.AuthorRating)
+											</span>
+											in:
+											<span class="threadForum">
+												<a asp-controller="Forum" asp-action="Forum"
+												   asp-route-id="@thread.Forum.Id">
+													@thread.Forum.Title
+												</a>
+											</span>
+										</div>
+									</div>
+								</div>
+							</td>
+
+							<td>
+								<div class="forumPostCount">Posts: @thread.PostCount</div>
+							</td>
+
+							<td>
+								<div class="threadDate">
+									@thread.CreatedAt
+								</div>
+								<!--TODO: why is the plain text generated when the data isn't ?-->
+								@if (thread.ModifiedAt != null && thread.CreatedAt != thread.ModifiedAt)
+								{
+									@:<div class="threadDate">Modified at: @thread.ModifiedAt</div>
+								}
+							</td>
+
+							<td>
+								<!--TODO: why the class style was not applied from the css?-->
+								<div class="threadStatus"
+									 style="color: #888; font-family: Roboto Mono; font-size: 0.8em;">
+									Status:<br />
+									@if (thread.Status.Equals(0))
+									{@:Open, Normal
+									}
+									else if (thread.Status.Equals(1))
+									{ @:Open, Sticky
+									}
+									else if (thread.Status.Equals(10))
+									{ @:Closed, Normal
+									}
+									else if (thread.Status.Equals(11))
+									{ @:Closed, Sticky
+									}
+								</div>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		}
+		else
+		{
+			<div class="noPosts">
+				<i class="material-icons md-72">question_answer</i>
+				<h3>
+					No results found for: @Model.SearchQuery <br />
+				</h3>
+			</div>
+		}
+	</div>
+</div>
+
+@section Scripts
+{
+	<script>
+		function clearThis(target) {
+			target.value = "";
+		}
+	</script>
+}

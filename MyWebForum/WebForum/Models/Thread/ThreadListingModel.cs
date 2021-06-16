@@ -23,7 +23,7 @@ namespace WebForum.Models.Thread
 
 		public string AuthorImageUrl { get; set; }
 
-		public int CreatorRating { get; set; }
+		public int AuthorRating { get; set; }
 				
 
 		public ForumListingModel Forum { get; set; }

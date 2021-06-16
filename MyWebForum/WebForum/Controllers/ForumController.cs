@@ -84,7 +84,7 @@ namespace WebForum.Controllers
 				AuthorId = thread.User.Id, // ApplicationUser : IdentityUser<string>
 				AuthorName = thread.User.UserName,
 				AuthorImageUrl = thread.User.ProfileImageUrl,
-				CreatorRating = thread.User.Rating,
+				AuthorRating = thread.User.Rating,
 				Forum = BuildForumListing(thread)
 			});
 

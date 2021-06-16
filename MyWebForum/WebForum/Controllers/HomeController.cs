@@ -47,7 +47,7 @@ namespace WebForum.Controllers
 				Title = thread.Title,
 				AuthorName = thread.User.UserName,
 				AuthorId = thread.User.Id,
-				CreatorRating = thread.User.Rating, // Author Rating
+				AuthorRating = thread.User.Rating, // Author Rating
 				CreatedAt = thread.CreatedAt.ToString(),
 				PostCount = thread.Posts.Count(),
 				Forum = GetForumListingForThread(thread)

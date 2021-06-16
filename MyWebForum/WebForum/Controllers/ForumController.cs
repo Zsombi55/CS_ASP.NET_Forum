@@ -17,10 +17,11 @@ namespace WebForum.Controllers
 		private readonly IForumEntity _forumEntityService;
 		private readonly IThreadEntity _threadEntityService;
 
-		public ForumController(IForumEntity forumEntityService, IBoardEntity boardEntityService)
+		public ForumController(IThreadEntity threadEntityService, IForumEntity forumEntityService, IBoardEntity boardEntityService)
 		{
 			_boardEntityService = boardEntityService;
 			_forumEntityService = forumEntityService;
+			_threadEntityService = threadEntityService;
 		}
 
 		// GET : Forum
@@ -55,14 +56,21 @@ namespace WebForum.Controllers
 		// GET : Forum
 		/// <summary>
 		/// Gets a Forum by its ID with all of its Threads for listing.
+		/// If the "search query" parameter is NOT empty, filter & collect Threads accordingly.
 		/// </summary>
 		/// <param name="id">Int: forum ID.</param>
+		/// <param name="searchQuery">String: user input (text to look for).</param>
 		/// <returns>Object: a Forum's data, its Thread collection, and some of their data.</returns>
-		public IActionResult Forum(int id)
+		public IActionResult Forum(int id, string searchQuery)
 		{
 			var forum = _forumEntityService.GetById(id);
-			//var threads = _threadEntityService.GetThreadsByForum(id);
-			var threads = forum.Threads;
+			var threads = new List<ThreadEntity>();
+
+			if(!string.IsNullOrEmpty(searchQuery))
+			{
+				threads = _threadEntityService.GetFilteredThreads(id, searchQuery).ToList();
+			}
+			threads = forum.Threads.ToList();
 
 			var threadListings = threads.Select(thread => new ThreadListingModel
 			{
@@ -107,6 +115,18 @@ namespace WebForum.Controllers
 			};
 
 			return View(model);
+		}
+
+		/// <summary>
+		/// Gets a collection of Threads containing the "Search" string for listing, from the ID-d Forum.
+		/// </summary>
+		/// <param name="id">Int: forum ID.</param>
+		/// <param name="searchQuery">String: user input (text to look for), ex. thread name.</param>
+		/// <returns>An action: pass data to & call function to render a Forum's data, its potentially "search query" filtered Thread collection (if the parameter is empty, there is no filtering), and some of their data.</returns>
+		[HttpPost]
+		public async Task<IActionResult> Search(int id, string searchQuery)
+		{
+			return RedirectToAction("Forum", new { id, searchQuery });
 		}
 
 		/// <summary>

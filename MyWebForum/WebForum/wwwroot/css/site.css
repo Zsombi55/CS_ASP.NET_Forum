@@ -340,6 +340,13 @@ body {
     color: #FFF !important;
 }
 
+.btn-forumSearch {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    font: inherit;
+}
+
 /* Forum Index
 -------------------------------------------------- */
 #forumIndexTable td {

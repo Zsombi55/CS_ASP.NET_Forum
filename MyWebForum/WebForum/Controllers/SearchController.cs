@@ -45,7 +45,7 @@ namespace WebForum.Controllers
 				EmptySerachResults = zeroResults
 			};
 
-			return View();
+			return View(model);
 		}
 
 		private ForumListingModel BuildForumListing(ThreadEntity thread)

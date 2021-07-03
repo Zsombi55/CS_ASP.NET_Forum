@@ -26,8 +26,8 @@ namespace WebForum.Data
 
 			var user = new ApplicationUser
 			{
-				UserName = "ForumAdmin2",
-				NormalizedUserName = "forumadmin2",
+				UserName = "user_admin_2@mail.com",
+				NormalizedUserName = "USER_ADMIN_2@MAIL.COM",
 				Email = "user_admin_2@mail.com",
 				EmailConfirmed = true,
 				LockoutEnabled = false,
@@ -35,7 +35,7 @@ namespace WebForum.Data
 			};
 
 			var hasher = new PasswordHasher<ApplicationUser>();
-			var hashedPass = hasher.HashPassword(user, "Admin-User-2!");
+			var hashedPass = hasher.HashPassword(user, "Admin-User_2!");
 			user.PasswordHash = hashedPass;
 
 			var hasAdminRole = _context.Roles.Any(roles => roles.Name == "Admin");

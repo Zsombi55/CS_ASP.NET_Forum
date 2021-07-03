@@ -19,20 +19,19 @@ namespace WebForum.Data
 			_context = context;
 		}
 
-		public async Task SeedSuperUser()
+		public Task SeedSuperUser()
 		{
-			var store = new RoleStore<IdentityRole>(_context);
+			var roleStore = new RoleStore<IdentityRole>(_context);
 			var userStore = new UserStore<ApplicationUser>(_context);
 
 			var user = new ApplicationUser
 			{
-				UserName = "ForumAdmin",
-				NormalizedUserName = "forumadmin",
+				UserName = "ForumAdmin2",
+				NormalizedUserName = "forumadmin2",
 				Email = "user_admin_2@mail.com",
 				EmailConfirmed = true,
 				LockoutEnabled = false,
 				SecurityStamp = Guid.NewGuid().ToString(),
-
 			};
 
 			var hasher = new PasswordHasher<ApplicationUser>();
@@ -43,7 +42,7 @@ namespace WebForum.Data
 
 			if(!hasAdminRole)
 			{
-				await store.CreateAsync(new IdentityRole {
+				roleStore.CreateAsync(new IdentityRole {
 					Name = "Admin",
 					NormalizedName = "admin"
 				});
@@ -53,11 +52,13 @@ namespace WebForum.Data
 
 			if (!hasSuperUser)
 			{
-				await userStore.CreateAsync(user);
-				await userStore.AddToRoleAsync(user, "Admin");
+				userStore.CreateAsync(user);
+				userStore.AddToRoleAsync(user, "Admin");
 			}
 
-			await _context.SaveChangesAsync();
+			_context.SaveChangesAsync();
+
+			return Task.CompletedTask;
 		}
 	}
 }

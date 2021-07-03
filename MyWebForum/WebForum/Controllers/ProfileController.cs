@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebForum.Data;
 using WebForum.Entities;
+using WebForum.Models.AppUser;
 
 namespace WebForum.Controllers
 {
@@ -20,7 +21,20 @@ namespace WebForum.Controllers
 
 		public IActionResult Detail(string id)
 		{
-			return View();
+			var user = _userService.GetById(id);
+			var userRoles = _userManager.GetRolesAsync(user).Result;
+
+			var model = new ProfileModel(){
+				UserId = user.Id,
+				UserName = user.UserName,
+				UserRating = user.Rating.ToString(),
+				Email = user.Email,
+				ProfileImgUrl = user.ProfileImageUrl,
+				MemberSince = user.MemberSince,
+				IsAdmin = userRoles.Contains("Admin")
+			};
+
+			return View(model);
 		}
 
 		public IActionResult Index()

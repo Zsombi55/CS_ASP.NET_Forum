@@ -1,3 +1,0 @@
-MyWebforum 
-
-This is me trying a different approach too in making a Forum/ Message board web application.

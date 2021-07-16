@@ -1,16 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WebForum.Data;
 using WebForum.Entities;
 using WebForum.Services;
@@ -44,6 +38,9 @@ namespace WebForum
 			services.AddScoped<IBoardEntity, BoardService>();
 			services.AddScoped<IForumEntity, ForumService>();
 			services.AddScoped<IThreadEntity, ThreadService>();
+			services.AddScoped<IUpload, UploadService>();
+
+			services.AddScoped<IApplicationUser, AppUserService>();
 
 			services.AddTransient<DataSeeder>();
 		}

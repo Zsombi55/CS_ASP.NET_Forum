@@ -19,7 +19,7 @@ namespace WebForum.Data
 			_context = context;
 		}
 
-		//public async Task SeedSuperUser()
+		//public async Task SeedSuperUser() // Gives error.
 		public Task SeedSuperUser()
 		{
 			var roleStore = new RoleStore<IdentityRole>(_context);
@@ -54,15 +54,13 @@ namespace WebForum.Data
 
 			if (!hasSuperUser)
 			{
-				//await userStore. ...
-				//await userStore. ...
-
+				//await ...
 				userStore.CreateAsync(user);
 				userStore.AddToRoleAsync(user, "Admin");
 				//TODO: Roles and Users do not get paired !! the "AspNetUserRoles" db table remains empty.
 			}
 
-			//await _context.SaveChangesAsync(); }
+			//await _context.SaveChangesAsync();
 			_context.SaveChangesAsync();
 
 			return Task.CompletedTask;

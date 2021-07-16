@@ -19,6 +19,7 @@ namespace WebForum.Data
 			_context = context;
 		}
 
+		//public async Task SeedSuperUser()
 		public Task SeedSuperUser()
 		{
 			var roleStore = new RoleStore<IdentityRole>(_context);
@@ -42,20 +43,26 @@ namespace WebForum.Data
 
 			if(!hasAdminRole)
 			{
+				//await roleStore. ...
 				roleStore.CreateAsync(new IdentityRole {
 					Name = "Admin",
-					NormalizedName = "admin"
+					NormalizedName = "ADMIN"
 				});
 			}
 
-			var hasSuperUser = _context.Roles.Any(u => u.NormalizedName == user.UserName);
+			var hasSuperUser = _context.Users.Any(u => u.NormalizedUserName == user.UserName);
 
 			if (!hasSuperUser)
 			{
+				//await userStore. ...
+				//await userStore. ...
+
 				userStore.CreateAsync(user);
 				userStore.AddToRoleAsync(user, "Admin");
+				//TODO: Roles and Users do not get paired !! the "AspNetUserRoles" db table remains empty.
 			}
 
+			//await _context.SaveChangesAsync(); }
 			_context.SaveChangesAsync();
 
 			return Task.CompletedTask;

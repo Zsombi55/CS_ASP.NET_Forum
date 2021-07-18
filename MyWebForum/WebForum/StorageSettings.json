@@ -1,0 +1,5 @@
+{
+	"ConnectionStrings": {
+		"AzureStorageAccount": "DefaultEndpointsProtocol=https;AccountName=MyWebForum;Account...;"
+	}
+}

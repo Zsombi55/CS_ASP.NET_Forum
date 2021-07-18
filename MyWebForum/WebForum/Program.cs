@@ -23,17 +23,17 @@ namespace WebForum
 
 				// Doesn't work: I won't make a temp Azure account just for this minor personal project.
 
-				.ConfigureWebHostDefaults(webBuilder =>
-					webBuilder.ConfigureAppConfiguration(config =>
-					{
-						var settings = config.Build();
-						var connection = settings.GetConnectionString("AppConfig");
-						config.AddAzureAppConfiguration(connection);
-					}).UseStartup<Startup>());
-
 				//.ConfigureWebHostDefaults(webBuilder =>
-				//{
-				//	webBuilder.UseStartup<Startup>();
-				//});
+				//	webBuilder.ConfigureAppConfiguration(config =>
+				//	{
+				//		var settings = config.Build();
+				//		var connection = settings.GetConnectionString("AppConfig");
+				//		config.AddAzureAppConfiguration(connection);
+				//	}).UseStartup<Startup>());
+
+				.ConfigureWebHostDefaults(webBuilder =>
+				{
+					webBuilder.UseStartup<Startup>();
+				});
 	}
 }

@@ -40,6 +40,8 @@ namespace WebForum
 			services.AddScoped<IThreadEntity, ThreadService>();
 			services.AddScoped<IUpload, UploadService>();
 
+			services.AddSingleton(Configuration);
+
 			services.AddScoped<IApplicationUser, AppUserService>();
 
 			services.AddTransient<DataSeeder>();

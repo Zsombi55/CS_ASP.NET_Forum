@@ -445,6 +445,14 @@ body {
     background-color: #fff;
 }
 
+/* Implies the image is a "square". */
+#userProfileImage {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    background-color: #ddd;
+}
+
 #userEmailLabel, #userBioLabel, #userCreatedLabel, #userRating, #userActiveLabel {
     display: block;
     color: #444;

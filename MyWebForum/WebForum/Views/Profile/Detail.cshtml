@@ -18,32 +18,32 @@
 	</div>
 	<div class="row userProfile">
 		<div class="col-md-4">
-			<div id="userProfileImg" style="background-image: url(@Model.ProfileImgUrl)">
-				@if (User.Identity.Name == Model.UserName)
-				{
-					<form method="post" enctype="multipart/form-data"
-						  asp-controller="Profile" asp-action="UploadProfileImg">
-						<div id="upload">
-							<label class="btn btn-default btn-file">
-								Browse
-								<input type="file" name="file" style="display: none" />
-							</label>
-						</div>
-						<button type="submit" id="btn-profile" class="btn btn-default">Submit</button>
-					</form>
-				}
-			</div>
+			<div id="userProfileImg"
+				 style="background-image: url(@Model.ProfileImgUrl); background-size:100%;"></div>
+			@if (User.Identity.Name == Model.UserName)
+			{
+				<form method="post" enctype="multipart/form-data"
+					  asp-controller="Profile" asp-action="UploadProfileImg">
+					<div id="upload">
+						<label class="btn btn-default btn-file">
+							Browse
+							<input type="file" name="file" style="display: none" />
+						</label>
+					</div>
+					<button type="submit" id="btn-profile" class="btn btn-default">Submit</button>
+				</form>
+			}
 		</div>
-	</div>
-	<!-- Basic user information. -->
-	<div class="col-md-8">
-		<span id="userName">@Model.UserName</span>
-		@if (Model.IsAdmin)
-		{
-			<span class="isAdmin">Admin</span>
-		}
-		<span id="userRating">Rating: @Model.UserRating</span>
-		<span id="userEmailLabel">E-mail: @Model.Email</span>
-		<span id="userCreatedLabel">Joined: @Model.MemberSince</span>
+		<!-- Basic user information. -->
+		<div class="col-md-8">
+			<span id="userName">@Model.UserName</span>
+			@if (Model.IsAdmin)
+			{
+				<span class="isAdmin">Admin</span>
+			}
+			<span id="userRating">Rating: @Model.UserRating</span>
+			<span id="userEmailLabel">E-mail: @Model.Email</span>
+			<span id="userCreatedLabel">Joined: @Model.MemberSince</span>
+		</div>
 	</div>
 </div>

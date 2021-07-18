@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WebForum.Data;
 using WebForum.Entities;
 using WebForum.Models.AppUser;
@@ -17,6 +19,11 @@ namespace WebForum.Controllers
 			_userManager = userManager;
 			_userService = userService;
 			_uploadService = uploadService; //For file upload handling, ex. profile pictures.
+		}
+
+		public IActionResult Index()
+		{
+			return View();
 		}
 
 		public IActionResult Detail(string id)
@@ -37,9 +44,10 @@ namespace WebForum.Controllers
 			return View(model);
 		}
 
-		public IActionResult Index()
+		[HttpPost]
+		public async Task<IActionResult> PostProfileImg (IFormFile file)
 		{
-			return View();
+			//
 		}
 	}
 }

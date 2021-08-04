@@ -142,7 +142,8 @@ namespace WebForum.Controllers
 		{
 			var forum = BuildForum(model);
 
-			_forumEntityService.Create(forum).Wait();
+			//_forumEntityService.Create(forum).Wait();
+			await _forumEntityService.Create(forum);
 
 			return RedirectToAction("Index", "Forum", new { id = forum.Id });
 		}

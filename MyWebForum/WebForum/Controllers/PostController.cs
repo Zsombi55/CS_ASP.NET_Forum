@@ -12,12 +12,13 @@ namespace WebForum.Controllers
 {
 	public class PostController : Controller
 	{
-		private readonly IThreadEntity _threadService;
+		private readonly IThreadEntity _threadEntityService;
 		private readonly UserManager<ApplicationUser> _userManager;
 
-		protected PostController(IThreadEntity threadService)
+		public PostController(IThreadEntity threadEntityService, UserManager<ApplicationUser> userManager)
 		{
-			_threadService = threadService;
+			_threadEntityService = threadEntityService;
+			_userManager = userManager;
 		}
 
 		/// <summary>
@@ -27,7 +28,7 @@ namespace WebForum.Controllers
 		/// <returns>View model data: for showing the post-creation page.</returns>
 		public async Task<IActionResult> Create(int id)
 		{
-			var thread = _threadService.GetById(id);
+			var thread = _threadEntityService.GetById(id);
 
 			var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
@@ -66,7 +67,7 @@ namespace WebForum.Controllers
 
 			var post = BuildPost(model, user);
 
-			await _threadService.AddPost(post);
+			await _threadEntityService.AddPost(post);
 
 			return RedirectToAction("Index", "Thread", new {id = model.ThreadId });
 		}
@@ -79,7 +80,7 @@ namespace WebForum.Controllers
 		/// <returns>Object: a new PostEntity based on the NewPostModel data template.</returns>
 		private PostEntity BuildPost(NewPostModel model, ApplicationUser user)
 		{
-			var thread = _threadService.GetById(model.ThreadId);
+			var thread = _threadEntityService.GetById(model.ThreadId);
 
 			return new PostEntity{
 				Thread = thread,

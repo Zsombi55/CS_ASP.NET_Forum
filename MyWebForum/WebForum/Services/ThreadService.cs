@@ -20,7 +20,7 @@ namespace WebForum.Services
 			_context = context;
 		}
 
-		public Task AddReply(PostEntity postEntity)
+		public Task AddPost(PostEntity postEntity)
 		{
 			throw new NotImplementedException();
 		}

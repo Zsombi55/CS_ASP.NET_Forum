@@ -37,10 +37,13 @@ namespace WebForum.Controllers
 				AuthorRating = user.Rating,
 				IsAuthorAdmin = User.IsInRole("Admin"),
 
+				ForumId = thread.Forum.Id,
+				ForumTitle = thread.Forum.Title,
+												
 				CreatedAt = DateTime.Now
 			};
 
-			return View();
+			return View(model);
 		}
 	}
 }

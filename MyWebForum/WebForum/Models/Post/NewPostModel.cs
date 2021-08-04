@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebForum.Models.Post
 {
-	public class PostModel
+	public class NewPostModel
 	{
 		public int Id { get; set; }
 		

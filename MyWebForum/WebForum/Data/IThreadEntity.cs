@@ -17,6 +17,6 @@ namespace WebForum.Data
 		Task Delete(int threadId);
 		Task UpdateThreadContent(int threadId, string newContent);
 
-		Task AddReply(PostEntity postEntity);
+		Task AddPost(PostEntity post);
 	}
 }

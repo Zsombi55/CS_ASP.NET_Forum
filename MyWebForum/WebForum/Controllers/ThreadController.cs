@@ -142,9 +142,9 @@ namespace WebForum.Controllers
 		/// </summary>
 		/// <param name="posts">PostEntity object.</param>
 		/// <returns>Collection object: a thread's posts.</returns>
-		private IEnumerable<PostModel> BuildThreadReplies(IEnumerable<PostEntity> posts)
+		private IEnumerable<NewPostModel> BuildThreadReplies(IEnumerable<PostEntity> posts)
 		{
-			return posts.Select(post => new PostModel
+			return posts.Select(post => new NewPostModel
 			{
 				Id = post.Id,
 				Content = post.Content,

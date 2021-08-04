@@ -1,6 +1,6 @@
 ﻿@*For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860*@
 
-@model WebForum.Models.Post.PostModel
+@model WebForum.Models.Post.NewPostModel
 
 <div class="container body-content">
 	<div class="row sectionHeader">
@@ -29,6 +29,7 @@
 			<div class="authorBlock">You are submiting this post as @Model.AuthorName</div>
 
 			<form id="AddPostForm" asp-action="AddPost" method="post">
+			@*The action "AddPost" is found in "Data / IThreadEntity.cs"*@
 				<div class="text-danger" asp-validation-summary="All"></div>
 				<div class="form-group">
 					<label asp-for="Content">Post: </label>
@@ -41,7 +42,7 @@
 
 				<input asp-for="AuthorId" type="hidden" />
 				<input asp-for="ThreadId" type="hidden" />
-				<input asp-for="ForumId" type="hidden" />
+				<input asp-for="ThreadId" type="hidden" />
 			</form>
 		</div>
 	</div>

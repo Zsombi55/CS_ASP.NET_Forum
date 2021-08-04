@@ -38,7 +38,7 @@ namespace WebForum.Models.Thread
 		public string ForumName { get; set; }
 
 
-		public virtual IEnumerable<PostModel> Posts { get; set; }
+		public virtual IEnumerable<NewPostModel> Posts { get; set; }
 	}
 }
 

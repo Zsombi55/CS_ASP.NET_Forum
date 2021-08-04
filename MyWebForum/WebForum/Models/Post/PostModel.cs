@@ -8,12 +8,13 @@ namespace WebForum.Models.Post
 	public class PostModel
 	{
 		public int Id { get; set; }
-
+		
 		public string Content { get; set; }
 
-		public DateTime CreatedAt { get; set; }
+		public DateTime CreatedAt { get; set; } // Not DateTime for easier manipulation.
 
 		public DateTime? ModifiedAt { get; set; }
+
 
 		public string AuthorId { get; set; }
 
@@ -26,7 +27,16 @@ namespace WebForum.Models.Post
 		public bool IsAuthorAdmin { get; set; }
 
 
-		public int PostId { get; set; }
+		public int ThreadId { get; set; }
+
+		public string ThreadTitle { get; set; }
+
+		public string ThreadContent { get; set; }
+
+
+		public int ForumId { get; set; }
+
+		public string ForumTitle { get; set; }
 	}
 }
 

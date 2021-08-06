@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using WebForum.Data;
 using WebForum.Entities;
@@ -17,11 +21,18 @@ namespace WebForum.Controllers
 		private readonly IForumEntity _forumEntityService;
 		private readonly IThreadEntity _threadEntityService;
 
-		public ForumController(IThreadEntity threadEntityService, IForumEntity forumEntityService, IBoardEntity boardEntityService)
+		private readonly IUpload _uploadService;
+		private readonly IConfiguration _configuration;
+
+		public ForumController(IThreadEntity threadEntityService, IForumEntity forumEntityService, IBoardEntity boardEntityService, IUpload uploadService, IConfiguration configService)
 		{
 			_boardEntityService = boardEntityService;
 			_forumEntityService = forumEntityService;
 			_threadEntityService = threadEntityService;
+
+			_uploadService = uploadService; //For file upload handling, ex. profile pictures.
+
+			_configuration = configService;
 		}
 
 		// GET : Forum
@@ -97,6 +108,18 @@ namespace WebForum.Controllers
 			return View(model);
 		}
 
+		/// <summary>
+		/// Gets a collection of Threads containing the "Search" string for listing, from the ID-d Forum.
+		/// </summary>
+		/// <param name="id">Int: forum ID.</param>
+		/// <param name="searchQuery">String: user input (text to look for), ex. thread name.</param>
+		/// <returns>An action: pass data to & call function to render a Forum's data, its potentially "search query" filtered Thread collection (if the parameter is empty, there is no filtering), and some of their data.</returns>
+		[HttpPost]
+		public async Task<IActionResult> Search(int id, string searchQuery)
+		{
+			return RedirectToAction("Forum", new { id, searchQuery });
+		}
+
 		// POST : Forum
 		/// <summary>
 		/// Gets the existing data to which later the User-entered data can be connected to.
@@ -119,18 +142,6 @@ namespace WebForum.Controllers
 		}
 
 		/// <summary>
-		/// Gets a collection of Threads containing the "Search" string for listing, from the ID-d Forum.
-		/// </summary>
-		/// <param name="id">Int: forum ID.</param>
-		/// <param name="searchQuery">String: user input (text to look for), ex. thread name.</param>
-		/// <returns>An action: pass data to & call function to render a Forum's data, its potentially "search query" filtered Thread collection (if the parameter is empty, there is no filtering), and some of their data.</returns>
-		[HttpPost]
-		public async Task<IActionResult> Search(int id, string searchQuery)
-		{
-			return RedirectToAction("Forum", new { id, searchQuery });
-		}
-
-		/// <summary>
 		/// Sets/ Posts user-input into a view model then pushes that into the DB.
 		/// A form method type post, triggers this; so it doesn't handle it like a typical GET request.
 		/// [bad explanation]
@@ -140,12 +151,48 @@ namespace WebForum.Controllers
 		[HttpPost]
 		public async Task<IActionResult> AddForum(NewForumModel model)
 		{
+			var imageUri = "images/users/default.png";
+
+			// This will never be used; never adding cloud storage functions; it is just a demo app.
+			if (model.ImageUpload != null)
+			{
+				// Set the Forum's Image to the URI
+				var blockBlob = UploadForumImage(model.ImageUpload);
+				imageUri = blockBlob.Uri.AbsoluteUri;
+			}
+
 			var forum = BuildForum(model);
 
 			//_forumEntityService.Create(forum).Wait();
 			await _forumEntityService.Create(forum);
 
 			return RedirectToAction("Index", "Forum", new { id = forum.Id });
+		}
+
+		private CloudBlockBlob UploadForumImage(IFormFile file)
+		{
+			// NOTE: to use Azure web-app storage see:
+			// https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-aspnet-core-app?tabs=core5x
+
+			// Connect to Azure Storage Account Container.
+			var connectionString = _configuration.GetConnectionString("AzureStorageAccount");
+
+			// Get Blob Container.
+			var container = _uploadService.GetBlobContainer(connectionString);
+
+			// Parse the Content Disposition response header
+			var contantDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
+
+			// Grab the filename
+			var fileName = contantDisposition.FileName.Trim('"');
+
+			// Get a reference to a Block Blob
+			var blockBlob = container.GetBlockBlobReference(fileName);
+
+			// On that, upload our file <-- file uploaded to the cloud
+			blockBlob.UploadFromStreamAsync(file.OpenReadStream());
+
+			return blockBlob;
 		}
 
 		/// <summary>
@@ -162,6 +209,7 @@ namespace WebForum.Controllers
 				Title = model.Title,
 				Description = model.Description,
 				CreatedAt = DateTime.Now,
+				//ImageUrl = imgageUri, // Placeholder; not added; seems silly to have a forum or thread have an picture like a user would have a profile image.
 				Board = board
 			};
 		}

@@ -129,14 +129,16 @@ namespace WebForum.Controllers
 		/// <returns>NewForumModel object: basic new Forum creation data.</returns>
 		public IActionResult Create(int id)
 		{
-			var board = _boardEntityService.GetById(id);
+			// TODO: somehow link the forum to be created to a Board by user selection.
+			//var board = _boardEntityService.GetById(id);
 
-			var model = new NewForumModel
-			{
-				BoardId = board.Id,
-				BoardName = board.Title
-				//TODO: no regular Users should be able to use this, only Mods & Admins !
-			};
+			//var model = new NewForumModel
+			//{
+			//	BoardId = board.Id,
+			//	BoardName = board.Title
+			//};
+
+			var model = new NewForumModel{};
 
 			return View(model);
 		}
@@ -169,7 +171,7 @@ namespace WebForum.Controllers
 			return RedirectToAction("Index", "Forum", new { id = forum.Id });
 		}
 
-		private CloudBlockBlob UploadForumImage(IFormFile file)
+				private CloudBlockBlob UploadForumImage(IFormFile file)
 		{
 			// NOTE: to use Azure web-app storage see:
 			// https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-aspnet-core-app?tabs=core5x

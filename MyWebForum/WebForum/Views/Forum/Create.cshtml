@@ -22,8 +22,8 @@
 
 				<div class="form-group">
 					<label asp-for="Description">Forum Description</label>
-					<input class="form-control" asp-for="Description" 
-						placeholder="Brief description (max. 255 characters).." />
+					<input class="form-control" asp-for="Description"
+						   placeholder="Brief description (max. 255 characters).." />
 					<span class="text-danger" asp-validation-summary="Description"></span>
 				</div>
 
@@ -37,13 +37,8 @@
 				</div>
 
 				<button id="newForumBtn" class="btn btn-submitForum" type="submit">Create Forum</button>
+				<input asp-for="BoardId" type="hidden" />
 			</form>
 		</div>
-	</div>
-
-	
-
-	
-	<button type="submit" id="submitForumBtn" class="btn btn-submitForum">Create Forum</button>
-	<input asp-for="BoardId" type="hidden" />
+	</div>	
 </div>

@@ -20,9 +20,18 @@ namespace WebForum.Services
 			_context = context;
 		}
 
-		public Task AddPost(PostEntity postEntity)
+		// ThreadController does the heavy-lifting, here we are just appending data to an existing object.
+		public async Task AddThread(ThreadEntity threadEntity)
 		{
-			throw new NotImplementedException();
+			_context.Add(threadEntity);
+			await _context.SaveChangesAsync();
+		}
+
+		// PostController does the heavy-lifting, here we are just appending data to an existing object.
+		public async Task AddPost(PostEntity postEntity)
+		{
+			_context.Posts.Add(postEntity);
+			await _context.SaveChangesAsync();
 		}
 
 		/// <summary>

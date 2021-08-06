@@ -13,11 +13,14 @@ namespace WebForum.Controllers
 	public class PostController : Controller
 	{
 		private readonly IThreadEntity _threadEntityService;
+		private readonly IApplicationUser _appUserService;
 		private readonly UserManager<ApplicationUser> _userManager;
 
-		public PostController(IThreadEntity threadEntityService, UserManager<ApplicationUser> userManager)
+		public PostController(IThreadEntity threadEntityService, IApplicationUser appUserService,
+			UserManager<ApplicationUser> userManager)
 		{
 			_threadEntityService = threadEntityService;
+			_appUserService = appUserService;
 			_userManager = userManager;
 		}
 
@@ -68,6 +71,8 @@ namespace WebForum.Controllers
 			var post = BuildPost(model, user);
 
 			await _threadEntityService.AddPost(post);
+
+			await _appUserService.UpdateRating(userId, typeof(PostEntity));
 
 			return RedirectToAction("Index", "Thread", new {id = model.ThreadId });
 		}

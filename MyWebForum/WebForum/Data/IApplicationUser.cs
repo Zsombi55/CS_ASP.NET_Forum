@@ -11,6 +11,6 @@ namespace WebForum.Data
 		IEnumerable<ApplicationUser> GetAll();
 
 		Task SetProfileImg(string id, Uri uri);
-		Task IncrementRating(string id, Type type);
+		Task UpdateRating(string id, Type type);
 	}
 }

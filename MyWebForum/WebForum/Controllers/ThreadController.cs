@@ -16,18 +16,20 @@ namespace WebForum.Controllers
 	{
 		private readonly IForumEntity _forumEntityService;
 		private readonly IThreadEntity _threadEntityService;
-		
+		private readonly IApplicationUser _appUserService;
+
 		private static UserManager<ApplicationUser> _userManager;
 		// provides the APIs for interacting with the Users in the data-storage.
 
 		public ThreadController(IThreadEntity threadEntityService, IForumEntity forumEntityService,
-			UserManager<ApplicationUser> userManager)
+			IApplicationUser appUserService, UserManager<ApplicationUser> userManager)
 		{
 			_forumEntityService = forumEntityService;
 			_threadEntityService = threadEntityService;
+			_appUserService = appUserService;
 			_userManager = userManager;
 		}
-		// TODO: if User IS NOT authen. & author. T.-editing and cretion should not even be offered.
+		// TODO: if User IS NOT authen. & author., Thread-editing and cretion should not even be offered.
 
 		// GET : Thread
 		/// <summary>
@@ -107,11 +109,11 @@ namespace WebForum.Controllers
 
 			var thread = BuildThread(model, user);
 
-			//await _threadEntityService.Create(thread);
-			// Block current thread, wait for task completion - NOTE: bad workaround, shoud use "await".
-			_threadEntityService.Create(thread).Wait();
+			await _threadEntityService.Create(thread);
+			// Block current thread, wait for task completion - NOTE: using "await" gives error.
+			//_threadEntityService.Create(thread).Wait();
 
-			// TODO: add user rating manager
+			await _appUserService.UpdateRating(userId, typeof(ThreadEntity));
 
 			return RedirectToAction("Index", "Thread", new { id = thread.Id });
 		}

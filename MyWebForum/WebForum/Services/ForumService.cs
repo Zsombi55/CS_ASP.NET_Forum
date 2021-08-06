@@ -40,9 +40,16 @@ namespace WebForum.Services
 			await _context.SaveChangesAsync();
 		}
 
-		public Task Delete(int forumId)
+		/// <summary>
+		/// Deletes an existing Forum.
+		/// </summary>
+		/// <param name="forumId">Integer: a specific ForumEntity's ID.</param>
+		/// <remarks>Not actually implemented for use.</remarks>
+		public async Task Delete(int forumId)
 		{
-			throw new NotImplementedException();
+			var forum = GetById(forumId);
+			_context.Remove(forum);
+			await _context.SaveChangesAsync();
 		}
 		
 		/// <summary>

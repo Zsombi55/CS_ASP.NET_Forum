@@ -10,12 +10,12 @@ namespace WebForum.Services
 {
 	public class UploadService : IUpload
 	{
-		public CloudBlobContainer GetBlobContainer(string connectionString)
+		public CloudBlobContainer GetBlobContainer(string connectionString, string containerName)
 		{
 			var sotageAccount = CloudStorageAccount.Parse(connectionString);
 			var blobClient = sotageAccount.CreateCloudBlobClient();
 
-			return blobClient.GetContainerReference("profile-immages");
+			return blobClient.GetContainerReference(containerName);
 		}
 	}
 }

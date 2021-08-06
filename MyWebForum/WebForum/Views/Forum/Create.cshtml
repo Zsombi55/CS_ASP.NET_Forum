@@ -27,6 +27,7 @@
 					<span class="text-danger" asp-validation-summary="Description"></span>
 				</div>
 
+				@* Placeholder, NOT USED, no cloud/ server storage is connected.
 				<div id="upload">
 					<label>Upload Forum Image</label>
 					<br />
@@ -34,7 +35,7 @@
 						Browse
 						<input asp-for="ImageUpload" typeof="file" style="display: none" />
 					</label>
-				</div>
+				</div>*@
 
 				<button id="newForumBtn" class="btn btn-submitForum" type="submit">Create Forum</button>
 				<input asp-for="BoardId" type="hidden" />

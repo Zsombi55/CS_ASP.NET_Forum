@@ -171,7 +171,7 @@ namespace WebForum.Controllers
 			return RedirectToAction("Index", "Forum", new { id = forum.Id });
 		}
 
-				private CloudBlockBlob UploadForumImage(IFormFile file)
+		private CloudBlockBlob UploadForumImage(IFormFile file)
 		{
 			// NOTE: to use Azure web-app storage see:
 			// https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-aspnet-core-app?tabs=core5x
@@ -180,7 +180,7 @@ namespace WebForum.Controllers
 			var connectionString = _configuration.GetConnectionString("AzureStorageAccount");
 
 			// Get Blob Container.
-			var container = _uploadService.GetBlobContainer(connectionString);
+			var container = _uploadService.GetBlobContainer(connectionString, "forum-images");
 
 			// Parse the Content Disposition response header
 			var contantDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
@@ -191,8 +191,8 @@ namespace WebForum.Controllers
 			// Get a reference to a Block Blob
 			var blockBlob = container.GetBlockBlobReference(fileName);
 
-			// On that, upload our file <-- file uploaded to the cloud
-			blockBlob.UploadFromStreamAsync(file.OpenReadStream());
+			// On that, upload our file <-- file uploaded to the cloud/ a server
+			blockBlob.UploadFromStreamAsync(file.OpenReadStream()).Wait();
 
 			return blockBlob;
 		}

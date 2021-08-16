@@ -282,6 +282,11 @@ body {
     padding: 8px 0 24px 24px;
 }
 
+#postDivider {
+    height: 2px;
+    margin-bottom: 12px;
+}
+
 #headingBtn {
     float: right;
     margin-left: 20px;
@@ -434,8 +439,90 @@ body {
 /* Create Threads
 -------------------------------------------------- */
 .createThreadSection {
-    background-color: #FFF;
+    background-color: #fff;
     padding: 24px;
+}
+
+.authorBlock {
+    padding: 18px;
+    border: 1px dashed #00AFCF;
+    margin-bottom: 8px;
+}
+
+.noBorder {
+    border: none;
+}
+
+/* Threads, Posting & Replies
+-------------------------------------------------- */
+#threadData {
+    display: inline-block;
+}
+
+.replyContent {
+    display: table;
+    background-color: #fff;
+    border-bottom: 1px solid #aaa;
+    width: inherit;
+}
+
+#replyRow {
+    background-color: #3F5185;
+    padding: 8px;
+}
+
+.replyContentContainer, .replyAuthorContainer {
+    display: table-cell;
+    padding: 12px;
+}
+
+.isAdmin {
+    display: inline-block;
+    padding: 3px;
+    background-color: #FFEB3B;
+    color: #000;
+    font-family: Roboto Mono;
+}
+
+.smaller {
+    font-size: 0.8em;
+}
+
+#originalThreadPost {
+    background-color: #fff;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+/* NOT USED
+#threadLogo {
+    display: inline-block;
+    border-radius: 3px;
+    margin-right: 20px;
+    height: 40px;
+    width: 40px;
+    background-color: #ddd;
+}*/
+
+#postDate {
+    color: #888;
+    font-family: Roboto Mono;
+    font-size: 0.8em;
+}
+
+#postAuthorImage {
+    height: 80px;
+    width: 80px;
+    background-size: 100%;
+}
+
+#postAuthorContainer {
+    padding: 12px;
+    color: #444;
+    font-family: Roboto;
+    height: 80px;
+    width: 80px;
+    background-size: 100%;
 }
 
 /* User Profile
@@ -465,4 +552,21 @@ body {
     color: #2569d5;
     font-family: Roboto;
     font-size: 1.7em;
+}
+
+/* User Profile Index
+-------------------------------------------------- */
+
+.userProfilePic {
+    height: 140px;
+    width: 140px;
+    background-size: 100%;
+}
+
+#userProfileImage {
+    background-size: 100%;
+}
+
+.fillSquare {
+    background-size: 100%;
 }

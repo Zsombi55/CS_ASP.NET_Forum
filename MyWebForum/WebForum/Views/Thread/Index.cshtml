@@ -35,7 +35,7 @@
 	<!-- TODO: Inspect one of the inspiration sources to see how they put 3 rows in 1 coluumn. -->
 			<header class="threadContentHeader">
 				<!-- Can format the output of the date here with at'ToString(). -->
-				<span class="threadData">Created at: @Model.CreatedAt</span>
+				<span class="threadDate">Created at: @Model.CreatedAt</span>
 			</header>
 			<div class="threadContentBody">
 				@Html.Raw(Model.Content)
@@ -53,7 +53,7 @@
 
 	@if (User.Identity.IsAuthenticated)
 	{
-		<div class="row">
+		<div id="replyRow" class="row">
 			<span>
 				<a asp-controller="Post" asp-action="Create" asp-route-id="@Model.Id"
 				   class="btn btn-newPost">
@@ -74,6 +74,7 @@
 					<a asp-controller="Profile" asp-action="Detail" asp-route-id="@post.AuthorId">
 						Author: @post.AuthorName
 					</a>
+
 					@if (post.AuthorRating != 0)
 					{
 						@: (Rating: @post.AuthorRating)
@@ -84,6 +85,8 @@
 						<div class="isAdmin smaller">Admin</div>
 						<br />
 					}
+
+					<span class="postDate">@post.CreatedAt</span>
 				</div>
 
 				<div class="col-md-9 postContentContainer">

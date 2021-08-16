@@ -22,11 +22,13 @@
 				@foreach (var profile in @Model.UserProfiles) {
 					<tr class="userRow">
 						<td>
-							<div class="userProfilePic" 
-								style="background-image: url(@profile.ProfileImgUrl)">
-								
-							</div>
+							<div class="userProfilePic"
+								 style="background-image: url(@profile.ProfileImgUrl)"></div>
 						</td>
+						<td>@profile.UserName</td>
+						<td>@profile.Email</td>
+						<td>@profile.MemberSince</td>
+						<td>@profile.UserRating</td>
 					</tr>
 				}
 			</tbody>

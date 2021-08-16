@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 //using Microsoft.Net.Http.Headers;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -29,7 +30,21 @@ namespace WebForum.Controllers
 
 		public IActionResult Index()
 		{
-			return View();
+			var profiles = _userService.GetAll()
+				.OrderByDescending(user => user.Rating)
+				.Select(u => new ProfileModel {
+					Email = u.Email,
+					UserName = u.UserName,
+					ProfileImgUrl = u.ProfileImageUrl,
+					UserRating = u.Rating.ToString(),
+					MemberSince = u.MemberSince
+				});
+
+			var model = new ProfileListModel {
+				UserProfiles = profiles
+			};
+
+			return View(model);
 		}
 
 		public IActionResult Detail(string id)
@@ -51,7 +66,7 @@ namespace WebForum.Controllers
 		}
 
 		/// <summary>
-		/// Usfinished !!  Would have used MS Azure web-app cloud storage for storinguploaded files like profile images, however i decided not to spend time on this now, because I am unwilling to pay for storage space when i only need less than 250 MB's for storing a few placeholder/ test images for a personal test project like this. Thus, I will follow the tutorial, write the code, but it will not be tested, so it's unlikely to work even if there is an Azure storage to connect to.
+		/// Usfinished !!  Would have used MS Azure web-app cloud storage for storinguploaded files like profile images, however I decided not to spend time on this now, because I am unwilling to pay for storage space when I only need some KB's for storing a few placeholder/ test images for a personal test project like this. Thus, I will follow the tutorial, write the code, but it will not be tested, so it's unlikely to work even if there is an Azure /other storage to connect to.
 		/// </summary>
 		[HttpPost]
 		public async Task<IActionResult> PostProfileImg (IFormFile file)

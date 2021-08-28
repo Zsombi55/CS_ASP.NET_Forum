@@ -9,9 +9,11 @@ using WebForum.Entities;
 using WebForum.Models.Forum;
 using WebForum.Models.Thread;
 using WebForum.Models.Post;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebForum.Controllers
 {
+	[Authorize]
 	public class ThreadController : Controller
 	{
 		private readonly IForumEntity _forumEntityService;
@@ -64,7 +66,7 @@ namespace WebForum.Controllers
 			return View(model);
 		}
 
-		// NOTE: How would it be different from "Index(int id)" above ??
+		// NOTE: How would it be different from "Index(int id)" above ??  This is likely redundant.
 		public IActionResult GetById(int id)
 		{
 			throw new NotImplementedException();
@@ -77,6 +79,7 @@ namespace WebForum.Controllers
 		/// </summary>
 		/// <param name="id">Integer: Forum obj. ID parameter.</param>
 		/// <returns>NewThreadModel object: basic new thread creation data.</returns>
+		[Authorize]
 		public IActionResult Create(int id)
 		{
 			var forum = _forumEntityService.GetById(id);
@@ -101,6 +104,7 @@ namespace WebForum.Controllers
 		/// <param name="model">NewThreadModel obj.; returned by the "Create" function above.</param>
 		/// <returns>An action: set view to the newly created Thread Index by its ID.</returns>
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> AddThread(NewThreadModel model)
 		{
 			var userId = _userManager.GetUserId(User);
@@ -168,6 +172,5 @@ namespace WebForum.Controllers
 		{
 			return _userManager.GetRolesAsync(user).Result.Contains("Admin");
 		}
-
 	}
 }

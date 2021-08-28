@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using WebForum.Models.Post;
 
 namespace WebForum.Controllers
 {
+	[Authorize]
 	public class PostController : Controller
 	{
 		private readonly IThreadEntity _threadEntityService;

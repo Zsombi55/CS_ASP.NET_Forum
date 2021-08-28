@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -131,6 +132,7 @@ namespace WebForum.Controllers
 		/// </summary>
 		/// <param name="id">Integer: Board obj. ID parameter.</param>
 		/// <returns>NewForumModel object: basic new Forum creation data.</returns>
+		[Authorize(Roles = "Admin")]
 		public IActionResult Create(int id)
 		{
 			// TODO: somehow link the forum to be created to a Board by user selection.
@@ -155,6 +157,7 @@ namespace WebForum.Controllers
 		/// <param name="model">NewForumModel obj.; returned by the "Create" function above.</param>
 		/// <returns>An action: set view to the newly created Forum Index by its ID.</returns>
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> AddForum(NewForumModel model)
 		{
 			var imageUri = "images/users/default.png";

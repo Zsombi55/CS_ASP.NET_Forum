@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,7 @@ using WebForum.Models.AppUser;
 
 namespace WebForum.Controllers
 {
+	[Authorize]
 	public class ProfileController : Controller
 	{
 		private readonly UserManager<ApplicationUser> _userManager;
@@ -28,6 +30,7 @@ namespace WebForum.Controllers
 			_configuration = configService;
 		}
 
+		[Authorize(Roles = "Admin")]
 		public IActionResult Index()
 		{
 			var profiles = _userService.GetAll()
@@ -66,7 +69,7 @@ namespace WebForum.Controllers
 		}
 
 		/// <summary>
-		/// Usfinished !!  Would have used MS Azure web-app cloud storage for storinguploaded files like profile images, however I decided not to spend time on this now, because I am unwilling to pay for storage space when I only need some KB's for storing a few placeholder/ test images for a personal test project like this. Thus, I will follow the tutorial, write the code, but it will not be tested, so it's unlikely to work even if there is an Azure /other storage to connect to.
+		/// Usfinished !!  Would have used MS Azure web-app cloud storage for storing uploaded files like profile images, however I decided not to spend time on this now, because I am unwilling to pay for storage space when I only need some KB's for storing a few placeholder/ test images for a personal test project like this. Thus, I will follow the tutorial, write the code, but it will not be tested, so it's unlikely to work even if there is an Azure /other storage to connect to.
 		/// </summary>
 		[HttpPost]
 		public async Task<IActionResult> PostProfileImg (IFormFile file)

@@ -14,31 +14,77 @@
 	</a>
 </span>*@
 
-<table class="table table-hover" id="forumIndexTable">
-	<thead>
-		<tr>
-			@*
-			<th>@Html.DisplayNameFor(model => model.Title)</th>
-			<th>@Model.ForumList.Title</th>
-			*@
-			<th>Forum Title</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-	@foreach (var forum in Model.ForumList)
-	{
-		<tr>
-			<td>
-				<!--{controller=Home}/{action=Index}/{id?}-->
-				<a asp-controller="Forum" asp-action="Forum" asp-route-id="@forum.Id">
-					@forum.Title
-				</a>
-			</td>
-			<td>
-				@forum.Description
-			</td>
-		</tr>
-	}
-	</tbody>
-</table>
+<div class="container body-content">
+	<div class="row sectionHeader">
+		<div class="sectionHeading">
+			Browse Forums
+		</div>
+		<div class="sectionDescription">
+			<p>Welcome to the <strong>Web Forums community</strong>. Threads are broadly categorized into separate forums by main topics (boards) & subtopics (forums) where individual discussions are found (threads).</p>
+			<p>Please read the site <strong>Guidelines</strong> before creating a new thread.</p>
+
+			@if (! User.Identity.IsAuthenticated)
+			{
+				<span>You must be a 
+					<a asp-area="Identity" asp-page="/Account/Register" title="Register">registered member</a> 
+					to create a new thread!
+				</span>
+			}
+		</div>
+	</div>
+
+	<div id="forumIndexContent" class="row">
+		<table id="forumIndexTable" class="table table-hover">
+			<thead>
+				<tr>@*TODO: How to set the second column width? Tried with exact values and % without the desired results, thread & user count number values still get separate rows.*@
+					<th id="fTitle">Forum Title</th>
+					<th id="fCounts">Counts</th>
+					<th id="fDesc">Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var forum in Model.ForumList)
+				{
+					<tr>
+						<td>
+						@* PLACEHOLDER
+						Not using site background images. The "ImageUrl" property doesn't even exist.
+							<div class="forumLogo" style="background-image:url(@forum.ImageUrl);">
+								<div class="forumData"></div>
+							</div>*@
+
+							<div class="forumData">
+								<div class="forumTitle">
+									<!--{controller=Home}/{action=Index}/{id?}-->
+									<a asp-controller="Forum" asp-action="Forum" asp-route-id="@forum.Id">
+										@forum.Title
+									</a>
+								</div>
+								<div class="forumSubTitle">
+									@if (forum.HasRecentThread)
+									{
+										<div class="hasRecentThread">Hot</div>
+									}
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="forumThreadCount">
+								@forum.ThreadCount Threads
+							</div>
+							<div class="forumMemberCount">
+								@forum.UserCount Users
+							</div>
+						</td>
+						<td>
+							<div class="forumDescription">
+								@forum.Description
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+

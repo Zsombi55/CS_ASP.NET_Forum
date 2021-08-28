@@ -12,6 +12,12 @@ namespace WebForum.Models.Forum
 
 		public string Title { get; set; }
 
+		public int ThreadCount { get; set; }
+
+		public int UserCount { get; set; }
+
+		public bool HasRecentThread { get; set; }
+
 		public string Description { get; set; }
 
 

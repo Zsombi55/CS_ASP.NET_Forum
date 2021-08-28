@@ -504,6 +504,15 @@ body {
     background-color: #ddd;
 }*/
 
+.hasRecentThread {
+    padding: 2px;
+    background-color: #fe552f;
+    color: #fff;
+    text-align: center;
+    border-radius: 1px;
+    width: 30px;
+}
+
 #postDate {
     color: #888;
     font-family: Roboto Mono;

@@ -50,6 +50,10 @@ namespace WebForum.Controllers
 				{
 					Id = forum.Id,
 					Title = forum.Title,
+					ThreadCount = forum.Threads?.Count() ?? 0,
+					UserCount = _forumEntityService.GetActiveUsers(forum.Id).Count(),
+					HasRecentThread = _forumEntityService.HasRecentThread(forum.Id),
+					//ImageUrl = forum.ImageUrl,
 					Description = forum.Description
 				});
 
@@ -58,7 +62,7 @@ namespace WebForum.Controllers
 				// NO FORCED CASTING !
 				//ForumList = (IEnumerable<ForumListingModel>)forums
 
-				ForumList = forums
+				ForumList = forums.OrderBy(f => f.Title)
 			};
 
 			return View(model);

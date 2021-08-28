@@ -51,7 +51,7 @@ namespace WebForum.Services
 			_context.Remove(forum);
 			await _context.SaveChangesAsync();
 		}
-		
+
 		/// <summary>
 		/// Gets all Forums & their Threads.
 		/// </summary>
@@ -62,9 +62,26 @@ namespace WebForum.Services
 			return _context.Forums.Include(forum => forum.Threads);
 		}
 
-		public IEnumerable<ApplicationUser> GetAllActiveUsers()
+		/// <summary>
+		/// Gets the number of current Users viewing a specific Thread.
+		/// </summary>
+		/// <param name="forumId">Integer: Id of current forum object.</param>
+		/// <returns>A list of currently active Users.</returns>
+		public IEnumerable<ApplicationUser> GetActiveUsers(int forumId)
 		{
-			throw new NotImplementedException();
+			var threads = GetById(forumId).Threads;
+			
+			if(threads != null || !threads.Any())
+			{
+				var threadUsers = threads.Select(t => t.User);
+
+				var postUsers = threads.SelectMany(t => t.Posts)
+										.Select(p => p.User);
+
+				return threadUsers.Union(postUsers).Distinct();
+			}			
+
+			return new List<ApplicationUser>();
 		}
 
 		/// <summary>
@@ -93,6 +110,15 @@ namespace WebForum.Services
 		public Task UpdateForumTitle(int forumId, string newTitle)
 		{
 			throw new NotImplementedException();
+		}
+
+		public bool HasRecentThread(int threadId)
+		{
+			const int hoursAgo = 12;
+
+			var window = DateTime.Now.AddHours(-hoursAgo);
+
+			return GetById(threadId).Threads.Any(t => t.CreatedAt > window);
 		}
 	}
 }

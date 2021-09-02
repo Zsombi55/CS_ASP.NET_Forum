@@ -80,9 +80,11 @@ namespace WebForum.Services
 
 		public IEnumerable<ThreadEntity> GetFilteredThreads(string searchQuery)
 		{
+			var normalized = searchQuery.ToLower();
+
 			return GetAll().Where(thread =>
-				thread.Title.Contains(searchQuery) ||
-				thread.Content.Contains(searchQuery));
+				thread.Title.ToLower().Contains(normalized) ||
+				thread.Content.ToLower().Contains(normalized));
 		}
 
 		public IEnumerable<ThreadEntity> GetFilteredThreads(ForumEntity forum, string searchQuery)
